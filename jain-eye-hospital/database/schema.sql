@@ -273,6 +273,7 @@ CREATE TABLE contact_enquiries (
   phone VARCHAR(30) DEFAULT NULL,
   subject VARCHAR(200) DEFAULT NULL,
   message TEXT NOT NULL,
+  consent TINYINT(1) NOT NULL DEFAULT 0,
   status ENUM('New','In Progress','Resolved','Closed') NOT NULL DEFAULT 'New',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_status (status)
@@ -494,9 +495,7 @@ SELECT 2, id FROM permissions WHERE name IN
 INSERT INTO role_permissions (role_id, permission_id)
 SELECT 3, id FROM permissions WHERE name IN ('appointments.manage','enquiries.manage');
 
--- Default admin: email admin@jaineye.com / password Admin@123  (CHANGE IMMEDIATELY AFTER FIRST LOGIN)
-INSERT INTO admins (role_id, name, email, password_hash) VALUES
-(1, 'Site Administrator', 'admin@jaineye.com', '$2y$12$Fqax5NEAtycQPZVsZ5uyQu/IuG6zjEB9sIxlZ6gywRDOAKMlEVV7G');
+-- Create the first administrator once via /admin/setup.php after importing the schema.
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('hero_eyebrow','ADVANCED SUPER-SPECIALITY EYE CARE'),
@@ -613,36 +612,80 @@ INSERT INTO footer_links (column_group, label, url, position) VALUES
 ('Resources','HTML Sitemap','/sitemap',5);
 
 -- Specialities
-INSERT INTO specialities (name, slug, category, short_description, overview, is_featured, status, position) VALUES
-('Cataract & IOL','cataract-iol','Cataract & Refractive Care','Evaluation and modern surgical care for cataract with a range of intraocular lens options.','A cataract is clouding of the natural lens of the eye that gradually reduces vision. At Jain Eye Hospital & Laser Centre, cataract is evaluated with a detailed eye examination and appropriate investigations, and surgery is planned according to each patient''s eye condition and visual needs.',1,'published',1),
-('LASIK & Refractive Surgery','lasik-refractive','Cataract & Refractive Care','Structured assessment and laser vision correction options for suitable candidates.','Refractive errors such as myopia, hyperopia and astigmatism can often be corrected with laser procedures in suitable candidates. A detailed pre-operative evaluation is essential before any laser vision correction is advised.',1,'published',2),
-('Retina & Uvea','retina-uvea','Retina & Cornea','Medical and laser care for retinal conditions including diabetic retinopathy.','The retina is the light-sensitive layer at the back of the eye. Conditions such as diabetic retinopathy, retinal vein occlusion and macular disorders require timely diagnosis and treatment to protect vision.',1,'published',3),
-('Macular Conditions','macular-conditions','Retina & Cornea','Evaluation and monitoring of age-related and other macular disorders.','The macula is responsible for central, detailed vision. Macular conditions can cause blurred or distorted central vision and benefit from early detection and regular monitoring.',0,'published',4),
-('Cornea Care','cornea-care','Retina & Cornea','Care for corneal infections, keratoconus and other corneal disorders.','The cornea is the clear front window of the eye. Corneal conditions can affect clarity of vision and comfort, and range from infections and injuries to shape disorders such as keratoconus.',1,'published',5),
-('Squint Evaluation & Treatment','squint','Children''s & General Eye Care','Assessment and treatment planning for misaligned eyes in children and adults.','Squint (strabismus) is a condition where the eyes do not align properly. Early evaluation is important, especially in children, to support normal visual development.',0,'published',6),
-('Myopia Clinic','myopia-clinic','Children''s & General Eye Care','Dedicated care for childhood myopia and guidance on slowing its progression.','Myopia (near-sightedness) is increasingly common in children. Regular monitoring and evidence-based guidance can help manage its progression.',0,'published',7),
-('Children''s Eye Health','childrens-eye-health','Children''s & General Eye Care','Comprehensive eye examinations and care tailored for children.','Children may not always complain about vision problems. Regular eye examinations help detect refractive errors, lazy eye (amblyopia), squint and other conditions early.',1,'published',8);
+INSERT INTO specialities (name, slug, category, short_description, overview, image, is_featured, status, position) VALUES
+('Cataract & IOL','cataract-iol','Cataract & Refractive Care','Evaluation and modern surgical care for cataract with a range of intraocular lens options.','A cataract is clouding of the natural lens of the eye that gradually reduces vision. At Jain Eye Hospital & Laser Centre, cataract is evaluated with a detailed eye examination and appropriate investigations, and surgery is planned according to each patient''s eye condition and visual needs.','assets/img/surgeon-at-the-operating-microscope.webp',1,'published',1),
+('LASIK & Refractive Surgery','lasik-refractive','Cataract & Refractive Care','Structured assessment and laser vision correction options for suitable candidates.','Refractive errors such as myopia, hyperopia and astigmatism can often be corrected with laser procedures in suitable candidates. A detailed pre-operative evaluation is essential before any laser vision correction is advised.','assets/img/hospital-pic-17.webp',1,'published',2),
+('Retina & Uvea','retina-uvea','Retina & Cornea','Medical and laser care for retinal conditions including diabetic retinopathy.','The retina is the light-sensitive layer at the back of the eye. Conditions such as diabetic retinopathy, retinal vein occlusion and macular disorders require timely diagnosis and treatment to protect vision.','assets/img/precision-ophthalmic-surgery-close-up.webp',1,'published',3),
+('Macular Conditions','macular-conditions','Retina & Cornea','Evaluation and monitoring of age-related and other macular disorders.','The macula is responsible for central, detailed vision. Macular conditions can cause blurred or distorted central vision and benefit from early detection and regular monitoring.','assets/img/hospital-pic-16.webp',0,'published',4),
+('Cornea Care','cornea-care','Retina & Cornea','Care for corneal infections, keratoconus and other corneal disorders.','The cornea is the clear front window of the eye. Corneal conditions can affect clarity of vision and comfort, and range from infections and injuries to shape disorders such as keratoconus.','assets/img/ophthalmic-microsurgery-preparation.webp',1,'published',5),
+('Squint Evaluation & Treatment','squint','Children''s & General Eye Care','Assessment and treatment planning for misaligned eyes in children and adults.','Squint (strabismus) is a condition where the eyes do not align properly. Early evaluation is important, especially in children, to support normal visual development.','assets/img/hospital-pic-14.webp',0,'published',6),
+('Myopia Clinic','myopia-clinic','Children''s & General Eye Care','Dedicated care for childhood myopia and guidance on slowing its progression.','Myopia (near-sightedness) is increasingly common in children. Regular monitoring and evidence-based guidance can help manage its progression.','assets/img/neha-mohan-2.webp',0,'published',7),
+('Children''s Eye Health','childrens-eye-health','Children''s & General Eye Care','Comprehensive eye examinations and care tailored for children.','Children may not always complain about vision problems. Regular eye examinations help detect refractive errors, lazy eye (amblyopia), squint and other conditions early.','assets/img/hospital-pic-15.webp',1,'published',8);
 
 -- Treatments
-INSERT INTO treatments (speciality_id, name, slug, short_description, status, position) VALUES
-(1,'Cataract Surgery','cataract-surgery','Modern micro-incision cataract surgery with personalised intraocular lens selection.','published',1),
-(2,'LASIK Assessment','lasik-assessment','Detailed pre-operative workup to determine suitability for laser vision correction.','published',2),
-(2,'Laser Vision Correction','laser-vision-correction','Laser-based procedures to reduce dependence on glasses in suitable candidates.','published',3),
-(1,'Intraocular Lens Options','intraocular-lens-options','Guidance on monofocal, toric and other IOL choices based on lifestyle needs.','published',4),
-(3,'Diabetic Retina Evaluation','diabetic-retina-evaluation','Structured retinal screening for patients with diabetes.','published',5),
-(3,'Retinal Laser Treatment','retinal-laser-treatment','Laser photocoagulation for appropriate retinal conditions.','published',6),
-(5,'Keratoconus Evaluation','keratoconus-evaluation','Corneal imaging and assessment for keratoconus and its progression.','published',7),
-(5,'Corneal Surgery','corneal-surgery','Surgical care for corneal conditions when medically indicated.','published',8),
-(5,'Corneal Transplantation','corneal-transplantation','Transplant options for advanced corneal disease.','published',9),
-(6,'Vision Therapy','vision-therapy','Structured therapy programmes for selected binocular vision problems.','published',10),
-(8,'Comprehensive Eye Examination','comprehensive-eye-examination','Complete eye health check including vision, pressure and retinal evaluation.','published',11),
-(8,'Eye Health Screening','eye-health-screening','Preventive screening packages for early detection of eye disease.','published',12);
+INSERT INTO treatments (speciality_id, name, slug, short_description, image, status, position) VALUES
+(1,'Cataract Surgery','cataract-surgery','Modern micro-incision cataract surgery with personalised intraocular lens selection.','assets/img/surgeon-at-the-operating-microscope.webp','published',1),
+(2,'LASIK Assessment','lasik-assessment','Detailed pre-operative workup to determine suitability for laser vision correction.','assets/img/hospital-pic-17.webp','published',2),
+(2,'Laser Vision Correction','laser-vision-correction','Laser-based procedures to reduce dependence on glasses in suitable candidates.','assets/img/neha-mohan-4.webp','published',3),
+(1,'Intraocular Lens Options','intraocular-lens-options','Guidance on monofocal, toric and other IOL choices based on lifestyle needs.','assets/img/hospital-pic-12.webp','published',4),
+(3,'Diabetic Retina Evaluation','diabetic-retina-evaluation','Structured retinal screening for patients with diabetes.','assets/img/hospital-pic-16.webp','published',5),
+(3,'Retinal Laser Treatment','retinal-laser-treatment','Laser photocoagulation for appropriate retinal conditions.','assets/img/precision-ophthalmic-surgery-close-up.webp','published',6),
+(5,'Keratoconus Evaluation','keratoconus-evaluation','Corneal imaging and assessment for keratoconus and its progression.','assets/img/hospital-pic-14.webp','published',7),
+(5,'Corneal Surgery','corneal-surgery','Surgical care for corneal conditions when medically indicated.','assets/img/ophthalmic-microsurgery-preparation.webp','published',8),
+(5,'Corneal Transplantation','corneal-transplantation','Transplant options for advanced corneal disease.','assets/img/precision-ophthalmic-surgery-in-theatre.webp','published',9),
+(6,'Vision Therapy','vision-therapy','Structured therapy programmes for selected binocular vision problems.','assets/img/hospital-pic-15.webp','published',10),
+(8,'Comprehensive Eye Examination','comprehensive-eye-examination','Complete eye health check including vision, pressure and retinal evaluation.','assets/img/hospital-pic-16.webp','published',11),
+(8,'Eye Health Screening','eye-health-screening','Preventive screening packages for early detection of eye disease.','assets/img/neha-mohan-2.webp','published',12);
 
 -- Doctors (names verified from existing site; complete profiles via admin)
-INSERT INTO doctors (name, slug, designation, specialisation, is_featured, status, position) VALUES
-('Dr Arun Kumar Jain','dr-arun-kumar-jain','Senior Consultant','Ophthalmology',1,'published',1),
-('Dr Rajat Jain','dr-rajat-jain','Consultant','Ophthalmology',1,'published',2),
-('Dr Neha Mohan','dr-neha-mohan','Consultant','Ophthalmology',1,'published',3);
+INSERT INTO doctors (name, slug, photo, is_featured, status, position) VALUES
+('Dr Arun Kumar Jain','dr-arun-kumar-jain',NULL,1,'published',1),
+('Dr Rajat Jain','dr-rajat-jain','assets/img/rajat-jain-3.webp',1,'published',2),
+('Dr Neha Mohan','dr-neha-mohan','assets/img/neha-mohan.webp',1,'published',3);
+
+-- Real hospital photography. Device names and model specifications are intentionally not inferred.
+INSERT INTO technologies (name, slug, category, short_description, description, image, status, position) VALUES
+('Eye examination area','eye-examination-area','diagnostics','An examination space photographed at Jain Eye Hospital.','This photograph shows an eye examination area at the hospital. Ask the clinical team which tests are appropriate for your visit.','assets/img/hospital-pic-16.webp','published',1),
+('Clinical equipment','clinical-equipment','diagnostics','Equipment shown in the hospital’s own clinical photographs.','This photograph shows clinical equipment at the hospital. Specific device names and model information should be confirmed with the clinical team.','assets/img/hospital-pic-17.webp','published',2),
+('Ophthalmic theatre','ophthalmic-theatre','facility','A photograph of the hospital’s ophthalmic clinical theatre.','This photograph shows a clinical theatre. Ask the hospital team about the preparation and care relevant to a particular procedure.','assets/img/ophthalmic-microsurgery-in-a-clinical-theatre.webp','published',3),
+('Surgical microscope in use','surgical-microscope-in-use','surgical','A real photograph of an ophthalmic surgeon at work.','This photograph shows a surgeon using an operating microscope. Ask your clinician about the procedure and equipment relevant to your care.','assets/img/surgeon-at-the-operating-microscope.webp','published',4);
+
+-- Distinct, genuine supplied photos; no stock imagery, duplicate variants, or unverified patient reviews.
+INSERT INTO gallery_items (title, category, image, caption, position, is_active) VALUES
+('Hospital exterior','infrastructure','assets/img/hospital-pic.webp','Exterior view of Jain Eye Hospital.',1,1),
+('Hospital entrance','infrastructure','assets/img/hospital-pic-2.webp','The hospital exterior in Shalimar Bagh.',2,1),
+('Hospital sign','infrastructure','assets/img/hospital-pic-3.webp','Hospital signage at the entrance.',3,1),
+('Clinic entrance','infrastructure','assets/img/hospital-pic-4.webp','Entrance to the hospital.',4,1),
+('Reception area','infrastructure','assets/img/hospital-pic-6.webp','Reception and patient coordination area.',5,1),
+('Reception desk','infrastructure','assets/img/hospital-pic-7.webp','Hospital reception desk.',6,1),
+('Patient reception','infrastructure','assets/img/hospital-pic-8.webp','Reception and waiting area.',7,1),
+('Waiting area','infrastructure','assets/img/hospital-pic-9.webp','Patient waiting area.',8,1),
+('Waiting lounge','infrastructure','assets/img/hospital-pic-13.webp','Hospital waiting lounge.',9,1),
+('Operating theatre','infrastructure','assets/img/hospital-pic-10.webp','Operating-room photograph supplied by the hospital.',10,1),
+('Surgical theatre','infrastructure','assets/img/hospital-pic-11.webp','Clinical theatre at the hospital.',11,1),
+('Clinical theatre equipment','technology','assets/img/hospital-pic-12.webp','Equipment visible in a clinical theatre.',12,1),
+('Eye examination room','technology','assets/img/hospital-pic-14.webp','A room for eye-care evaluation.',13,1),
+('Patient consultation','doctors','assets/img/hospital-pic-15.webp','A clinician meeting with a patient.',14,1),
+('Clinical examination equipment','technology','assets/img/hospital-pic-16.webp','Equipment in an eye examination area.',15,1),
+('Clinical equipment','technology','assets/img/hospital-pic-17.webp','Clinical equipment photographed at the hospital.',16,1),
+('Dr Neha Mohan','doctors','assets/img/neha-mohan.webp','Portrait of Dr Neha Mohan.',17,1),
+('Doctor consultation','doctors','assets/img/neha-mohan-2.webp','A doctor speaking with a patient.',18,1),
+('Clinical consultation','doctors','assets/img/neha-mohan-4.webp','A doctor consulting with a patient.',19,1),
+('Dr Rajat Jain','doctors','assets/img/rajat-jain-3.webp','Portrait of Dr Rajat Jain.',20,1),
+('Doctor at work','doctors','assets/img/rajat-jain.webp','A doctor during clinical work.',21,1),
+('Patient examination','doctors','assets/img/rajat-jain-2.webp','A doctor examining a patient.',22,1),
+('Eye-care consultation','doctors','assets/img/rajat-jain-4.webp','A doctor with a patient in a clinical setting.',23,1),
+('Clinical care','doctors','assets/img/rajat-jain-5.webp','A doctor at the hospital.',24,1),
+('Microsurgery','technology','assets/img/microsurgery-under-the-surgical-microscope.webp','Ophthalmic surgery under a microscope.',25,1),
+('Theatre preparation','technology','assets/img/ophthalmic-microsurgery-preparation.webp','Preparation in a clinical theatre.',26,1),
+('Ophthalmic microsurgery','technology','assets/img/ophthalmic-microsurgery-in-a-clinical-theatre.webp','Ophthalmic care in a clinical theatre.',27,1),
+('Microsurgery under magnification','technology','assets/img/precision-microsurgery-under-the-microscope.webp','Surgery viewed through a microscope.',28,1),
+('Ophthalmic surgery close-up','technology','assets/img/precision-ophthalmic-surgery-close-up.webp','A close view of ophthalmic surgery.',29,1),
+('Surgical care in the clinic','technology','assets/img/precision-ophthalmic-surgery-in-the-clinic.webp','A surgical care setting.',30,1),
+('Ophthalmic surgery in theatre','technology','assets/img/precision-ophthalmic-surgery-in-theatre.webp','A clinical theatre photograph.',31,1),
+('Operating microscope','technology','assets/img/surgeon-at-the-operating-microscope.webp','A surgeon using an operating microscope.',32,1),
+('Ophthalmic microscope','technology','assets/img/surgeon-at-the-ophthalmic-microscope.webp','A surgeon at an ophthalmic microscope.',33,1),
+('Ophthalmic surgical equipment','technology','assets/img/surgeon-using-an-operating-microscope.webp','An ophthalmic surgical setting.',34,1);
 
 -- FAQs (general, medically responsible)
 INSERT INTO faqs (question, answer, category, position) VALUES

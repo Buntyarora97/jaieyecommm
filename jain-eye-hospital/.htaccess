@@ -10,6 +10,9 @@ RewriteEngine On
 # Uncomment & adjust if installed in a subfolder:
 # RewriteBase /
 
+# Never expose application internals, source documentation, or the SQL schema.
+RewriteRule ^(config|database|docs|includes|storage)(/|$) - [F,L,NC]
+
 # Force HTTPS (uncomment after SSL is enabled)
 # RewriteCond %{HTTPS} off
 # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

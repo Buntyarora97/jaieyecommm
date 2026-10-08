@@ -8,13 +8,17 @@ require __DIR__ . '/../includes/header.php';
   <h1>Privacy Policy</h1>
 </div></section>
 <section class="section"><div class="container"><div class="prose" style="max-width:800px">
-  <p><?= e(SITE_NAME) ?> respects your privacy. This policy explains how information submitted through this website is handled.</p>
-  <h2>Information We Collect</h2>
-  <p>When you submit an appointment request or contact form, we collect the details you provide, such as your name, phone number, email address and message, solely to respond to your request.</p>
-  <h2>How We Use It</h2>
-  <p>Your information is used only to schedule and manage appointments, respond to enquiries and provide requested services. We do not sell or share your personal information with third parties for marketing.</p>
+  <p>This page describes the information this website’s appointment and contact forms are designed to collect. The hospital should review and approve this policy before launch.</p>
+  <h2>Information You Submit</h2>
+  <p>Appointment requests may include your name, contact details, preferred date and time, and selected doctor or speciality. Contact requests may include your name, contact details, subject and message. The forms also record your consent. Please do not submit medical records, payment information or detailed health information through these forms.</p>
+  <h2>How It Is Used</h2>
+  <p>Submissions are stored in the website database so authorised hospital administrators can review and respond. If email notifications are configured and enabled, submission details may also be sent to the hospital’s designated email address.</p>
+  <h2>Website Operation</h2>
+  <p>The site uses a session cookie for form security and administrator sign-in. Pages load fonts from Google Fonts and the contact page may display a Google Maps embed; those services may receive technical connection information when your browser loads them. Please see their own privacy information for details.</p>
+  <h2>Access and Retention</h2>
+  <p>Hospital administrators with website access and the hosting provider needed to operate the site may process submitted information. The hospital should define and communicate its retention and deletion practices before launch.</p>
   <h2>Data Security</h2>
-  <p>Access to submitted information is restricted to authorised staff, and reasonable technical measures are in place to protect it.</p>
+  <p>Administrator access requires an account, and the site uses request protections and access controls. No website can guarantee absolute security; contact the hospital promptly if you believe information was submitted in error.</p>
   <h2>Contact</h2>
   <p>For any privacy-related questions, contact us at <?= e(SITE_EMAIL) ?> or call <?= e(SITE_PHONE_1) ?>.</p>
 </div></div></section>

@@ -34,6 +34,7 @@ if ($action === 'view') {
         <dt>Phone</dt><dd><?= e($en['phone'] ?: '—') ?></dd>
         <dt>Subject</dt><dd><?= e($en['subject'] ?: '—') ?></dd>
         <dt>Message</dt><dd><?= nl2br(e($en['message'])) ?></dd>
+        <dt>Contact consent</dt><dd><?= (int)$en['consent'] === 1 ? 'Yes' : 'No' ?></dd>
         <dt>Received</dt><dd><?= e(format_date($en['created_at'], 'd M Y, h:i A')) ?></dd>
       </dl>
     </div>

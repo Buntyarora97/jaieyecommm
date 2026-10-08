@@ -1,22 +1,23 @@
 <?php
 $route = '/international-patients';
-$page_seo = page_seo($route, 'International Patients | ' . SITE_NAME, 'Guidance for patients travelling to ' . SITE_NAME . ', Delhi for eye care.');
+$page_seo = page_seo($route, 'International Patients | ' . SITE_NAME, 'Contact ' . SITE_NAME . ' to ask about appointment availability before planning a visit to Delhi.');
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero"><div class="container">
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><span>International Patients</span></nav>
-  <h1>International Patients</h1><p>Planning your eye care visit to Delhi? We are here to help.</p>
+  <h1>International Patients</h1><p>Please contact the hospital to ask about consultations and availability before arranging travel.</p>
 </div></section>
 <section class="section"><div class="container split">
   <div class="reveal">
     <span class="eyebrow">Plan Ahead</span>
-    <h2>How We Support Visiting Patients</h2>
+    <h2>Before You Plan a Visit</h2>
     <ul class="check-list">
-      <li>Pre-visit consultation scheduling and coordination</li>
-      <li>Guidance on medical reports to carry for your evaluation</li>
-      <li>Clear treatment estimates shared before procedures</li>
-      <li>Structured follow-up plans before you travel back</li>
+      <li>Confirm that a consultation is available on your proposed dates</li>
+      <li>Ask the hospital which records or reports may be useful at your visit</li>
+      <li>Discuss expected costs and payment arrangements before planned care</li>
+      <li>Ask about follow-up requirements before making travel arrangements</li>
     </ul>
+    <p style="color:var(--grey);margin:16px 0 24px">This website does not confirm travel assistance, remote consultations, treatment eligibility or appointment availability.</p>
     <a class="btn btn--primary" href="<?= url('book-appointment') ?>">Request an Appointment</a>
   </div>
   <div class="contact-card reveal">

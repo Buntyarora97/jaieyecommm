@@ -9,14 +9,14 @@
 ## 2. Import the Schema
 1. cPanel → **phpMyAdmin** → select your database.
 2. Tab **Import** → choose `database/schema.sql` → **Go**.
-3. Confirm 36 tables were created and seed data exists (check `navigation_items`, `specialities`, `admins`).
+3. Confirm the tables were created and seed data exists (check `navigation_items`, `specialities`, `technologies`, and `gallery_items`). The `admins` table is intentionally empty until first-time setup.
 
 ## 3. Upload the Files
 1. cPanel → **File Manager** → `public_html/`.
 2. If migrating, first back up the old site: compress the current `public_html` contents and download the ZIP, and export the old database via phpMyAdmin.
 3. Upload the project ZIP → **Extract** → ensure `index.php` sits directly in `public_html/` (not in a subfolder).
 
-## 4. Configure Credentials
+## 4. Configure the Site
 Edit `config/config.php`:
 ```php
 define('DB_HOST', 'localhost');
@@ -25,6 +25,7 @@ define('DB_USER', 'your_cpanel_dbuser');
 define('DB_PASS', 'your_strong_password');
 define('SITE_URL', 'https://jaineye.com');
 ```
+Alternatively, set the corresponding server environment variables. Do not commit production database credentials.
 
 ## 5. Enable SSL + HTTPS Redirect
 1. cPanel → **SSL/TLS Status** → run AutoSSL (free).
@@ -38,14 +39,14 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 - Folders: `755`, Files: `644` (cPanel default).
 - Ensure `uploads/` is writable (`755` works on most hosts; use `775` only if uploads fail).
 
-## 7. First Admin Login
-1. Visit `https://yourdomain.com/admin/`.
-2. Login: `admin@jaineye.com` / `Admin@123`.
-3. **Immediately**: Admin → Users → Edit → set a new strong password and your real email.
+## 7. Create the First Administrator
+1. Visit `https://yourdomain.com/admin/setup.php`.
+2. Create the administrator account with a unique password between 14 and 72 characters.
+3. The setup route closes automatically when the account is created. Sign in at `https://yourdomain.com/admin/`.
 
 ## 8. Email / SMTP
-- The CMS uses PHP `mail()` when `MAIL_ENABLED = true` in config.
-- On cPanel, create the mailbox `no-reply@jaineye.com` first. Test by submitting the appointment form.
+- Email notifications are off by default. The CMS uses PHP `mail()` only when `MAIL_ENABLED` is enabled.
+- Confirm the sender mailbox and delivery with your hosting provider, then test appointment and contact notifications before enabling it for visitors.
 - If mail is unreliable, install a mail plugin later or use cPanel's SMTP with a small PHPMailer addition.
 
 ## 9. Post-Deployment Tests

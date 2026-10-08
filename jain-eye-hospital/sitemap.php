@@ -27,6 +27,10 @@ $urls = [
     ['/media-news', '0.5', 'monthly'],
     ['/contact-us', '0.8', 'yearly'],
     ['/book-appointment', '0.9', 'yearly'],
+    ['/privacy-policy', '0.3', 'yearly'],
+    ['/terms-and-conditions', '0.3', 'yearly'],
+    ['/medical-disclaimer', '0.3', 'yearly'],
+    ['/accessibility', '0.3', 'yearly'],
 ];
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";

@@ -1,12 +1,12 @@
 <?php
 $route = '/awards';
-$page_seo = page_seo($route, 'Awards & Recognition | ' . SITE_NAME, 'Awards and recognition received by ' . SITE_NAME . '.');
+$page_seo = page_seo($route, 'Awards & Recognition | ' . SITE_NAME, 'Verified awards and recognition published by ' . SITE_NAME . '.');
 $awards = db_all("SELECT * FROM awards WHERE is_active=1 ORDER BY position");
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero"><div class="container">
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><span>Awards</span></nav>
-  <h1>Awards &amp; Recognition</h1><p>Milestones that reflect our commitment to quality eye care.</p>
+  <h1>Awards &amp; Recognition</h1><p>Verified recognitions are listed here when the hospital has approved them for publication.</p>
 </div></section>
 <section class="section"><div class="container">
   <?php if ($awards): ?>
@@ -21,7 +21,7 @@ require __DIR__ . '/../includes/header.php';
     <?php endforeach; ?>
   </div>
   <?php else: ?>
-  <div class="empty-state"><strong>Updates coming soon</strong>Our awards and recognition will be listed here.</div>
+  <div class="empty-state"><strong>No verified awards are listed</strong>Please contact the hospital if you need information about a specific recognition.</div>
   <?php endif; ?>
 </div></section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

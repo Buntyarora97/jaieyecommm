@@ -9,7 +9,7 @@ require __DIR__ . '/../includes/header.php';
 </div></section>
 <section class="section"><div class="container"><div class="cards cards--2">
   <div class="card"><h3>Main Pages</h3><ul style="list-style:disc;margin-left:20px;display:grid;gap:6px;margin-top:10px">
-    <?php foreach (['/'=>'Home','/about-us'=>'About Us','/doctors'=>'Our Doctors','/specialities'=>'Specialities','/treatments'=>'Treatments','/technology'=>'Technology','/blog'=>'Blog','/gallery'=>'Gallery','/reels'=>'Videos & Reels','/contact-us'=>'Contact Us','/book-appointment'=>'Book Appointment'] as $u=>$l): ?>
+    <?php foreach (['/'=>'Home','/about-us'=>'About Us','/doctors'=>'Our Doctors','/specialities'=>'Specialities','/treatments'=>'Treatments','/technology'=>'Technology','/blog'=>'Blog','/gallery'=>'Gallery','/reels'=>'Videos & Reels','/contact-us'=>'Contact Us','/book-appointment'=>'Book Appointment','/accessibility'=>'Accessibility','/terms-and-conditions'=>'Terms & Conditions','/medical-disclaimer'=>'Medical Disclaimer','/privacy-policy'=>'Privacy Policy'] as $u=>$l): ?>
     <li><a href="<?= url(ltrim($u,'/')) ?>"><?= e($l) ?></a></li>
     <?php endforeach; ?>
   </ul></div>

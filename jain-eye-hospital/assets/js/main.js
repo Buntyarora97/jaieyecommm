@@ -110,14 +110,35 @@
     if (!video) return;
     var playBtn = phone.querySelector('[data-play]');
     var muteBtn = phone.querySelector('[data-mute]');
-    if (playBtn) playBtn.addEventListener('click', function () {
-      if (video.paused) { video.play(); playBtn.textContent = '❚❚'; }
-      else { video.pause(); playBtn.textContent = '▶'; }
-    });
-    if (muteBtn) muteBtn.addEventListener('click', function () {
-      video.muted = !video.muted;
-      muteBtn.textContent = video.muted ? '🔇' : '🔊';
-    });
+    if (playBtn) {
+      var updatePlayState = function () {
+        playBtn.dataset.state = video.paused ? 'paused' : 'playing';
+        playBtn.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+      };
+      video.addEventListener('play', updatePlayState);
+      video.addEventListener('pause', updatePlayState);
+      updatePlayState();
+      playBtn.addEventListener('click', function () {
+        if (video.paused) {
+          var playback = video.play();
+          if (playback && typeof playback.catch === 'function') playback.catch(function () {});
+        } else {
+          video.pause();
+        }
+      });
+    }
+    if (muteBtn) {
+      var updateMuteState = function () {
+        muteBtn.dataset.muted = video.muted ? 'true' : 'false';
+        muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+        muteBtn.setAttribute('aria-pressed', video.muted ? 'true' : 'false');
+      };
+      muteBtn.addEventListener('click', function () {
+        video.muted = !video.muted;
+        updateMuteState();
+      });
+      updateMuteState();
+    }
   });
 
   /* Doctor directory live search/filter */

@@ -9,11 +9,12 @@ function e(?string $value): string
 
 function url(string $path = ''): string
 {
-    $base = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
-    if (strpos($path, '/admin') === 0) {
-        $base = rtrim(dirname($base), '/\\');
+    $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/'));
+    $base = rtrim($scriptDir, '/');
+    if (preg_match('#/admin$#', $base)) {
+        $base = substr($base, 0, -6);
     }
-    return ($base === '' ? '' : $base) . '/' . ltrim($path, '/');
+    return $base . '/' . ltrim($path, '/');
 }
 
 function asset(string $path): string
@@ -128,7 +129,13 @@ function page_seo(string $route, string $title, string $description): array
 /* ---------------- Content helpers ---------------- */
 function image_or_placeholder(?string $path, string $class = '', string $alt = '', bool $lazy = true): string
 {
-    $src = $path ? uploads_url($path) : asset('img/placeholder.svg');
+    $path = trim((string)$path);
+    if ($path === '') {
+        $classAttr = $class !== '' ? ' class="' . e('image-placeholder ' . $class) . '"' : ' class="image-placeholder"';
+        $label = $alt !== '' ? $alt . '. Photo not yet provided.' : 'Photo not yet provided.';
+        return '<div' . $classAttr . ' role="img" aria-label="' . e($label) . '"><span aria-hidden="true">Photo not yet provided</span></div>';
+    }
+    $src = str_starts_with($path, 'assets/') ? url($path) : uploads_url($path);
     $loading = $lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"';
     return '<img src="' . e($src) . '" alt="' . e($alt) . '"' . ($class ? ' class="' . e($class) . '"' : '') . $loading . '>';
 }

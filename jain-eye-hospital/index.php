@@ -4,6 +4,20 @@
  */
 declare(strict_types=1);
 
+// Let PHP's built-in preview server serve real static files directly.
+if (PHP_SAPI === 'cli-server') {
+    $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+    $rootPath = realpath(__DIR__);
+    $requestedFile = realpath(__DIR__ . $requestPath);
+    if ($requestPath !== '/' && $rootPath && $requestedFile
+        && str_starts_with($requestedFile, $rootPath . DIRECTORY_SEPARATOR)) {
+        if (is_file($requestedFile)
+            || (is_dir($requestedFile) && is_file($requestedFile . DIRECTORY_SEPARATOR . 'index.php'))) {
+            return false;
+        }
+    }
+}
+
 require __DIR__ . '/config/config.php';
 
 session_name(SESSION_NAME);
@@ -32,6 +46,12 @@ if ($redirect) {
     exit;
 }
 
+// Apache rewrites this URL in production; make the equivalent work in PHP's preview server too.
+if ($path === '/sitemap.xml') {
+    require __DIR__ . '/sitemap.php';
+    exit;
+}
+
 // Static routes
 $routes = [
     '/'                      => 'home.php',
@@ -56,8 +76,12 @@ $routes = [
     '/media-news'            => 'media-news.php',
     '/contact-us'            => 'contact.php',
     '/book-appointment'      => 'appointment.php',
+    '/thank-you'             => 'thank-you.php',
     '/sitemap'               => 'sitemap-page.php',
     '/privacy-policy'        => 'privacy.php',
+    '/terms-and-conditions'  => 'terms.php',
+    '/medical-disclaimer'    => 'medical-disclaimer.php',
+    '/accessibility'         => 'accessibility.php',
 ];
 
 // Dynamic routes

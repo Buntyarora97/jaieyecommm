@@ -19,6 +19,7 @@ require __DIR__ . '/../includes/header.php';
 <section class="hero">
   <div class="container">
     <div class="hero__content">
+      <p class="hero__place"><?= e(SITE_AREA) ?><span>Eye care, with a human touch</span></p>
       <span class="eyebrow"><?= e(setting('hero_eyebrow')) ?></span>
       <h1><?= e(setting('hero_title')) ?></h1>
       <p class="hero__secondary"><?= e(setting('hero_secondary')) ?></p>
@@ -31,7 +32,7 @@ require __DIR__ . '/../includes/header.php';
     </div>
     <div class="hero__media reveal">
       <div class="hero__frame">
-        <img src="<?= asset('img/placeholder.svg') ?>" alt="<?= e(SITE_NAME) ?> - advanced eye care" fetchpriority="high">
+        <img src="<?= asset('img/hospital-pic-15.webp') ?>" alt="A patient speaking with a Jain Eye Hospital clinician during a consultation" fetchpriority="high">
       </div>
       <span class="hero__arc" aria-hidden="true"></span>
       <div class="hero__card">
@@ -72,8 +73,8 @@ require __DIR__ . '/../includes/header.php';
 <section class="section section--pale">
   <div class="container split">
     <div class="media-stack reveal">
-      <div class="media-stack__main"><img src="<?= asset('img/placeholder.svg') ?>" alt="Inside <?= e(SITE_NAME) ?>" loading="lazy" decoding="async"></div>
-      <div class="media-stack__small"><img src="<?= asset('img/placeholder.svg') ?>" alt="Eye care consultation" loading="lazy" decoding="async"></div>
+      <div class="media-stack__main"><img src="<?= asset('img/hospital-pic-8.webp') ?>" alt="Reception and waiting area at Jain Eye Hospital" loading="lazy" decoding="async"></div>
+      <div class="media-stack__small"><img src="<?= asset('img/hospital-pic-15.webp') ?>" alt="A clinician consulting with a patient" loading="lazy" decoding="async"></div>
     </div>
     <div class="reveal">
       <span class="eyebrow">About the Hospital</span>
@@ -132,7 +133,7 @@ require __DIR__ . '/../includes/header.php';
       <h2>Care That Puts Your Vision First</h2>
       <p style="color:#BFD9CC;margin-top:16px">Every treatment plan begins with a detailed evaluation and an honest conversation about your options.</p>
       <div class="media-stack" style="margin-top:34px">
-        <div class="media-stack__main" style="aspect-ratio:4/2.9"><img src="<?= asset('img/placeholder.svg') ?>" alt="Eye examination in progress" loading="lazy" decoding="async"></div>
+        <div class="media-stack__main" style="aspect-ratio:4/2.9"><img src="<?= asset('img/ophthalmic-microsurgery-in-a-clinical-theatre.webp') ?>" alt="Ophthalmic care in a clinical theatre" loading="lazy" decoding="async"></div>
       </div>
     </div>
     <div class="why-grid reveal">
@@ -167,7 +168,20 @@ require __DIR__ . '/../includes/header.php';
     <div class="cards">
       <?php foreach ($doctors as $doc): ?>
       <article class="doctor-card reveal">
-        <div class="doctor-card__photo"><?= image_or_placeholder($doc['photo'], '', 'Portrait of ' . $doc['name']) ?></div>
+        <?php
+          $doctorPhoto = $doc['photo'] ?? '';
+          if (!$doctorPhoto && stripos($doc['name'], 'Rajat Jain') !== false) $doctorPhoto = 'rajat-jain-3.webp';
+          if (!$doctorPhoto && stripos($doc['name'], 'Neha Mohan') !== false) $doctorPhoto = 'neha-mohan.webp';
+        ?>
+        <div class="doctor-card__photo">
+          <?php if ($doc['photo']): ?>
+            <?= image_or_placeholder($doctorPhoto, '', 'Portrait of ' . $doc['name']) ?>
+          <?php elseif ($doctorPhoto): ?>
+            <img src="<?= asset('img/' . $doctorPhoto) ?>" alt="Portrait of <?= e($doc['name']) ?>" loading="lazy" decoding="async">
+          <?php else: ?>
+            <?= image_or_placeholder('', '', 'Portrait of ' . $doc['name']) ?>
+          <?php endif; ?>
+        </div>
         <div class="doctor-card__body">
           <h3><?= e($doc['name']) ?></h3>
           <?php if ($doc['designation']): ?><p class="doctor-card__role"><?= e($doc['designation']) ?></p><?php endif; ?>
@@ -242,7 +256,6 @@ require __DIR__ . '/../includes/header.php';
 </section>
 
 <!-- SECTION 9: PATIENT EXPERIENCES & MEDIA -->
-<?php if ($testimonials || $posts): ?>
 <section class="section section--pale">
   <div class="container">
     <?php if ($testimonials): ?>
@@ -282,9 +295,22 @@ require __DIR__ . '/../includes/header.php';
       <?php endforeach; ?>
     </div>
     <?php endif; ?>
+    <?php if (!$testimonials && !$posts): ?>
+    <div class="patient-care-panel reveal">
+      <div>
+        <span class="eyebrow">Patient Care</span>
+        <h3>Clear information, centred on your visit</h3>
+        <p>Learn what to expect before a consultation, read practical eye-health guidance and contact our team if you need help planning your visit.</p>
+      </div>
+      <div class="patient-care-panel__links">
+        <a class="link-arrow" href="<?= url('patient-journey') ?>">Plan your visit</a>
+        <a class="link-arrow" href="<?= url('patient-education') ?>">Patient education</a>
+        <a class="link-arrow" href="<?= url('contact-us') ?>">Ask our team</a>
+      </div>
+    </div>
+    <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
 
 <!-- SECTION 10: REELS EXPERIENCE -->
 <section class="section">
@@ -304,12 +330,17 @@ require __DIR__ . '/../includes/header.php';
         <?php if ($reel && $reel['video_path']): ?>
         <video src="<?= uploads_url($reel['video_path']) ?>" <?= $reel['thumbnail'] ? 'poster="' . e(uploads_url($reel['thumbnail'])) . '"' : '' ?> preload="none" muted playsinline loop></video>
         <div class="phone__controls">
-          <button class="phone__btn" data-play aria-label="Play or pause video">▶</button>
-          <button class="phone__btn" data-mute aria-label="Mute or unmute video">🔇</button>
+          <button class="phone__btn" data-play aria-label="Play or pause video"><span class="phone__icon phone__icon--play" aria-hidden="true"></span></button>
+          <button class="phone__btn" data-mute aria-label="Mute or unmute video"><span class="phone__icon phone__icon--sound" aria-hidden="true"></span></button>
         </div>
         <?php else: ?>
-        <div class="phone__empty">
-          <p>Educational reels from our doctors will appear here.<br><br><a href="<?= url('reels') ?>" style="color:var(--orange-warm)">Visit Videos &amp; Reels &rarr;</a></p>
+        <div class="phone__empty phone__empty--poster">
+          <img src="<?= asset('img/hospital-pic-15.webp') ?>" alt="A clinician speaking with a patient at Jain Eye Hospital" loading="lazy" decoding="async">
+          <div class="phone__empty-caption">
+            <span class="eyebrow">From the Hospital</span>
+            <p>Patient education videos will appear here when available.</p>
+            <a href="<?= url('reels') ?>">Visit Videos &amp; Reels &rarr;</a>
+          </div>
         </div>
         <?php endif; ?>
       </div>

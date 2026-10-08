@@ -83,9 +83,8 @@ table.data tr:hover td{background:#FAFCFA}
 .login-card h1{font-family:var(--head);font-size:1.4rem;color:var(--green-900);margin:14px 0 4px}
 .login-card p{color:var(--grey);font-size:.86rem;margin-bottom:26px}
 .login-card .field{margin-bottom:16px}
-.login-logo{width:52px;height:52px;border-radius:14px;background:var(--off);display:flex;
-  align-items:center;justify-content:center}
-.login-logo svg{width:30px;height:30px;fill:var(--green-800)}
+.login-logo{width:100%;min-height:60px;display:flex;align-items:center;justify-content:flex-start}
+.login-logo img{width:min(280px,100%);height:auto;object-fit:contain}
 .pager{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap}
 .pager a,.pager span{min-width:36px;height:36px;padding:0 10px;display:inline-flex;align-items:center;
   justify-content:center;border-radius:9px;border:1px solid var(--border);font-size:.82rem;font-weight:600}

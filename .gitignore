@@ -1,0 +1,10 @@
+# Local PHP and CMS runtime files
+jain-eye-hospital/uploads/*
+!jain-eye-hospital/uploads/.htaccess
+jain-eye-hospital/storage/logs/*
+jain-eye-hospital/*.log
+
+# Local tooling and editor files
+.DS_Store
+.idea/
+.vscode/

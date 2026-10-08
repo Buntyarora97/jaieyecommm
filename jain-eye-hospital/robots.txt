@@ -4,5 +4,8 @@ Disallow: /admin/
 Disallow: /config/
 Disallow: /includes/
 Disallow: /database/
+Disallow: /docs/
+Disallow: /storage/
+Disallow: /thank-you
 
 Sitemap: https://jaineye.com/sitemap.xml

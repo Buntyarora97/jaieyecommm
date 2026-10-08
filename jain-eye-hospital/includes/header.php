@@ -21,28 +21,27 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
 <meta property="og:image" content="<?= e($seo['og_image']) ?>">
 <?php endif; ?>
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/svg+xml" href="<?= asset('img/logo.svg') ?>">
+<link rel="icon" type="image/webp" href="<?= asset('img/logo-official.webp') ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Hospital",
-  "name": "<?= e(SITE_NAME) ?>",
-  "url": "<?= e(SITE_URL) ?>",
-  "telephone": "+91-11-4378-4377",
-  "email": "<?= e(SITE_EMAIL) ?>",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "AG-152, near Richi Rich Banquet, Block AG, Poorbi Shalimar Bagh",
-    "addressLocality": "Shalimar Bagh, Delhi",
-    "postalCode": "110088",
-    "addressCountry": "IN"
-  }
-}
-</script>
+<script type="application/ld+json"><?= json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => ['Hospital', 'MedicalOrganization'],
+    'name' => SITE_NAME,
+    'url' => SITE_URL,
+    'logo' => SITE_URL . '/assets/img/logo-official.webp',
+    'telephone' => [SITE_PHONE_1, SITE_PHONE_2, SITE_PHONE_3],
+    'email' => SITE_EMAIL,
+    'address' => [
+        '@type' => 'PostalAddress',
+        'streetAddress' => SITE_ADDRESS,
+        'addressLocality' => 'Shalimar Bagh, Delhi',
+        'postalCode' => '110088',
+        'addressCountry' => 'IN',
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?></script>
 <?php if (!empty($extra_head)) echo $extra_head; ?>
 </head>
 <body>
@@ -69,7 +68,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
   <div class="container">
     <nav class="nav" aria-label="Main navigation">
       <a class="nav__logo" href="<?= url('/') ?>" aria-label="<?= e(SITE_NAME) ?> - Home">
-        <img src="<?= asset('img/logo.svg') ?>" alt="<?= e(SITE_NAME) ?> logo" width="260" height="64">
+        <img src="<?= asset('img/logo-official.webp') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>" width="256" height="64">
       </a>
 
       <ul class="nav__menu">
@@ -134,7 +133,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
   <div class="drawer__overlay" data-close-drawer></div>
   <div class="drawer__panel">
     <div class="drawer__head">
-      <img src="<?= asset('img/logo.svg') ?>" alt="<?= e(SITE_NAME) ?> logo">
+      <img src="<?= asset('img/logo-official.webp') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>">
       <button class="drawer__close" data-close-drawer aria-label="Close menu">&times;</button>
     </div>
     <?php foreach ($nav['top'] as $item):

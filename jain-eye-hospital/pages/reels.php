@@ -18,7 +18,7 @@ require __DIR__ . '/../includes/header.php';
       <video src="<?= uploads_url($reel['video_path']) ?>" <?= $reel['thumbnail'] ? 'poster="' . e(uploads_url($reel['thumbnail'])) . '"' : '' ?> preload="none" muted playsinline loop></video>
       <div class="reel-card__play"><button class="phone__btn" data-play aria-label="Play <?= e($reel['title']) ?>"><span>▶</span></button></div>
       <?php else: ?>
-      <img src="<?= asset('img/placeholder.svg') ?>" alt="<?= e($reel['title']) ?>" loading="lazy">
+      <img src="<?= asset('img/hospital-pic-15.webp') ?>" alt="<?= e($reel['title'] . ' — a consultation at ' . SITE_NAME) ?>" loading="lazy" decoding="async">
       <?php endif; ?>
       <div class="reel-card__meta">
         <?= e($reel['title']) ?>

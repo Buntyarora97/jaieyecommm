@@ -3,7 +3,6 @@
 $route = '/contact-us';
 $page_seo = page_seo($route, 'Contact Us | ' . SITE_NAME, 'Contact ' . SITE_NAME . ', AG-152 Shalimar Bagh, Delhi 110088. Call ' . SITE_PHONE_1 . '.');
 $errors = [];
-$success = false;
 $old = ['name'=>'','email'=>'','phone'=>'','subject'=>'','message'=>''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,19 +14,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     foreach ($old as $k => $v) { $old[$k] = trim((string)($_POST[$k] ?? '')); }
 
-    if ($old['name'] === '') { $errors[] = 'Please enter your name.'; }
-    if ($old['email'] === '' || !filter_var($old['email'], FILTER_VALIDATE_EMAIL)) { $errors[] = 'Please enter a valid email address.'; }
-    if ($old['phone'] !== '' && !preg_match('/^[0-9+\-\s]{8,15}$/', $old['phone'])) { $errors[] = 'Please enter a valid phone number.'; }
-    if (mb_strlen($old['message']) < 10) { $errors[] = 'Please write a short message (at least 10 characters).'; }
+    if ($old['name'] === '' || mb_strlen($old['name']) > 160) { $errors[] = 'Please enter your name (up to 160 characters).'; }
+    if ($old['email'] === '' || !filter_var($old['email'], FILTER_VALIDATE_EMAIL) || mb_strlen($old['email']) > 160) { $errors[] = 'Please enter a valid email address.'; }
+    if ($old['phone'] !== '' && (!preg_match('/^[0-9+\-\s]{8,15}$/', $old['phone']) || mb_strlen($old['phone']) > 30)) { $errors[] = 'Please enter a valid phone number.'; }
+    if (mb_strlen($old['subject']) > 200) { $errors[] = 'Please keep the subject under 200 characters.'; }
+    if (mb_strlen($old['message']) < 10 || mb_strlen($old['message']) > 5000) { $errors[] = 'Please write a message between 10 and 5,000 characters.'; }
+    if (empty($_POST['consent'])) { $errors[] = 'Please confirm your consent to be contacted.'; }
 
     if (!$errors) {
-        db_exec("INSERT INTO contact_enquiries (name, email, phone, subject, message) VALUES (?,?,?,?,?)",
+        db_exec("INSERT INTO contact_enquiries (name, email, phone, subject, message, consent) VALUES (?,?,?,?,?,1)",
             [$old['name'], $old['email'], $old['phone'] ?: null, $old['subject'] ?: 'Website Enquiry', $old['message']]);
         notify_staff('New Website Enquiry - ' . ($old['subject'] ?: 'General'),
             "Name: {$old['name']}\nEmail: {$old['email']}\nPhone: {$old['phone']}\n\n{$old['message']}\n");
         $_SESSION['contact_last'] = $now;
-        $success = true;
-        $old = array_map(fn() => '', $old);
+        $_SESSION['form_success'] = ['kind' => 'contact'];
+        redirect('thank-you', 303);
     }
 }
 require __DIR__ . '/../includes/header.php';
@@ -53,11 +54,8 @@ require __DIR__ . '/../includes/header.php';
       </div>
       <div class="map-embed"><iframe src="<?= e(SITE_MAPS_EMBED) ?>" loading="lazy" title="Map - <?= e(SITE_NAME) ?>" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
-    <form class="form-card" method="post" action="<?= url('contact-us') ?>" novalidate>
+    <form class="form-card" method="post" action="<?= url('contact-us') ?>">
       <h2 style="margin-bottom:20px">Send Us a Message</h2>
-      <?php if ($success): ?>
-      <div class="alert alert--success">Thank you! Your message has been received. Our team will get back to you shortly.</div>
-      <?php endif; ?>
       <?php if ($errors): ?>
       <div class="alert alert--error"><ul style="margin-left:18px;list-style:disc"><?php foreach ($errors as $err): ?><li><?= e($err) ?></li><?php endforeach; ?></ul></div>
       <?php endif; ?>
@@ -73,7 +71,11 @@ require __DIR__ . '/../includes/header.php';
         <div class="field"><label for="csubject">Subject</label>
           <input id="csubject" name="subject" type="text" maxlength="160" value="<?= e($old['subject']) ?>"></div>
         <div class="field full"><label for="cmessage">Message <span class="req">*</span></label>
-          <textarea id="cmessage" name="message" required maxlength="2000"><?= e($old['message']) ?></textarea></div>
+          <textarea id="cmessage" name="message" required minlength="10" maxlength="5000"><?= e($old['message']) ?></textarea></div>
+        <div class="field field--consent full">
+          <input type="checkbox" id="contact-consent" name="consent" value="1" required>
+          <label for="contact-consent">I consent to being contacted by <?= e(SITE_NAME) ?> about this enquiry. Please see the <a href="<?= url('privacy-policy') ?>">Privacy Policy</a>. <span class="req">*</span></label>
+        </div>
         <div class="full"><button class="btn btn--primary" type="submit">Send Message</button></div>
       </div>
     </form>

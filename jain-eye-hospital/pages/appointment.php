@@ -5,8 +5,8 @@ $page_seo = page_seo($route, 'Book an Appointment | ' . SITE_NAME, 'Request an a
 $doctors = db_all("SELECT id, name FROM doctors WHERE status='published' ORDER BY position");
 $services = db_all("SELECT id, name FROM specialities WHERE status='published' ORDER BY position");
 $errors = [];
-$success = null;
 $old = ['name'=>'','mobile'=>'','email'=>'','doctor_id'=>'','speciality_id'=>'','preferred_date'=>'','preferred_time'=>'','message'=>''];
+$timeWindows = ['Morning', 'Afternoon', 'Evening', 'Flexible'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_check();
@@ -20,10 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     foreach ($old as $k => $v) { $old[$k] = trim((string)($_POST[$k] ?? '')); }
 
-    if ($old['name'] === '' || mb_strlen($old['name']) < 2) { $errors[] = 'Please enter your full name.'; }
+    if ($old['name'] === '' || mb_strlen($old['name']) < 2 || mb_strlen($old['name']) > 160) { $errors[] = 'Please enter a valid full name.'; }
     if (!preg_match('/^[0-9+\-\s]{8,15}$/', $old['mobile'])) { $errors[] = 'Please enter a valid mobile number.'; }
-    if ($old['email'] !== '' && !filter_var($old['email'], FILTER_VALIDATE_EMAIL)) { $errors[] = 'Please enter a valid email address.'; }
-    if ($old['preferred_date'] !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $old['preferred_date'])) { $errors[] = 'Please choose a valid date.'; }
+    if ($old['email'] !== '' && (!filter_var($old['email'], FILTER_VALIDATE_EMAIL) || mb_strlen($old['email']) > 160)) { $errors[] = 'Please enter a valid email address.'; }
+    if ($old['preferred_date'] !== '') {
+        $preferredDate = DateTimeImmutable::createFromFormat('!Y-m-d', $old['preferred_date']);
+        if (!$preferredDate || $preferredDate->format('Y-m-d') !== $old['preferred_date'] || $preferredDate < new DateTimeImmutable('today')) {
+            $errors[] = 'Please choose a valid date that is today or later.';
+        }
+    }
+    if ($old['preferred_time'] !== '' && !in_array($old['preferred_time'], $timeWindows, true)) { $errors[] = 'Please choose a valid time window.'; }
+    if ($old['doctor_id'] !== '' && !in_array((int)$old['doctor_id'], array_column($doctors, 'id'), true)) { $errors[] = 'Please choose a listed doctor or select no preference.'; }
+    if ($old['speciality_id'] !== '' && !in_array((int)$old['speciality_id'], array_column($services, 'id'), true)) { $errors[] = 'Please choose a listed speciality or select no preference.'; }
+    if (mb_strlen($old['message']) > 1000) { $errors[] = 'Please keep your message under 1,000 characters.'; }
     if (empty($_POST['consent'])) { $errors[] = 'Please confirm your consent to be contacted.'; }
 
     if (!$errors) {
@@ -46,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "Reference: $reference\nName: {$old['name']}\nMobile: {$old['mobile']}\nEmail: {$old['email']}\nDate: {$old['preferred_date']} {$old['preferred_time']}\n");
 
         $_SESSION['appt_last'] = $now;
-        $success = $reference;
-        $old = array_map(fn() => '', $old);
+        $_SESSION['form_success'] = ['kind' => 'appointment', 'reference' => $reference];
+        redirect('thank-you', 303);
     }
 }
 require __DIR__ . '/../includes/header.php';
@@ -58,18 +67,8 @@ require __DIR__ . '/../includes/header.php';
   <p>Request a consultation — our team will call to confirm your slot.</p>
 </div></section>
 <section class="section section--pale"><div class="container">
-  <?php if ($success): ?>
-  <div class="form-card" style="max-width:680px;margin:0 auto;text-align:center">
-    <div class="card__icon" style="margin:0 auto 18px"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.5-4-4 1.4-1.4 2.6 2.6 6-6 1.4 1.4-7.4 7.4z"/></svg></div>
-    <h2>Request Received</h2>
-    <p style="color:var(--grey);margin:14px 0 6px">Thank you! Your appointment request has been submitted.</p>
-    <p style="font-family:var(--font-head);font-weight:800;color:var(--green-800);font-size:1.3rem">Reference: <?= e($success) ?></p>
-    <p style="color:var(--grey);margin:14px 0 24px;font-size:.9rem">Please note: this is a <strong>request</strong>. Our team will contact you on your mobile number to confirm the final appointment time.</p>
-    <a class="btn btn--dark" href="<?= url('/') ?>">Back to Home</a>
-  </div>
-  <?php else: ?>
   <div class="location-grid" style="align-items:start">
-    <form class="form-card" method="post" action="<?= url('book-appointment') ?>" novalidate>
+    <form class="form-card" method="post" action="<?= url('book-appointment') ?>">
       <h2 style="margin-bottom:20px">Request an Appointment</h2>
       <?php if ($errors): ?>
       <div class="alert alert--error"><strong>Please correct the following:</strong><ul style="margin:8px 0 0 18px;list-style:disc"><?php foreach ($errors as $err): ?><li><?= e($err) ?></li><?php endforeach; ?></ul></div>
@@ -102,7 +101,7 @@ require __DIR__ . '/../includes/header.php';
         <div class="field"><label for="preferred_time">Preferred Time Window</label>
           <select id="preferred_time" name="preferred_time">
             <option value="">Any time</option>
-            <?php foreach (['Morning (10 AM - 12 PM)','Midday (12 PM - 2 PM)','Afternoon (2 PM - 4 PM)','Evening (4 PM - 7 PM)'] as $slot): ?>
+            <?php foreach ($timeWindows as $slot): ?>
             <option <?= $old['preferred_time'] === $slot ? 'selected' : '' ?>><?= e($slot) ?></option>
             <?php endforeach; ?>
           </select></div>
@@ -110,7 +109,7 @@ require __DIR__ . '/../includes/header.php';
           <textarea id="message" name="message" maxlength="1000" placeholder="Briefly describe your concern"><?= e($old['message']) ?></textarea></div>
         <div class="field field--consent full">
           <input type="checkbox" id="consent" name="consent" value="1" required>
-          <label for="consent">I consent to being contacted by <?= e(SITE_NAME) ?> regarding this appointment request. <span class="req">*</span></label>
+          <label for="consent">I consent to being contacted by <?= e(SITE_NAME) ?> regarding this appointment request. Please see the <a href="<?= url('privacy-policy') ?>">Privacy Policy</a>. <span class="req">*</span></label>
         </div>
         <div class="full"><button class="btn btn--primary" type="submit">Submit Request</button></div>
       </div>
@@ -125,6 +124,5 @@ require __DIR__ . '/../includes/header.php';
       <p style="font-size:.82rem;color:var(--grey);margin-top:16px">Online submissions are requests, not confirmed appointments. Confirmation is given by our team after reviewing availability.</p>
     </div>
   </div>
-  <?php endif; ?>
 </div></section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

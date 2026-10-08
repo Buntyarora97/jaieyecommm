@@ -9,9 +9,9 @@ A complete, from-scratch rebuild of **jaineye.com** — ultra-premium light-them
 | Frontend | 12-section homepage, 8-section About, doctor directory + profiles, speciality & treatment pages, technology, patient resources, blog, gallery, reels, contact, appointment |
 | Navigation | 8 items, 2 four-column mega menus + dropdowns — fully DB-driven (editable in admin) |
 | Admin CMS | `/admin/` — dashboard, appointments, enquiries, doctors, specialities, treatments, technology, blog, FAQs, testimonials, gallery, reels, media, awards, academics, community, insurance, page sections, navigation, footer, SEO, redirects, media library, users, roles, settings, audit logs |
-| Database | `database/schema.sql` — 36 tables, indexes, FKs, utf8mb4, seeded with navigation, specialities, treatments, doctors, FAQs & SEO defaults |
+| Database | `database/schema.sql` — 40 tables, indexes, foreign keys and utf8mb4; seeded with real clinic images, navigation, specialities, treatments, doctors, FAQs, technology and gallery content |
 | SEO | Unique meta per route, canonical, OG tags, Hospital/Physician/BlogPosting schema, XML sitemap (`/sitemap.xml`), HTML sitemap, robots.txt, 301 redirect manager, 404 handling |
-| Security | PDO prepared statements, bcrypt passwords, CSRF on every form, login rate-limiting + lockout, role-based permissions, upload validation (MIME + size), honeypot spam traps, secure session cookies, security & audit logs |
+| Security | PDO prepared statements, PHP password hashing, CSRF-protected forms, session and IP login rate-limits, role-based permissions, upload validation, honeypot spam traps, secure session cookies, security and audit logs |
 
 ## Quick Start (5 minutes)
 
@@ -19,7 +19,8 @@ A complete, from-scratch rebuild of **jaineye.com** — ultra-premium light-them
 2. **phpMyAdmin → Import**: select the database, import `database/schema.sql`.
 3. **Upload files** to `public_html/` (File Manager → Upload the ZIP → Extract).
 4. **Edit `config/config.php`**: set `DB_NAME`, `DB_USER`, `DB_PASS`.
-5. **Login**: visit `https://yourdomain.com/admin/` → `admin@jaineye.com` / `Admin@123` — **change this password immediately** (Admin → Users → Edit).
+5. Visit `https://yourdomain.com/admin/setup.php` and create the first administrator with a unique password (14–72 characters). Setup disables itself once an administrator exists.
+6. Sign in at `https://yourdomain.com/admin/`.
 
 Full instructions: see `docs/01-deployment-guide.md`.
 
@@ -47,6 +48,8 @@ Full instructions: see `docs/01-deployment-guide.md`.
 
 ## Notes
 
-- Doctor profiles, testimonials, awards and photos are intentionally **not fabricated** — add verified content through the admin panel.
-- Replace `assets/img/placeholder.svg` and upload real hospital photos via **Admin → Media Library** and each module's image fields.
-- To enable email notifications, set `MAIL_ENABLED` to `true` in `config/config.php` after confirming mail works on your hosting.
+- The supplied hospital logo is used unchanged; the supplied hospital, doctor and clinical photographs are optimized as WebP, and verified photos appear in the site gallery.
+- Patient testimonials, awards, credentials and device/model claims are not invented. Add or publish those only after hospital verification through the admin panel.
+- One doctor portrait was not included with the supplied assets. Add an approved portrait through the doctor manager when available.
+- Email notifications remain off by default. Enable `MAIL_ENABLED` only after configuring and testing mail delivery on your hosting.
+- `bash scripts/dev-server.sh` starts a local PHP preview with an isolated MariaDB database using the supplied schema.

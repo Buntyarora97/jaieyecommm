@@ -55,7 +55,7 @@ function admin_header(string $title): void
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
 <title><?= e($title) ?> | Admin - <?= e(SITE_NAME) ?></title>
-<link rel="icon" type="image/svg+xml" href="<?= asset('img/logo.svg') ?>">
+<link rel="icon" type="image/webp" href="<?= asset('img/logo-official.webp') ?>">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
 </head>
