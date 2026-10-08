@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="64" viewBox="0 0 260 64" role="img" aria-label="Jain Eye Hospital and Laser Centre">
+  <g>
+    <path d="M32 6C19 6 8 17 6 32c2 15 13 26 26 26s26-11 26-26C58 17 45 6 32 6z" fill="#EDF6F0"/>
+    <path d="M32 10c-9.5 0-17.5 8.4-19.4 22C14.5 45.6 22.5 54 32 54s19.4-8.4 19.4-22C51.4 18.4 41.5 10 32 10z" fill="#003D2B"/>
+    <circle cx="32" cy="32" r="11.5" fill="#F47713"/>
+    <circle cx="32" cy="32" r="5.5" fill="#002E22"/>
+    <circle cx="28.5" cy="27.5" r="2.4" fill="#fff"/>
+    <path d="M12 22c3-6 10-11 20-11" stroke="#F47713" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="72" y="27" font-family="Manrope, Arial, sans-serif" font-size="19" font-weight="800" fill="#002E22">JAIN EYE HOSPITAL</text>
+  <text x="72" y="45" font-family="Manrope, Arial, sans-serif" font-size="11.5" font-weight="600" letter-spacing="2.6" fill="#116348">&amp; LASER CENTRE</text>
+  <rect x="72" y="51" width="120" height="2.4" rx="1.2" fill="#F47713"/>
+</svg>

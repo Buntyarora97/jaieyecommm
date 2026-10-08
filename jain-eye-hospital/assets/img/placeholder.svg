@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EDF6F0"/><stop offset="1" stop-color="#D8EBE0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <circle cx="620" cy="120" r="180" fill="none" stroke="#116348" stroke-opacity=".15" stroke-width="2"/>
+  <circle cx="660" cy="80" r="120" fill="none" stroke="#F47713" stroke-opacity=".2" stroke-width="2"/>
+  <g transform="translate(400 300)">
+    <path d="M0-92C-58-92-104-46-116 0c12 46 58 92 116 92s116-46 116-92C104-46 58-92 0-92z" fill="#003D2B"/>
+    <circle r="44" fill="#F47713"/>
+    <circle r="20" fill="#002E22"/>
+    <circle cx="-15" cy="-16" r="8" fill="#fff"/>
+  </g>
+  <text x="400" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#116348" font-weight="700">Jain Eye Hospital &amp; Laser Centre</text>
+</svg>

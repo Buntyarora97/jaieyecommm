@@ -1,0 +1,1922 @@
+# FINAL COMPLETE WEBSITE DEVELOPMENT MASTER PROMPT
+# JAIN EYE HOSPITAL & LASER CENTRE
+## PREMIUM PHP + MYSQL HOSPITAL WEBSITE WITH COMPLETE ADMIN PANEL
+
+You are an expert full-stack PHP developer, senior UI/UX designer, healthcare website specialist, technical SEO architect, database engineer, website security specialist and conversion optimisation expert.
+
+I want you to **DESIGN, DEVELOP AND DELIVER A COMPLETE, FULLY FUNCTIONAL, PRODUCTION-READY WEBSITE** for my hospital.
+
+Do not give me only a plan, mockup, wireframe, explanation or incomplete code.
+
+I need a real, working, premium, multi-page hospital website with a complete admin dashboard, MySQL database, working enquiry forms, SEO optimisation and deployment-ready files.
+
+The website must be exceptionally beautiful, modern, trustworthy, premium and professional.
+
+The design should make visitors feel they are viewing the website of a highly established, modern, advanced super-speciality eye hospital.
+
+Use premium healthcare website design standards, beautiful typography, sophisticated layouts, smooth animations, authentic photography, exceptional spacing and polished interactions.
+
+The entire website must be compatible with standard cPanel shared hosting.
+
+---
+
+# 1. OFFICIAL HOSPITAL INFORMATION
+
+**Business Name:** Jain Eye Hospital & Laser Centre
+
+**Domain:** https://jaineye.com/
+
+**Official Tagline:** ADVANCED SUPER-SPECIALITY EYE CARE
+
+**Full Address:**
+
+AG-152, near Richi Rich Banquet, Block AG, Poorbi Shalimar Bagh, Shalimar Bagh, Delhi, 110088, India.
+
+**Contact Numbers:**
+
+- 011 4378 4377
+- 09643536373
+- 9643 900 900
+
+**Primary Email:**
+
+info@jaineye.com
+
+**Additional Email Pending Verification:**
+
+jaineyehospital@gmail.com
+
+Do not publish the additional Gmail address unless the hospital confirms it.
+
+**Instagram:**
+
+https://www.instagram.com/jaineyehospitalandlaser/
+
+**Facebook:**
+
+https://www.facebook.com/Jaineyehospitalshalimarbagh
+
+**YouTube:**
+
+https://www.youtube.com/@JAINEYEHOSPITALLASERCENTRE
+
+**Google Maps:**
+
+Use the supplied hospital address for Google Maps directions. Obtain the verified Google Maps embed link before production launch.
+
+**Important:**
+
+All hospital details must remain consistent across the header, footer, contact page, appointment page, schema markup and local SEO sections.
+
+Do not invent telephone numbers, email addresses, opening hours, ratings or business information.
+
+---
+
+# 2. MANDATORY TECHNOLOGY STACK
+
+The website must use:
+
+- Core PHP 8.2+
+- MySQL or compatible MariaDB
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- AJAX / Fetch API
+- PDO with prepared statements
+- Bootstrap 5 if required
+- Swiper.js
+- GSAP for lightweight animations
+- Locally hosted SVG icons
+- Apache .htaccess
+- JSON-LD structured data
+- PHPMailer for SMTP integration
+- WebP and optimised image formats
+
+Do not use Laravel, React, Next.js, Node.js backend, Python, MongoDB or anything requiring a VPS.
+
+No mandatory terminal or SSH access should be required on the production server.
+
+The final project must run on standard cPanel shared hosting.
+
+---
+
+# 3. COMPLETE BRAND DESIGN SYSTEM
+
+Use the uploaded official hospital logo as the primary branding reference.
+
+The logo must remain exactly as supplied.
+
+Do not redesign, recolour, stretch or recreate the logo.
+
+## Brand Colours
+
+Primary Deep Green: #003D2B
+
+Dark Green: #002E22
+
+Secondary Green: #116348
+
+Primary Orange: #F47713
+
+Warm Orange: #FF982D
+
+Soft White: #F8FAF7
+
+Pure White: #FFFFFF
+
+Soft Green: #EDF6F0
+
+Heading Colour: #202B29
+
+Body Text: #65716C
+
+Border Colour: #E2EAE5
+
+Use white and very light backgrounds throughout most of the website.
+
+Use dark green for important headings, orange for controlled highlights, and soft green for selected cards and backgrounds.
+
+The website should feel premium and spacious rather than crowded.
+
+## Typography
+
+Use:
+
+- Manrope or Plus Jakarta Sans for headings.
+- Inter for body text.
+- Noto Sans Devanagari for Hindi content.
+
+Use responsive font sizes.
+
+Desktop hero H1: approximately 56–68px.
+
+Mobile hero H1: approximately 34–40px.
+
+Section headings: approximately 34–46px.
+
+Body text: 16–18px.
+
+## Design Elements
+
+Use:
+
+- Beautiful asymmetric layouts.
+- Rounded image containers.
+- Premium white cards.
+- Subtle shadows.
+- Sophisticated green gradients.
+- Orange accent lines.
+- Large professional photography.
+- Floating information cards.
+- Smooth hover effects.
+- Subtle scroll animations.
+- Attractive typography.
+- Clean icons.
+- Professional section dividers.
+- Excellent mobile layouts.
+
+Avoid generic template designs.
+
+Avoid excessive gradients, oversized icons, heavy animation and unnecessary clutter.
+
+---
+
+# 4. COMPLETE WEBSITE PAGES
+
+Develop the following pages:
+
+1. Homepage
+2. About Us
+3. Our Doctors
+4. Individual Doctor Profile
+5. Specialities
+6. Individual Speciality Page
+7. Treatments
+8. Individual Treatment Page
+9. Technology
+10. Patient Journey
+11. Patient Safety
+12. Insurance & Payment
+13. International Patients
+14. Patient Education
+15. Blog
+16. Blog Detail
+17. Gallery
+18. Videos & Reels
+19. Media & News
+20. Awards & Recognition
+21. Academics
+22. Community
+23. FAQs
+24. Book Appointment
+25. Contact Us
+26. Privacy Policy
+27. Terms & Conditions
+28. Medical Disclaimer
+29. Accessibility Statement
+30. HTML Sitemap
+31. Thank You Page
+32. Custom 404 Page
+
+All pages must have beautiful, responsive layouts.
+
+All important page content must be editable through the admin panel.
+
+---
+
+# 5. GLOBAL WEBSITE HEADER
+
+Create a premium sticky header.
+
+## Top Information Bar
+
+Left:
+
+Hospital location: Shalimar Bagh, Delhi.
+
+Right:
+
+Telephone, email and social media icons.
+
+## Main Header
+
+Left:
+
+Official hospital logo.
+
+Centre:
+
+Navigation links.
+
+Right:
+
+Book Appointment button.
+
+Suggested navigation:
+
+Home
+About Us
+Our Doctors
+Specialities
+Technology
+Patient Resources
+Blog
+Contact
+
+Create an attractive mega menu for Specialities.
+
+Use a white header with a subtle shadow.
+
+On scroll, reduce the header height slightly.
+
+Create a fully responsive mobile navigation drawer with accordion submenus.
+
+Add a mobile click-to-call and appointment button.
+
+---
+
+# 6. HOMEPAGE — EXACTLY 12 PREMIUM SECTIONS
+
+The homepage is the most important page.
+
+It must have 12 beautifully designed major sections.
+
+Each section must feel different while maintaining a consistent visual identity.
+
+## SECTION 1 — PREMIUM HERO SECTION
+
+Create a large, elegant hero section with a light background.
+
+Layout:
+
+LEFT SIDE — 52%
+
+RIGHT SIDE — 48%
+
+### Left Content
+
+Small eyebrow:
+
+ADVANCED SUPER-SPECIALITY EYE CARE
+
+SEO-Optimised H1:
+
+Advanced Eye Hospital in Shalimar Bagh, Delhi
+
+Supporting Heading:
+
+Specialist Eye Care for Every Stage of Life
+
+Hindi Tagline:
+
+आपकी आँखों की सेहत, हमारी प्राथमिकता।
+
+Description:
+
+Experience comprehensive eye care with specialist consultations, personalised treatment planning and a patient-centred approach at Jain Eye Hospital & Laser Centre in Shalimar Bagh, Delhi.
+
+Buttons:
+
+Book an Appointment
+Explore Our Services
+
+Include a small, tasteful location and contact information strip.
+
+### Right Visual
+
+Use an actual high-quality hospital or doctor photograph supplied by the hospital.
+
+Create a premium image container.
+
+Add:
+
+- Subtle green circular design elements.
+- Orange accent.
+- Floating specialist-care card.
+- Soft shadow.
+- Gentle reveal animation.
+
+Do not invent statistics, ratings or awards.
+
+The hero must be visually impressive but fast-loading.
+
+Use actual HTML text for the H1.
+
+Only one H1 per page.
+
+---
+
+## SECTION 2 — SPECIALITY QUICK ACCESS
+
+Heading:
+
+Explore Our Eye Care Specialities
+
+Description:
+
+Find the right specialist care for your vision and eye health.
+
+Create a premium horizontal card layout.
+
+Include verified services such as:
+
+- Cataract Care
+- LASIK & Refractive Surgery
+- Retina & Uvea
+- Cornea Care
+- Squint Treatment
+- Myopia Clinic
+- Comprehensive Eye Examination
+
+Each card should have:
+
+Image or icon
+Service title
+One-line description
+Learn More arrow
+
+Use subtle hover effects.
+
+On mobile, use a swipeable carousel.
+
+---
+
+## SECTION 3 — ABOUT JAIN EYE HOSPITAL
+
+Heading:
+
+Dedicated to Advanced, Patient-Centred Eye Care
+
+Layout:
+
+Left — Hospital image collage.
+
+Right — Content.
+
+Write an informative introduction explaining the hospital's approach to ophthalmology, specialist consultation, appropriate technology and patient care.
+
+Include three or four concise value highlights.
+
+CTA:
+
+Discover Our Hospital
+
+Use authentic hospital images.
+
+Do not fabricate founding years or achievements.
+
+---
+
+## SECTION 4 — COMPLETE SERVICES SLIDER
+
+Heading:
+
+Comprehensive Eye Care Services
+
+Build a premium Swiper.js carousel.
+
+Show:
+
+Three cards on desktop.
+Two on tablet.
+One on mobile.
+
+Each card must include:
+
+- Large service image.
+- Service title.
+- Short informative description.
+- Learn More button.
+- Appointment link.
+
+Services must be dynamically managed from MySQL.
+
+Create professional animations.
+
+Avoid clutter.
+
+---
+
+## SECTION 5 — WHY CHOOSE JAIN EYE
+
+Heading:
+
+Why Choose Jain Eye Hospital & Laser Centre?
+
+Use a premium split layout.
+
+Left:
+
+Large hospital photograph.
+
+Right:
+
+Six elegant feature cards.
+
+Suggested features:
+
+1. Specialist-Led Eye Care
+2. Personalised Treatment Planning
+3. Comprehensive Eye Care Services
+4. Patient-Focused Consultations
+5. Clear Treatment Guidance
+6. Commitment to Clinical Safety
+
+Each card should have a minimal SVG icon and short description.
+
+CTA:
+
+Learn About Our Approach
+
+Only use claims supported by approved hospital information.
+
+---
+
+## SECTION 6 — OUR DOCTORS
+
+Heading:
+
+Meet Our Eye Care Specialists
+
+Create a beautiful doctor profile carousel.
+
+Prepare profiles for the hospital's verified doctors, including:
+
+- Dr Arun Kumar Jain
+- Dr Rajat Jain
+- Dr Neha Mohan
+
+Verify the final spelling, qualifications, designations and specialisations before publishing.
+
+Doctor cards should contain:
+
+Doctor photograph
+Name
+Verified qualification
+Verified specialisation
+Short introduction
+View Profile
+Book Appointment
+
+Use authentic doctor photographs.
+
+Do not crop faces awkwardly.
+
+Use elegant white cards with green accents.
+
+---
+
+## SECTION 7 — TECHNOLOGY & FACILITIES
+
+Heading:
+
+Technology Supporting Advanced Eye Care
+
+Use a large editorial image layout.
+
+Show actual equipment and facilities available at the hospital.
+
+Each technology card should include:
+
+Equipment name
+Actual image
+Clinical purpose
+Related services
+Learn More
+
+All equipment information must be verified.
+
+Add an Explore Our Technology button.
+
+---
+
+## SECTION 8 — PATIENT JOURNEY
+
+Heading:
+
+Your Eye Care Journey, Made Clear
+
+Create a four-step premium timeline.
+
+Step 1:
+
+Request an Appointment
+
+Step 2:
+
+Attend Your Eye Evaluation
+
+Step 3:
+
+Discuss Your Treatment Plan
+
+Step 4:
+
+Receive Follow-Up Guidance
+
+Use connecting lines, elegant numbers and small icons.
+
+Make it responsive.
+
+---
+
+## SECTION 9 — PATIENT EXPERIENCES & MEDIA
+
+Heading:
+
+Patient Experiences & Hospital Updates
+
+Use a split layout.
+
+Left:
+
+Approved patient testimonials.
+
+Right:
+
+Hospital news, media coverage and updates.
+
+Do not invent patient reviews, star ratings or testimonials.
+
+If testimonials are unavailable, show a patient-care information panel until genuine testimonials are approved.
+
+All content must be managed through admin.
+
+---
+
+## SECTION 10 — IPHONE REELS SECTION
+
+THIS SECTION IS MANDATORY.
+
+Create a premium section with a very attractive layout.
+
+LEFT SIDE:
+
+Small heading:
+
+EYE HEALTH, EXPLAINED
+
+Main Heading:
+
+Expert Eye Care Insights, One Reel at a Time
+
+Description:
+
+Explore short, informative videos on eye health, common concerns and treatment options from our clinical team.
+
+Add short topic labels:
+
+Cataract Awareness
+LASIK Suitability
+Retina Health
+Eye Drop Safety
+Children's Eye Health
+
+CTA:
+
+Explore All Videos
+
+RIGHT SIDE:
+
+Create a realistic iPhone-style frame using HTML and CSS.
+
+The phone must contain portrait videos.
+
+Aspect ratio:
+
+9:16
+
+Include:
+
+- Rounded phone frame.
+- Thin black bezel.
+- Camera cutout.
+- Premium metallic border.
+- Soft realistic shadow.
+- Portrait video.
+- Play and pause controls.
+- Mute/unmute.
+- Reel navigation.
+- Thumbnail fallback.
+
+Admin must be able to upload MP4 reels, thumbnails, titles and descriptions.
+
+Videos must load efficiently.
+
+Do not autoplay with sound.
+
+On mobile, display the phone below the content.
+
+---
+
+## SECTION 11 — FAQ
+
+Heading:
+
+Frequently Asked Questions About Eye Care
+
+Create an elegant accordion.
+
+Include relevant questions such as:
+
+When should I schedule an eye examination?
+
+How do I know whether LASIK is suitable for me?
+
+What are common cataract symptoms?
+
+When should I consult a retina specialist?
+
+Do children need regular eye examinations?
+
+How can I book an appointment?
+
+Where is Jain Eye Hospital located?
+
+Make all questions editable from admin.
+
+Use accurate, medically responsible answers.
+
+---
+
+## SECTION 12 — CONTACT, LOCATION & MAP
+
+Heading:
+
+Visit Jain Eye Hospital in Shalimar Bagh, Delhi
+
+Show the complete address:
+
+AG-152, near Richi Rich Banquet, Block AG, Poorbi Shalimar Bagh, Shalimar Bagh, Delhi, 110088.
+
+Show:
+
+011 4378 4377
+09643536373
+9643 900 900
+
+Email:
+
+info@jaineye.com
+
+Buttons:
+
+Book Appointment
+Call Hospital
+Get Directions
+
+Embed Google Maps using the verified hospital location.
+
+Below the section, add a premium final CTA:
+
+Take the Next Step Towards Better Eye Care
+
+Button:
+
+Request an Appointment
+
+---
+
+# 7. ABOUT US PAGE — EXACTLY 8 SECTIONS
+
+Create an exceptionally beautiful About page.
+
+## Section 1 — About Hero
+
+Large premium image.
+
+Heading:
+
+About Jain Eye Hospital & Laser Centre
+
+Subheading:
+
+Focused on Specialist Ophthalmology and Patient-Centred Eye Care.
+
+Add breadcrumbs.
+
+## Section 2 — Our Story
+
+Use authentic hospital photographs.
+
+Write an informative hospital introduction based on verified institutional information.
+
+Include hospital history only after verification.
+
+## Section 3 — Mission, Vision & Values
+
+Create three premium cards.
+
+Mission.
+
+Vision.
+
+Core Values.
+
+Use professional, concise copy.
+
+Obtain hospital approval before publication.
+
+## Section 4 — Our Clinical Approach
+
+Explain patient evaluation, treatment planning, communication and follow-up.
+
+Use a timeline or alternating content layout.
+
+## Section 5 — Our Doctors
+
+Show all verified doctor profiles.
+
+Include real images and credentials.
+
+## Section 6 — Our Team
+
+Create a beautiful team section.
+
+Categories:
+
+Medical Team
+Clinical Support
+Patient Coordination
+Administration
+
+Use actual staff information.
+
+## Section 7 — Facilities & Technology
+
+Show real hospital facilities.
+
+Use a premium photo grid.
+
+Include reception, consultation rooms, diagnostic areas and other verified facilities.
+
+## Section 8 — Location & Appointment
+
+Show contact details, map, directions and appointment CTA.
+
+---
+
+# 8. COMPLETE DOCTOR PROFILE SYSTEM
+
+Create a doctor listing page and individual doctor pages.
+
+Each doctor profile must have:
+
+1. Premium hero.
+2. Doctor photograph.
+3. Name.
+4. Verified designation.
+5. Qualifications.
+6. Specialisation.
+7. Professional biography.
+8. Clinical expertise.
+9. Education.
+10. Fellowships, if verified.
+11. Memberships, if verified.
+12. Awards, if verified.
+13. Publications, if verified.
+14. Related treatments.
+15. Educational videos.
+16. Related articles.
+17. FAQs.
+18. Appointment form.
+
+Use a two-column doctor hero.
+
+Left side:
+
+Doctor information.
+
+Right side:
+
+Actual portrait.
+
+Add a premium appointment CTA.
+
+Everything must be editable from the admin panel.
+
+---
+
+# 9. SPECIALITY AND TREATMENT PAGES
+
+Create separate, SEO-optimised pages for verified hospital services.
+
+Potential categories include:
+
+Cataract & IOL
+LASIK & Refractive Surgery
+Retina & Uvea
+Cornea Care
+Squint Evaluation & Treatment
+Myopia Management
+Comprehensive Eye Examination
+
+Do not publish a service unless its availability is confirmed.
+
+Each service page should contain:
+
+1. SEO hero.
+2. Overview.
+3. Conditions treated.
+4. Symptoms.
+5. When to seek evaluation.
+6. Diagnosis.
+7. Treatment options.
+8. Technology.
+9. Relevant doctor.
+10. What to expect.
+11. Recovery and follow-up where applicable.
+12. FAQs.
+13. Related blogs.
+14. Appointment CTA.
+
+Use detailed, original, medically responsible content.
+
+Do not duplicate the same text across pages.
+
+Avoid guaranteed medical outcomes.
+
+---
+
+# 10. TECHNOLOGY PAGE
+
+Create a premium technology directory.
+
+Use actual hospital equipment images.
+
+Each equipment entry must have:
+
+Name
+Image
+Manufacturer/model if verified
+Clinical purpose
+Related treatments
+Short explanation
+
+Create a beautiful responsive grid.
+
+Do not invent equipment.
+
+---
+
+# 11. PATIENT INFORMATION PAGES
+
+Create functional pages for:
+
+Patient Journey
+Patient Safety
+Insurance & Payment
+International Patients
+Patient Education
+
+Use approved information.
+
+Insurance partners must be editable through admin.
+
+Do not publish unsupported insurance or payment claims.
+
+---
+
+# 12. COMPLETE BLOG SYSTEM
+
+Create a professional SEO blog.
+
+Features:
+
+- Blog listing.
+- Featured articles.
+- Categories.
+- Search.
+- Pagination.
+- Blog detail pages.
+- Author information.
+- Medical reviewer information where applicable.
+- Featured images.
+- Related articles.
+- Table of contents.
+- Internal links.
+- SEO metadata.
+- Structured data.
+- Publication dates.
+- Last updated dates.
+
+Make the blog completely dynamic.
+
+Use a secure rich text editor in admin.
+
+Create draft, review and publish workflows.
+
+All medical content must be reviewed before publication.
+
+---
+
+# 13. GALLERY, MEDIA & REELS
+
+Create separate pages for:
+
+Photo Gallery
+Media & News
+Videos & Reels
+
+Gallery categories:
+
+Hospital Infrastructure
+Doctors
+Technology
+Events
+Community Programmes
+Media Coverage
+
+Create an attractive masonry gallery.
+
+Use a lightbox.
+
+Preserve image proportions.
+
+For reels, support MP4 uploads, thumbnails, titles, descriptions and ordering.
+
+Optimise video loading.
+
+---
+
+# 14. BOOK APPOINTMENT SYSTEM
+
+Create a fully working appointment request system.
+
+Form fields:
+
+Full Name
+Phone Number
+Email
+Preferred Doctor
+Preferred Service
+Preferred Date
+Preferred Time Window
+Message
+Consent Checkbox
+
+Important:
+
+The form is an appointment REQUEST, not an automatically confirmed booking.
+
+On submission:
+
+- Validate all fields.
+- Protect against CSRF.
+- Save to MySQL.
+- Generate a unique enquiry reference.
+- Send SMTP notification when configured.
+- Display confirmation.
+- Show enquiry in admin.
+- Prevent duplicate submissions.
+- Record submission timestamp.
+
+Admin statuses:
+
+New
+Contacted
+Pending Confirmation
+Confirmed
+Completed
+Cancelled
+
+Admin should be able to update status and add notes.
+
+---
+
+# 15. CONTACT PAGE
+
+Create a premium contact page.
+
+Include:
+
+Full address
+Three phone numbers
+Email
+Instagram
+Facebook
+YouTube
+Google Map
+Get Directions
+Contact form
+Appointment CTA
+
+Contact form fields:
+
+Name
+Phone
+Email
+Subject
+Message
+Consent
+
+Save all enquiries in MySQL.
+
+Add server-side validation and anti-spam protection.
+
+---
+
+# 16. COMPLETE ADMIN DASHBOARD
+
+Create a secure admin panel at:
+
+/admin/
+
+The admin dashboard must be fully functional.
+
+Not a static demo.
+
+## Dashboard Overview
+
+Show:
+
+Total Appointments
+New Appointments
+Contact Enquiries
+Active Doctors
+Published Services
+Published Blogs
+Media Items
+Recent Activity
+
+Use real database data.
+
+## Admin Modules
+
+1. Dashboard
+2. Appointments
+3. Contact Enquiries
+4. Doctors
+5. Specialities
+6. Treatments
+7. Homepage Management
+8. About Page Management
+9. Page Builder / Content Sections
+10. Blog Posts
+11. Blog Categories
+12. FAQs
+13. Testimonials
+14. Gallery
+15. Reels
+16. Media & News
+17. Technology
+18. Insurance Partners
+19. Navigation Menus
+20. Footer Settings
+21. SEO Manager
+22. Redirect Manager
+23. Media Library
+24. Admin Users
+25. Roles & Permissions
+26. Site Settings
+27. Activity Logs
+
+## Homepage Editing
+
+Admin must be able to edit all 12 sections.
+
+Change:
+
+Headings
+Descriptions
+Images
+Buttons
+Links
+Display order
+Visibility
+
+## Doctor Management
+
+Add doctor.
+Edit doctor.
+Upload photo.
+Update qualifications.
+Assign specialities.
+Edit biography.
+Publish/unpublish profile.
+
+## Service Management
+
+Add/edit services.
+Upload images.
+Edit content.
+Add FAQs.
+Assign doctors.
+Update SEO.
+
+## Blog Management
+
+Create draft.
+Edit article.
+Upload images.
+Add categories.
+Set meta title.
+Set meta description.
+Publish article.
+Archive article.
+
+## Media Management
+
+Upload:
+
+JPG
+PNG
+WebP
+Supported AVIF
+MP4
+Approved PDF
+
+Validate all uploads.
+
+Prevent executable file uploads.
+
+Generate thumbnails.
+
+## Security
+
+Use:
+
+Password hashing.
+Secure sessions.
+CSRF protection.
+PDO prepared statements.
+Login rate limiting.
+Role-based access.
+Secure file uploads.
+Audit logs.
+HTTPS cookies.
+
+Do not ship default production passwords.
+
+---
+
+# 17. MYSQL DATABASE
+
+Create a complete relational MySQL database.
+
+Recommended tables:
+
+admins
+roles
+permissions
+role_permissions
+admin_activity_logs
+
+site_settings
+pages
+page_sections
+navigation_items
+footer_links
+
+doctors
+doctor_specialities
+doctor_gallery
+
+specialities
+treatments
+treatment_doctors
+technologies
+
+appointments
+appointment_status_history
+contact_enquiries
+enquiry_notes
+
+blog_posts
+blog_categories
+blog_tags
+blog_post_tags
+
+faqs
+testimonials
+gallery_items
+media_items
+reels
+insurance_partners
+
+seo_metadata
+redirects
+media_library
+email_templates
+security_logs
+
+Include:
+
+Primary keys.
+Foreign keys.
+Unique slugs.
+Indexes.
+Created timestamps.
+Updated timestamps.
+Publication status.
+Soft deletes where appropriate.
+
+Use utf8mb4.
+
+Create schema.sql.
+
+Create safe initial seed data.
+
+Do not insert fabricated patient testimonials or medical achievements.
+
+---
+
+# 18. COMPLETE TECHNICAL SEO
+
+The website must be SEO-ready from day one.
+
+## On-Page SEO
+
+Every page needs:
+
+Unique SEO title.
+Meta description.
+H1.
+Logical H2/H3 hierarchy.
+Canonical URL.
+Internal links.
+Image alt text.
+Open Graph metadata.
+Social sharing image.
+
+## Local SEO
+
+Optimise naturally for relevant searches including:
+
+Eye Hospital in Delhi
+Eye Hospital in New Delhi
+Eye Hospital in Shalimar Bagh
+Eye Specialist in Delhi
+Cataract Care in Delhi
+LASIK Consultation in Delhi
+Retina Specialist in Delhi
+
+Do not keyword-stuff.
+
+Do not create duplicate doorway pages.
+
+## Structured Data
+
+Use valid JSON-LD where applicable:
+
+Organization
+Hospital
+MedicalOrganization
+Physician
+BreadcrumbList
+WebPage
+BlogPosting
+VideoObject
+
+Only include verified facts.
+
+Never invent ratings or reviews.
+
+## Technical SEO
+
+Create:
+
+sitemap.xml
+robots.txt
+Canonical URLs
+301 Redirects
+Custom 404
+Clean URLs
+Responsive pages
+Optimised images
+Fast loading
+
+Protect existing SEO rankings.
+
+Before replacing the live website, crawl existing URLs and create a complete redirect map.
+
+---
+
+# 19. PERFORMANCE REQUIREMENTS
+
+Optimise for:
+
+Fast loading.
+Excellent mobile performance.
+Efficient database queries.
+Minimal JavaScript.
+Optimised images.
+Responsive images.
+Lazy loading below the fold.
+Proper caching.
+Deferred scripts.
+Lightweight animations.
+
+Target Core Web Vitals:
+
+LCP ≤ 2.5 seconds.
+
+INP ≤ 200 milliseconds.
+
+CLS ≤ 0.1.
+
+Aim for Lighthouse scores above 90 where practical.
+
+Do not sacrifice usability for animation.
+
+---
+
+# 20. MOBILE RESPONSIVENESS
+
+The entire website must work beautifully on:
+
+Mobile
+Tablet
+Laptop
+Desktop
+Large screens
+
+Test widths:
+
+360px
+390px
+430px
+768px
+1024px
+1366px
+1440px
+1920px
+
+No horizontal scrolling.
+
+No overlapping elements.
+
+No broken images.
+
+No clipped buttons.
+
+Mobile navigation must work properly.
+
+All forms must be touch-friendly.
+
+---
+
+# 21. ACCESSIBILITY
+
+Target WCAG 2.2 AA.
+
+Implement:
+
+Semantic HTML.
+Keyboard navigation.
+Accessible forms.
+Visible focus states.
+Screen reader labels.
+Alt text.
+Accessible accordions.
+Reduced-motion support.
+Sufficient colour contrast.
+Proper heading hierarchy.
+
+---
+
+# 22. SECURITY AND PRIVACY
+
+Implement:
+
+SQL injection prevention.
+XSS protection.
+CSRF protection.
+Authentication.
+Authorisation.
+Secure session handling.
+File upload validation.
+HTTPS.
+Rate limiting.
+Secure HTTP headers.
+Protected configuration.
+Error logging.
+Database backup guidance.
+
+Keep sensitive patient enquiry data restricted to authorised staff.
+
+Collect only necessary information.
+
+Prepare privacy and consent notices for legal review.
+
+---
+
+# 23. PREMIUM FOOTER
+
+Create a four-column footer.
+
+Column 1:
+
+Hospital logo.
+Short description.
+Social icons.
+
+Column 2:
+
+Quick Links.
+
+Column 3:
+
+Specialities.
+
+Column 4:
+
+Address.
+Phone numbers.
+Email.
+Directions.
+
+Below:
+
+Privacy Policy.
+Terms & Conditions.
+Medical Disclaimer.
+Accessibility.
+Sitemap.
+
+Copyright:
+
+© {current year} Jain Eye Hospital & Laser Centre. All Rights Reserved.
+
+Use a dynamic PHP year.
+
+---
+
+# 24. WEBSITE FOLDER STRUCTURE
+
+Use a clean, maintainable architecture.
+
+Suggested structure:
+
+/public_html
+    index.php
+    .htaccess
+    robots.txt
+
+    /assets
+        /css
+        /js
+        /images
+        /fonts
+        /icons
+
+    /uploads
+        /doctors
+        /services
+        /gallery
+        /blogs
+        /reels
+        /technology
+
+    /app
+        /config
+        /core
+        /controllers
+        /models
+        /views
+        /helpers
+        /middleware
+        /services
+
+    /admin
+        index.php
+        login.php
+        logout.php
+        /assets
+
+    /database
+        schema.sql
+        seed.sql
+
+    /storage
+        /logs
+        /cache
+
+    /documentation
+        INSTALLATION.md
+        ADMIN_GUIDE.md
+        SEO_GUIDE.md
+        SECURITY.md
+        CONTENT_CHECKLIST.md
+
+Protect internal directories.
+
+Prefer storing private configuration and logs outside the public web root when hosting permits.
+
+---
+
+# 25. IMAGE REQUIREMENTS
+
+I have actual hospital images and doctor photographs.
+
+Use those assets throughout the website.
+
+Do not generate fake hospital photos and present them as real.
+
+Image categories:
+
+Hospital exterior.
+Reception.
+Waiting area.
+Doctor consultation.
+Doctors.
+Clinical team.
+Technology.
+Facilities.
+Events.
+Media.
+Reels.
+Services.
+
+Preserve original proportions.
+
+Avoid awkward cropping.
+
+Use WebP where appropriate.
+
+Provide alt text.
+
+Allow image replacement through admin.
+
+During development, use clearly labelled temporary placeholders only where real images are not yet available.
+
+---
+
+# 26. CPANEL SHARED HOSTING DEPLOYMENT
+
+Provide a complete deployment guide.
+
+Explain:
+
+1. How to upload files through cPanel.
+2. How to create a MySQL database.
+3. How to create the database user.
+4. How to assign privileges.
+5. How to import schema.sql through phpMyAdmin.
+6. How to configure PHP database credentials.
+7. How to configure SMTP.
+8. How to configure .htaccess.
+9. How to enable HTTPS.
+10. How to configure uploads.
+11. How to securely create the first admin.
+12. How to test appointments.
+13. How to test contact forms.
+14. How to verify all pages.
+15. How to generate sitemap.xml.
+16. How to connect Google Search Console.
+17. How to set up GA4 appropriately.
+18. How to take backups.
+19. How to migrate from staging to production.
+20. How to roll back if deployment fails.
+
+Do not require SSH or a VPS.
+
+---
+
+# 27. TESTING CHECKLIST
+
+Before delivery, test:
+
+All pages.
+All navigation links.
+All dropdowns.
+All forms.
+Doctor pages.
+Service pages.
+Appointment submissions.
+Contact submissions.
+Admin login.
+Admin permissions.
+Doctor CRUD.
+Service CRUD.
+Blog CRUD.
+Media uploads.
+Reel playback.
+Mobile navigation.
+Responsive design.
+Sitemap.
+SEO metadata.
+Redirects.
+Google Map.
+Error handling.
+Database connectivity.
+Email notifications.
+
+Test security against common web vulnerabilities.
+
+Do not claim a test passed unless it was actually performed.
+
+---
+
+# 28. DEVELOPMENT WORKFLOW
+
+Follow this exact development sequence.
+
+## PHASE 1 — FOUNDATION
+
+Create the project structure.
+
+Configure PHP routing.
+
+Create MySQL schema.
+
+Set up secure database connections.
+
+Build the global design system.
+
+## PHASE 2 — HOMEPAGE
+
+Build all 12 sections.
+
+Complete header and footer.
+
+Make the homepage responsive.
+
+## PHASE 3 — INNER PAGES
+
+Build About Us with eight sections.
+
+Build Doctors.
+
+Build Doctor Profiles.
+
+Build Specialities.
+
+Build Treatments.
+
+Build Technology.
+
+Build Patient Resources.
+
+Build Contact.
+
+## PHASE 4 — CONTENT SYSTEM
+
+Build Blog.
+
+Build Gallery.
+
+Build Media.
+
+Build Reels.
+
+Build FAQs.
+
+## PHASE 5 — ADMIN PANEL
+
+Implement authentication.
+
+Create dashboard.
+
+Implement all CRUD modules.
+
+Create media manager.
+
+Create SEO manager.
+
+## PHASE 6 — FUNCTIONAL INTEGRATIONS
+
+Implement appointment forms.
+
+Implement contact forms.
+
+Configure SMTP.
+
+Implement enquiry statuses.
+
+Generate sitemap.
+
+## PHASE 7 — QUALITY ASSURANCE
+
+Test functionality.
+
+Test mobile layouts.
+
+Check accessibility.
+
+Check SEO.
+
+Check security.
+
+Optimise performance.
+
+## PHASE 8 — DEPLOYMENT
+
+Prepare production files.
+
+Create installation guide.
+
+Provide database import.
+
+Deploy to staging.
+
+Verify everything.
+
+Prepare safe production migration.
+
+---
+
+# 29. IMPORTANT EXISTING DOMAIN MIGRATION RULES
+
+The website domain is:
+
+https://jaineye.com/
+
+Do not directly overwrite the existing live website without a backup.
+
+First develop the new website on a staging environment.
+
+Before migration:
+
+Crawl the old website.
+
+Save existing URLs.
+
+Identify important SEO pages.
+
+Preserve valuable content.
+
+Prepare 301 redirects.
+
+Check canonical URLs.
+
+Verify the database.
+
+Test the complete website.
+
+Only move to production after approval.
+
+---
+
+# 30. FINAL DELIVERY REQUIREMENTS
+
+I need the following final deliverables:
+
+1. Complete PHP website source code.
+2. Complete MySQL database schema.
+3. Complete admin dashboard.
+4. All frontend pages.
+5. All backend functionality.
+6. Working appointment forms.
+7. Working contact forms.
+8. Doctor profile management.
+9. Service management.
+10. Blog management.
+11. Gallery management.
+12. Reel management.
+13. SEO management.
+14. Responsive design.
+15. Security protections.
+16. Installation documentation.
+17. Admin usage guide.
+18. Deployment-ready project package.
+19. Testing report.
+20. Production launch checklist.
+
+Do not deliver an incomplete template.
+
+Do not use fake success messages for non-functional features.
+
+Do not hardcode content that should be editable from admin.
+
+Do not omit backend implementation.
+
+Do not stop after the homepage.
+
+Do not provide only screenshots.
+
+Build the real website.
+
+If implementation is too large for one response, continue through the phases systematically, preserving the same architecture.
+
+---
+
+# 31. FINAL DESIGN EXPECTATION
+
+I want this website to feel exceptional.
+
+It should combine:
+
+Premium hospital branding.
+
+Modern UI/UX.
+
+Beautiful light backgrounds.
+
+Deep green and orange accents.
+
+Professional typography.
+
+Authentic hospital photography.
+
+Smooth animations.
+
+Attractive service sliders.
+
+Elegant doctor profiles.
+
+A premium iPhone-style reels section.
+
+Detailed speciality pages.
+
+Excellent mobile experience.
+
+Fast loading.
+
+Strong SEO foundations.
+
+A complete, secure admin CMS.
+
+The final website should communicate:
+
+**TRUST — EXPERTISE — TECHNOLOGY — COMPASSION — PREMIUM CARE.**
+
+Make the website beautiful enough to impress hospital management, patients and professional designers while remaining practical, accessible and easy to maintain.
+
+---
+
+# 32. FINAL EXECUTION INSTRUCTION
+
+START BUILDING THE ACTUAL WEBSITE NOW.
+
+Do not respond with only an explanation of what you will build.
+
+Do not generate only a design preview.
+
+Do not deliver static HTML instead of PHP.
+
+Create the complete PHP + MySQL implementation in the development environment.
+
+Use the official logo and uploaded hospital assets.
+
+Keep every section consistent with the approved hospital identity.
+
+Use medically accurate content and mark unverified details for approval.
+
+Implement the database and admin functionality.
+
+Generate all required files.
+
+Test what can actually be tested.
+
+Clearly identify any remaining configuration or asset requirements.
+
+The finished project must be suitable for deployment on standard cPanel shared hosting.
+
+**PROJECT NAME: JAIN EYE HOSPITAL & LASER CENTRE**
+
+**DOMAIN: https://jaineye.com/**
+
+**TECHNOLOGY: CORE PHP + MYSQL**
+
+**DESIGN: PREMIUM LIGHT-THEME OPHTHALMOLOGY HOSPITAL WEBSITE**
+
+**HOMEPAGE: 12 SECTIONS**
+
+**ABOUT PAGE: 8 SECTIONS**
+
+**ADMIN PANEL: COMPLETE CMS**
+
+**SEO: FULL TECHNICAL AND ON-PAGE FOUNDATION**
+
+**FINAL RESULT: COMPLETE PRODUCTION-READY WEBSITE.**
