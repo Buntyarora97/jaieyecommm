@@ -17,7 +17,7 @@ require __DIR__ . '/../includes/header.php';
     <div class="cards">
       <?php foreach ($treatments as $t): ?>
       <article class="service-card reveal">
-        <div class="service-card__img"><?= image_or_placeholder($t['image'], '', $t['name']) ?></div>
+        <div class="service-card__img<?= $t['slug'] === 'cataract-surgery' ? ' service-card__img--wide' : '' ?>"><?= image_or_placeholder($t['image'], '', $t['name']) ?></div>
         <div class="service-card__body">
           <?php if ($t['spec_name']): ?><span style="font-size:.75rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.08em"><?= e($t['spec_name']) ?></span><?php endif; ?>
           <h3><?= e($t['name']) ?></h3>

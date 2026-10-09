@@ -57,7 +57,7 @@ require __DIR__ . '/../includes/header.php';
     <div class="spec-strip">
       <?php foreach ($specialities as $spec): ?>
       <a class="spec-card reveal" href="<?= url('specialities/' . $spec['slug']) ?>">
-        <div class="spec-card__img"><?= image_or_placeholder($spec['image'], '', $spec['name']) ?></div>
+        <div class="spec-card__img<?= $spec['slug'] === 'cataract-iol' ? ' spec-card__img--wide' : '' ?>"><?= image_or_placeholder($spec['image'], '', $spec['name']) ?></div>
         <div class="spec-card__body">
           <h3><?= e($spec['name']) ?></h3>
           <p><?= e($spec['short_description']) ?></p>
@@ -104,7 +104,7 @@ require __DIR__ . '/../includes/header.php';
       <div class="carousel__track">
         <?php foreach ($services as $srv): ?>
         <article class="service-card reveal">
-          <div class="service-card__img"><?= image_or_placeholder($srv['image'], '', $srv['name']) ?></div>
+          <div class="service-card__img<?= $srv['slug'] === 'cataract-surgery' ? ' service-card__img--wide' : '' ?>"><?= image_or_placeholder($srv['image'], '', $srv['name']) ?></div>
           <div class="service-card__body">
             <h3><?= e($srv['name']) ?></h3>
             <p><?= e($srv['short_description']) ?></p>

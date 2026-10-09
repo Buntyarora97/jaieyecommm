@@ -30,6 +30,11 @@ if (PHP_SAPI === 'cli-server') {
 
 require __DIR__ . '/config/config.php';
 
+// CMS-managed images and page content must refresh when an admin updates them.
+header('Cache-Control: private, no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
+
 session_name(SESSION_NAME);
 session_set_cookie_params([
     'httponly' => true,

@@ -816,3 +816,7 @@ h1,h2,h3,h4{letter-spacing:-.035em}
   .carousel__track{grid-auto-columns:100%;scroll-padding-inline:4px}
   .spec-card,.service-card{width:100%;min-width:0;scroll-snap-stop:always}
 }
+
+/* The cataract cover uses a supplied landscape theatre photo; keep its full frame visible. */
+.spec-card__img.spec-card__img--wide,
+.service-card__img.service-card__img--wide{aspect-ratio:1706/922}

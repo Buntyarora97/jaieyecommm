@@ -613,7 +613,7 @@ INSERT INTO footer_links (column_group, label, url, position) VALUES
 
 -- Specialities
 INSERT INTO specialities (name, slug, category, short_description, overview, image, is_featured, status, position) VALUES
-('Cataract & IOL','cataract-iol','Cataract & Refractive Care','Evaluation and modern surgical care for cataract with a range of intraocular lens options.','A cataract is clouding of the natural lens of the eye that gradually reduces vision. At Jain Eye Hospital & Laser Centre, cataract is evaluated with a detailed eye examination and appropriate investigations, and surgery is planned according to each patient''s eye condition and visual needs.','assets/img/surgeon-at-the-operating-microscope.webp',1,'published',1),
+('Cataract & IOL','cataract-iol','Cataract & Refractive Care','Evaluation and modern surgical care for cataract with a range of intraocular lens options.','A cataract is clouding of the natural lens of the eye that gradually reduces vision. At Jain Eye Hospital & Laser Centre, cataract is evaluated with a detailed eye examination and appropriate investigations, and surgery is planned according to each patient''s eye condition and visual needs.','assets/img/ophthalmic-microsurgery-in-a-clinical-theatre.webp',1,'published',1),
 ('LASIK & Refractive Surgery','lasik-refractive','Cataract & Refractive Care','Structured assessment and laser vision correction options for suitable candidates.','Refractive errors such as myopia, hyperopia and astigmatism can often be corrected with laser procedures in suitable candidates. A detailed pre-operative evaluation is essential before any laser vision correction is advised.','assets/img/hospital-pic-17.webp',1,'published',2),
 ('Retina & Uvea','retina-uvea','Retina & Cornea','Medical and laser care for retinal conditions including diabetic retinopathy.','The retina is the light-sensitive layer at the back of the eye. Conditions such as diabetic retinopathy, retinal vein occlusion and macular disorders require timely diagnosis and treatment to protect vision.','assets/img/precision-ophthalmic-surgery-close-up.webp',1,'published',3),
 ('Macular Conditions','macular-conditions','Retina & Cornea','Evaluation and monitoring of age-related and other macular disorders.','The macula is responsible for central, detailed vision. Macular conditions can cause blurred or distorted central vision and benefit from early detection and regular monitoring.','assets/img/hospital-pic-16.webp',0,'published',4),
@@ -624,7 +624,7 @@ INSERT INTO specialities (name, slug, category, short_description, overview, ima
 
 -- Treatments
 INSERT INTO treatments (speciality_id, name, slug, short_description, image, status, position) VALUES
-(1,'Cataract Surgery','cataract-surgery','Modern micro-incision cataract surgery with personalised intraocular lens selection.','assets/img/surgeon-at-the-operating-microscope.webp','published',1),
+(1,'Cataract Surgery','cataract-surgery','Modern micro-incision cataract surgery with personalised intraocular lens selection.','assets/img/ophthalmic-microsurgery-in-a-clinical-theatre.webp','published',1),
 (2,'LASIK Assessment','lasik-assessment','Detailed pre-operative workup to determine suitability for laser vision correction.','assets/img/hospital-pic-17.webp','published',2),
 (2,'Laser Vision Correction','laser-vision-correction','Laser-based procedures to reduce dependence on glasses in suitable candidates.','assets/img/neha-mohan-4.webp','published',3),
 (1,'Intraocular Lens Options','intraocular-lens-options','Guidance on monofocal, toric and other IOL choices based on lifestyle needs.','assets/img/hospital-pic-12.webp','published',4),
@@ -639,7 +639,7 @@ INSERT INTO treatments (speciality_id, name, slug, short_description, image, sta
 
 -- Doctors (names verified from existing site; complete profiles via admin)
 INSERT INTO doctors (name, slug, photo, is_featured, status, position) VALUES
-('Dr Arun Kumar Jain','dr-arun-kumar-jain',NULL,1,'published',1),
+('Dr Arun Kumar Jain','dr-arun-kumar-jain','assets/img/dr-arun-kumar-jain.webp',1,'published',1),
 ('Dr Rajat Jain','dr-rajat-jain','assets/img/rajat-jain-3.webp',1,'published',2),
 ('Dr Neha Mohan','dr-neha-mohan','assets/img/neha-mohan.webp',1,'published',3);
 

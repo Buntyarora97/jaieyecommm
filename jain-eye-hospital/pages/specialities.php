@@ -24,7 +24,7 @@ require __DIR__ . '/../includes/header.php';
       <div class="cards">
         <?php foreach ($specs as $spec): ?>
         <a class="spec-card reveal" href="<?= url('specialities/' . $spec['slug']) ?>">
-          <div class="spec-card__img"><?= image_or_placeholder($spec['image'], '', $spec['name']) ?></div>
+          <div class="spec-card__img<?= $spec['slug'] === 'cataract-iol' ? ' spec-card__img--wide' : '' ?>"><?= image_or_placeholder($spec['image'], '', $spec['name']) ?></div>
           <div class="spec-card__body">
             <h3><?= e($spec['name']) ?></h3>
             <p><?= e($spec['short_description']) ?></p>
