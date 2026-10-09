@@ -100,7 +100,9 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    // Long guide articles can be taller than the viewport, so a percentage
+    // threshold may never be reached. Reveal once any part enters view.
+    }, { threshold: 0 });
     revealEls.forEach(function (el) { io.observe(el); });
   } else {
     revealEls.forEach(function (el) { el.classList.add('is-visible'); });

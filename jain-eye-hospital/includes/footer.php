@@ -147,6 +147,6 @@ if (!$patient_resource_links) {
   </div>
 </dialog>
 
-<script src="<?= asset('js/main.js') ?>" defer></script>
+<script src="<?= e(asset('js/main.js') . '?v=' . filemtime(__DIR__ . '/../assets/js/main.js')) ?>" defer></script>
 </body>
 </html>
