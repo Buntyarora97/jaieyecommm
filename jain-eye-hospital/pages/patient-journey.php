@@ -1,6 +1,10 @@
 <?php
 $route = '/patient-journey';
 $page_seo = page_seo($route, 'Patient Journey | ' . SITE_NAME, 'What to expect when you visit ' . SITE_NAME . ' - from booking to follow-up care.');
+$faqs = db_all(
+    "SELECT * FROM faqs WHERE is_active=1 AND (context='patient-journey' OR context='website')
+     ORDER BY CASE WHEN context='patient-journey' THEN 0 ELSE 1 END, position LIMIT 5"
+);
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero"><div class="container">
@@ -34,6 +38,16 @@ require __DIR__ . '/../includes/header.php';
     </div>
     <p class="patient-prep__note">These are general planning suggestions, not personal medical instructions. Follow the advice given for your own examination or treatment.</p>
   </div>
+  <?php if ($faqs): ?>
+  <div class="patient-resource-faq">
+    <div class="section-head center"><span class="eyebrow">Helpful answers</span><h2>Questions About Your Visit</h2></div>
+    <div class="faq">
+      <?php foreach ($faqs as $faq): ?>
+      <details><summary><?= e($faq['question']) ?><span class="plus" aria-hidden="true">+</span></summary><div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <?php endif; ?>
   <div class="patient-journey-cta"><div><h2>Need help arranging a visit?</h2><p>Contact our team for appointment information or directions to the hospital.</p></div><div class="btn-row"><a class="btn btn--primary" href="<?= url('book-appointment') ?>">Request Appointment</a><a class="btn btn--outline" href="<?= url('contact-us') ?>">Contact &amp; Directions</a></div></div>
 </div></section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

@@ -6,7 +6,14 @@ if (!$treatment) { http_response_code(404); require __DIR__ . '/404.php'; return
 $route = '/treatments/' . $treatment['slug'];
 $page_seo = page_seo($route, $treatment['name'] . ' | ' . SITE_NAME, excerpt($treatment['short_description'] ?: '', 155));
 $doctors = db_all("SELECT d.* FROM doctors d JOIN treatment_doctors td ON td.doctor_id=d.id WHERE td.treatment_id=? AND d.status='published'", [$treatment['id']]);
-if (!$doctors) { $doctors = db_all("SELECT * FROM doctors WHERE status='published' ORDER BY position LIMIT 3"); }
+$relatedTreatments = $treatment['speciality_id']
+    ? db_all("SELECT id, name, slug, short_description, image FROM treatments WHERE speciality_id=? AND status='published' AND id<>? ORDER BY position LIMIT 4", [$treatment['speciality_id'], $treatment['id']])
+    : [];
+$faqs = db_all(
+    "SELECT * FROM faqs WHERE is_active=1 AND (context=? OR context='website')
+     ORDER BY CASE WHEN context=? THEN 0 ELSE 1 END, position LIMIT 5",
+    [$treatment['slug'], $treatment['slug']]
+);
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero care-hero">
@@ -72,6 +79,33 @@ require __DIR__ . '/../includes/header.php';
           <div class="doctor-card__actions"><a class="btn btn--outline" href="<?= url('doctors/' . $doc['slug']) ?>">View Profile</a></div>
         </div>
       </article>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+<?php if ($relatedTreatments): ?>
+<section class="section section--pale">
+  <div class="container">
+    <div class="section-head reveal"><span class="eyebrow">Related services</span><h2>Explore More in <?= e($treatment['spec_name'] ?: 'Eye Care') ?></h2><p>Read about other services published under this speciality.</p></div>
+    <div class="cards related-treatment-grid">
+      <?php foreach ($relatedTreatments as $related): ?>
+      <a class="service-card related-treatment-card reveal" href="<?= url('treatments/' . $related['slug']) ?>">
+        <div class="service-card__img"><?= image_or_placeholder($related['image'], '', $related['name']) ?></div>
+        <div class="service-card__body"><h3><?= e($related['name']) ?></h3><p><?= e($related['short_description']) ?></p><span class="link-arrow">Read treatment information</span></div>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+<?php if ($faqs): ?>
+<section class="section">
+  <div class="container">
+    <div class="section-head center reveal"><span class="eyebrow">Helpful answers</span><h2>Questions About <?= e($treatment['name']) ?></h2></div>
+    <div class="faq">
+      <?php foreach ($faqs as $faq): ?>
+      <details><summary><?= e($faq['question']) ?><span class="plus" aria-hidden="true">+</span></summary><div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
       <?php endforeach; ?>
     </div>
   </div>

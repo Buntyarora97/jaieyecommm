@@ -3,6 +3,11 @@
 $route = '/technology';
 $page_seo = page_seo($route, 'Technology & Facilities | ' . SITE_NAME, 'View clinical photographs and ask ' . SITE_NAME . ' about equipment used for your care.');
 $rows = db_all("SELECT * FROM technologies WHERE status='published' ORDER BY category, position");
+$relatedSpecialities = db_all("SELECT name, slug, short_description, image FROM specialities WHERE status='published' ORDER BY is_featured DESC, position LIMIT 4");
+$faqs = db_all(
+    "SELECT * FROM faqs WHERE is_active=1 AND (context='technology' OR context='website')
+     ORDER BY CASE WHEN context='technology' THEN 0 ELSE 1 END, position LIMIT 5"
+);
 $grouped = [];
 $labels = ['diagnostics'=>'Diagnostic Technology','laser'=>'Laser Technology','surgical'=>'Surgical Technology','facility'=>'Hospital Facilities'];
 foreach ($rows as $row) { $grouped[$row['category']][] = $row; }
@@ -49,6 +54,29 @@ require __DIR__ . '/../includes/header.php';
         <article><span>03</span><h3>Confirm the next step</h3><p>Before leaving, ask when and how you will receive an explanation of findings and what follow-up is recommended.</p></article>
       </div>
     </section>
+    <?php if ($relatedSpecialities): ?>
+    <div class="technology-related">
+      <div class="section-head"><span class="eyebrow">Explore eye care</span><h2>Browse Our Specialities</h2><p>Read about the eye-care areas published by the hospital and see which questions to discuss at a consultation.</p></div>
+      <div class="cards related-treatment-grid">
+        <?php foreach ($relatedSpecialities as $speciality): ?>
+        <a class="service-card related-treatment-card reveal" href="<?= url('specialities/' . $speciality['slug']) ?>">
+          <div class="service-card__img"><?= image_or_placeholder($speciality['image'], '', $speciality['name']) ?></div>
+          <div class="service-card__body"><h3><?= e($speciality['name']) ?></h3><p><?= e($speciality['short_description']) ?></p><span class="link-arrow">Explore speciality</span></div>
+        </a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($faqs): ?>
+    <div class="technology-faq">
+      <div class="section-head center"><span class="eyebrow">Quick answers</span><h2>Questions About Technology</h2></div>
+      <div class="faq">
+        <?php foreach ($faqs as $faq): ?>
+        <details><summary><?= e($faq['question']) ?><span class="plus" aria-hidden="true">+</span></summary><div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endif; ?>
   </div>
 </section>
 <section class="section section--green">

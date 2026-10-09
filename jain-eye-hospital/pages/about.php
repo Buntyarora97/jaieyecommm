@@ -4,6 +4,11 @@ $route = '/about-us';
 $page_seo = page_seo($route, 'About Us | ' . SITE_NAME, setting('about_intro'));
 $doctors = db_all("SELECT * FROM doctors WHERE status='published' ORDER BY position");
 $techs   = db_all("SELECT * FROM technologies WHERE status='published' ORDER BY position LIMIT 4");
+$aboutSpecialities = db_all("SELECT name, slug, short_description, image FROM specialities WHERE status='published' ORDER BY is_featured DESC, position LIMIT 4");
+$aboutFaqs = db_all(
+    "SELECT * FROM faqs WHERE is_active=1 AND (context='about-us' OR context='website')
+     ORDER BY CASE WHEN context='about-us' THEN 0 ELSE 1 END, position LIMIT 4"
+);
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero">
@@ -147,6 +152,31 @@ require __DIR__ . '/../includes/header.php';
       <a class="btn btn--primary" href="<?= url('book-appointment') ?>">Book Appointment</a>
       <a class="btn btn--light" href="<?= url('contact-us') ?>">Contact &amp; Directions</a>
     </div>
+  </div>
+  <div class="container about-resource-links">
+    <?php if ($aboutSpecialities): ?>
+    <div class="about-resource-links__services">
+      <div class="section-head"><span class="eyebrow">Explore eye care</span><h2>Browse Our Specialities</h2></div>
+      <div class="cards related-treatment-grid">
+        <?php foreach ($aboutSpecialities as $speciality): ?>
+        <a class="service-card related-treatment-card reveal" href="<?= url('specialities/' . $speciality['slug']) ?>">
+          <div class="service-card__img"><?= image_or_placeholder($speciality['image'], '', $speciality['name']) ?></div>
+          <div class="service-card__body"><h3><?= e($speciality['name']) ?></h3><p><?= e($speciality['short_description']) ?></p><span class="link-arrow">Explore speciality</span></div>
+        </a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($aboutFaqs): ?>
+    <div class="about-resource-links__faq">
+      <div class="section-head center"><span class="eyebrow">Helpful answers</span><h2>Questions About the Hospital</h2></div>
+      <div class="faq">
+        <?php foreach ($aboutFaqs as $faq): ?>
+        <details><summary><?= e($faq['question']) ?><span class="plus" aria-hidden="true">+</span></summary><div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endif; ?>
   </div>
 </section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

@@ -1,6 +1,10 @@
 <?php
 $route = '/patient-safety';
 $page_seo = page_seo($route, 'Patient Safety | ' . SITE_NAME, 'Questions patients can ask about safety and preparation for eye care.');
+$faqs = db_all(
+    "SELECT * FROM faqs WHERE is_active=1 AND (context='patient-safety' OR context='website')
+     ORDER BY CASE WHEN context='patient-safety' THEN 0 ELSE 1 END, position LIMIT 5"
+);
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero"><div class="container">
@@ -24,5 +28,16 @@ require __DIR__ . '/../includes/header.php';
     <?php endforeach; ?>
   </div>
   <p style="color:var(--grey);margin-top:24px">This page offers general information and does not describe or certify specific hospital protocols. Ask your clinician about the precautions relevant to your care.</p>
+  <?php if ($faqs): ?>
+  <div class="patient-resource-faq">
+    <div class="section-head center"><span class="eyebrow">More information</span><h2>Patient Safety Questions</h2></div>
+    <div class="faq">
+      <?php foreach ($faqs as $faq): ?>
+      <details><summary><?= e($faq['question']) ?><span class="plus" aria-hidden="true">+</span></summary><div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
+      <?php endforeach; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+  <div class="patient-safety-cta"><strong>Need information about an appointment?</strong><a class="link-arrow" href="<?= url('contact-us') ?>">Contact the hospital team</a></div>
 </div></section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

@@ -2,6 +2,10 @@
 /** Global header: SEO meta, utility bar, main nav with dropdowns + mega menus. */
 $nav = nav_tree();
 $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?? setting('hero_description'));
+$pageVisual = navigation_link_details($route ?? '/', $seo['title'] ?? SITE_NAME);
+$pageHeroImage = str_starts_with($pageVisual['image'], 'assets/')
+    ? url($pageVisual['image'])
+    : uploads_url($pageVisual['image']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +48,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?></script>
 <?php if (!empty($extra_head)) echo $extra_head; ?>
 </head>
-<body>
+<body style="--page-hero-photo:url('<?= e($pageHeroImage) ?>')">
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <div class="utility-bar">
@@ -75,6 +79,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
         <?php foreach ($nav['top'] as $item):
           $children = $nav['children'][$item['id']] ?? [];
           $mega = $item['mega'] ?? [];
+          $menuRoute = trim((string)$item['url'], '/');
           $hasSub = $children || $mega;
         ?>
         <li class="nav__item<?= $hasSub ? ' nav__item--has-sub' : '' ?>">
@@ -84,17 +89,12 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
           </a>
 
           <?php if ($mega): ?>
-          <?php
-            $menuRoute = trim((string)$item['url'], '/');
-            $featureImage = $menuRoute === 'specialities'
-                ? 'img/ophthalmic-microsurgery-in-a-clinical-theatre.webp'
-                : 'img/hospital-pic-15.webp';
-          ?>
           <div class="mega mega--4" role="menu">
             <?php foreach ($mega as $col): ?>
               <?php if ($col['column_type'] === 'featured'): ?>
+              <?php $feature = navigation_link_details($col['cta_url'] ?: $item['url'], $col['heading'] ?? $item['label']); ?>
               <div class="mega__featured">
-                <img class="mega__image" src="<?= asset($featureImage) ?>" alt="" loading="lazy" decoding="async">
+                <?= image_or_placeholder($feature['image'], 'mega__image', $col['heading'] ?? $item['label']) ?>
                 <div class="mega__feature-copy">
                   <span class="eyebrow">Jain Eye Hospital</span>
                   <h4><?= e($col['heading']) ?></h4>
@@ -105,7 +105,15 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
                 </div>
               </div>
               <?php else: ?>
+              <?php
+                $columnLead = $col['links'][0] ?? ['url' => $item['url'], 'label' => $col['title']];
+                $columnVisual = navigation_link_details($columnLead['url'], $columnLead['label'] ?? $col['title']);
+              ?>
               <div class="mega__col">
+                <a class="mega__col-cover" href="<?= url(ltrim($columnLead['url'], '/')) ?>">
+                  <?= image_or_placeholder($columnVisual['image'], '', $col['title']) ?>
+                  <span><?= e($col['title']) ?><small><?= e($columnVisual['description']) ?></small></span>
+                </a>
                 <h4><?= e($col['title']) ?></h4>
                 <ul>
                   <?php foreach ($col['links'] as $link): ?>
@@ -117,10 +125,20 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
             <?php endforeach; ?>
           </div>
           <?php elseif ($children): ?>
-          <div class="dropdown" role="menu">
+          <div class="dropdown dropdown--visual<?= $menuRoute === 'doctors' ? ' dropdown--doctors' : '' ?>" role="menu">
+            <div class="dropdown__heading">
+              <span class="eyebrow"><?= $menuRoute === 'doctors' ? 'Our Specialists' : 'Explore the Hospital' ?></span>
+              <strong><?= $menuRoute === 'doctors' ? 'Meet your eye-care team' : 'Discover more about us' ?></strong>
+            </div>
+            <div class="dropdown__grid">
             <?php foreach ($children as $child): ?>
-            <a href="<?= url(ltrim($child['url'], '/')) ?>"><?= e($child['label']) ?></a>
+            <?php $childVisual = navigation_link_details($child['url'], $child['label']); ?>
+            <a class="dropdown__card" href="<?= url(ltrim($child['url'], '/')) ?>">
+              <span class="dropdown__photo"><?= image_or_placeholder($childVisual['image'], '', $child['label']) ?></span>
+              <span class="dropdown__copy"><strong><?= e($child['label']) ?></strong><small><?= e($childVisual['description']) ?></small><b>Explore <i aria-hidden="true">→</i></b></span>
+            </a>
             <?php endforeach; ?>
+            </div>
           </div>
           <?php endif; ?>
         </li>
@@ -156,17 +174,35 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
       <?php else: ?>
       <details>
         <summary><?= e($item['label']) ?></summary>
-        <div class="drawer__links">
-          <a href="<?= url(ltrim($item['url'], '/')) ?>"><strong><?= e($item['label']) ?> — Overview</strong></a>
+        <div class="drawer__links drawer__links--visual">
+          <?php $overviewVisual = navigation_link_details($item['url'], $item['label']); ?>
+          <a class="drawer__card" href="<?= url(ltrim($item['url'], '/')) ?>">
+            <span class="drawer__card-image"><?= image_or_placeholder($overviewVisual['image'], '', $item['label']) ?></span>
+            <span><strong><?= e($item['label']) ?> — Overview</strong><small><?= e($overviewVisual['description']) ?></small></span>
+          </a>
           <?php foreach ($children as $child): ?>
-          <a href="<?= url(ltrim($child['url'], '/')) ?>"><?= e($child['label']) ?></a>
+          <?php $childVisual = navigation_link_details($child['url'], $child['label']); ?>
+          <a class="drawer__card" href="<?= url(ltrim($child['url'], '/')) ?>">
+            <span class="drawer__card-image"><?= image_or_placeholder($childVisual['image'], '', $child['label']) ?></span>
+            <span><strong><?= e($child['label']) ?></strong><small><?= e($childVisual['description']) ?></small></span>
+          </a>
           <?php endforeach; ?>
           <?php foreach ($mega as $col): ?>
             <?php if ($col['column_type'] === 'links'): ?>
             <h5><?= e($col['title']) ?></h5>
             <?php foreach ($col['links'] as $link): ?>
-            <a href="<?= url(ltrim($link['url'], '/')) ?>"><?= e($link['label']) ?></a>
+            <?php $linkVisual = navigation_link_details($link['url'], $link['label']); ?>
+            <a class="drawer__card" href="<?= url(ltrim($link['url'], '/')) ?>">
+              <span class="drawer__card-image"><?= image_or_placeholder($linkVisual['image'], '', $link['label']) ?></span>
+              <span><strong><?= e($link['label']) ?></strong><small><?= e($linkVisual['description']) ?></small></span>
+            </a>
             <?php endforeach; ?>
+            <?php else: ?>
+            <?php $featureVisual = navigation_link_details($col['cta_url'] ?: $item['url'], $col['heading'] ?? $item['label']); ?>
+            <a class="drawer__feature" href="<?= url(ltrim($col['cta_url'] ?: $item['url'], '/')) ?>">
+              <?= image_or_placeholder($featureVisual['image'], '', $col['heading'] ?? $item['label']) ?>
+              <span><strong><?= e($col['heading'] ?? $item['label']) ?></strong><small><?= e($col['text'] ?? '') ?></small></span>
+            </a>
             <?php endif; ?>
           <?php endforeach; ?>
         </div>

@@ -70,7 +70,7 @@ require __DIR__ . '/../includes/header.php';
 </section>
 
 <!-- SECTION 3: HOSPITAL INTRODUCTION -->
-<section class="section section--pale">
+<section class="section section--pale" id="home-about">
   <div class="container split">
     <div class="media-stack reveal">
       <div class="media-stack__main"><img src="<?= asset('img/hospital-pic-8.webp') ?>" alt="Reception and waiting area at Jain Eye Hospital" loading="lazy" decoding="async"></div>
@@ -80,6 +80,7 @@ require __DIR__ . '/../includes/header.php';
       <span class="eyebrow">About the Hospital</span>
       <h2>Super-Speciality Eye Care, Close to Home</h2>
       <p style="color:var(--grey);margin-top:16px"><?= e(setting('about_intro')) ?></p>
+      <p class="home-about__detail">Bring your questions and any previous eye-care reports to your consultation. Your clinician can explain the examination findings, relevant options and the next steps for your visit.</p>
       <ul class="check-list">
         <li>Comprehensive eye evaluation under one roof</li>
         <li>Specialist-led diagnosis and treatment planning</li>
@@ -126,12 +127,12 @@ require __DIR__ . '/../includes/header.php';
 <?php endif; ?>
 
 <!-- SECTION 5: WHY CHOOSE JAIN EYE -->
-<section class="section section--green">
+<section class="section section--green" id="home-why-care">
   <div class="container split split--wide-right">
     <div class="reveal">
       <span class="eyebrow">Why Jain Eye</span>
       <h2>Care That Puts Your Vision First</h2>
-      <p style="color:#BFD9CC;margin-top:16px">Every treatment plan begins with a detailed evaluation and an honest conversation about your options.</p>
+      <p style="color:#BFD9CC;margin-top:16px">An eye-care decision starts with understanding your concerns, reviewing relevant information and discussing the options appropriate to your examination.</p>
       <div class="media-stack" style="margin-top:34px">
         <div class="media-stack__main" style="aspect-ratio:4/2.9"><img src="<?= asset('img/ophthalmic-microsurgery-in-a-clinical-theatre.webp') ?>" alt="Ophthalmic care in a clinical theatre" loading="lazy" decoding="async"></div>
       </div>
@@ -158,7 +159,7 @@ require __DIR__ . '/../includes/header.php';
 
 <!-- SECTION 6: DOCTOR SHOWCASE -->
 <?php if ($doctors): ?>
-<section class="section">
+<section class="section" id="home-doctors">
   <div class="container">
     <div class="section-head center reveal">
       <span class="eyebrow">Our Specialists</span>
@@ -199,7 +200,7 @@ require __DIR__ . '/../includes/header.php';
 <?php endif; ?>
 
 <!-- SECTION 7: TECHNOLOGY SHOWCASE -->
-<section class="section section--pale">
+<section class="section section--pale" id="home-technology">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Our Technology</span>
@@ -214,6 +215,7 @@ require __DIR__ . '/../includes/header.php';
         <div class="tech-card__label">
           <span><?= e(ucfirst($tech['category'])) ?></span>
           <h3><?= e($tech['name']) ?></h3>
+          <?php if (!empty($tech['short_description'])): ?><p><?= e($tech['short_description']) ?></p><?php endif; ?>
         </div>
       </a>
       <?php endforeach; ?>
@@ -296,7 +298,7 @@ require __DIR__ . '/../includes/header.php';
     </div>
     <?php endif; ?>
     <?php if (!$testimonials && !$posts): ?>
-    <div class="patient-care-panel reveal">
+      <div class="patient-care-panel reveal" id="home-patient-resources">
       <div>
         <span class="eyebrow">Patient Care</span>
         <h3>Plan your visit with clear, practical information</h3>
@@ -313,13 +315,13 @@ require __DIR__ . '/../includes/header.php';
 </section>
 
 <!-- SECTION 10: REELS EXPERIENCE -->
-<section class="section">
+<section class="section" id="home-reels">
   <div class="container reels-wrap">
     <div class="reveal">
       <span class="eyebrow">Watch &amp; Learn</span>
       <h2>Expert Eye Care Insights, One Reel at a Time</h2>
-      <p style="color:var(--grey);margin-top:16px">Short, easy-to-follow videos from our doctors covering everyday eye health, treatments and recovery guidance.</p>
-      <div class="topic-tags">
+      <p class="reels-wrap__intro">When patient-education videos are available, they will be shown here. Explore the video library for practical information about eye health and consultations.</p>
+      <div class="topic-tags" aria-label="Video topics">
         <span>Cataract</span><span>LASIK</span><span>Retina</span><span>Children's Eye Health</span><span>Eye Care Tips</span>
       </div>
       <a class="btn btn--dark" href="<?= url('reels') ?>">View All Videos</a>

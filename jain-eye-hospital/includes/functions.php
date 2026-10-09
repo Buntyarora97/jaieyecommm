@@ -251,6 +251,130 @@ function nav_tree(): array
     return $tree;
 }
 
+/**
+ * Reusable, CMS-aware image and short description for navigation cards.
+ * Uses the published page record where possible and authentic hospital
+ * photography for fixed informational routes.
+ */
+function navigation_link_details(string $href, string $label = ''): array
+{
+    static $content = null;
+    if ($content === null) {
+        $content = [
+            'images' => [
+                '/' => 'assets/img/hospital-pic-2.webp',
+                '/about-us' => 'assets/img/hospital-pic-2.webp',
+                '/about-us#mission-vision' => 'assets/img/hospital-pic-8.webp',
+                '/about-us#leadership' => '',
+                '/about-us#our-team' => 'assets/img/hospital-pic-7.webp',
+                '/gallery?category=infrastructure' => 'assets/img/hospital-pic-8.webp',
+                '/awards' => 'assets/img/hospital-pic-2.webp',
+                '/academics' => 'assets/img/surgeon-at-the-operating-microscope.webp',
+                '/community' => 'assets/img/hospital-pic-15.webp',
+                '/doctors' => '',
+                '/specialities' => '',
+                '/treatments' => '',
+                '/technology' => '',
+                '/technology#diagnostics' => 'assets/img/hospital-pic-16.webp',
+                '/technology#laser' => 'assets/img/hospital-pic-17.webp',
+                '/technology#surgical' => 'assets/img/surgeon-at-the-operating-microscope.webp',
+                '/technology#facility' => 'assets/img/hospital-pic-8.webp',
+                '/patient-journey' => 'assets/img/hospital-pic-15.webp',
+                '/patient-education' => 'assets/img/hospital-pic-15.webp',
+                '/faqs' => 'assets/img/hospital-pic-15.webp',
+                '/patient-safety' => 'assets/img/ophthalmic-microsurgery-preparation.webp',
+                '/insurance-payment' => 'assets/img/hospital-pic-8.webp',
+                '/international-patients' => 'assets/img/hospital-pic-15.webp',
+                '/reels' => 'assets/img/hospital-pic-15.webp',
+                '/gallery?category=technology' => 'assets/img/hospital-pic-17.webp',
+                '/media-news' => 'assets/img/hospital-pic-8.webp',
+                '/contact-us' => 'assets/img/hospital-pic-2.webp',
+                '/book-appointment' => 'assets/img/hospital-pic-15.webp',
+            ],
+            'descriptions' => [
+                '/' => SITE_NAME . ' in ' . SITE_AREA . '.',
+                '/about-us' => 'Learn about the hospital and its patient-centred approach.',
+                '/about-us#mission-vision' => 'The mission, vision and values that guide the hospital.',
+                '/about-us#leadership' => 'View the doctors listed by the hospital.',
+                '/about-us#our-team' => 'Find practical information for planning a visit.',
+                '/gallery?category=infrastructure' => 'Photographs of the hospital and its spaces.',
+                '/awards' => 'Verified recognition information, when available.',
+                '/academics' => 'Confirmed academic and training updates.',
+                '/community' => 'Published community initiative updates.',
+                '/doctors' => 'Meet the doctors listed by the hospital.',
+                '/specialities' => 'Explore the eye-care specialities listed by the hospital.',
+                '/treatments' => 'Explore published treatment and procedure information.',
+                '/technology' => 'View hospital photographs of clinical spaces and equipment.',
+                '/patient-journey' => 'What to bring and what to ask when planning a visit.',
+                '/patient-education' => 'General eye-care education and patient resources.',
+                '/faqs' => 'Answers to common questions about planning a visit.',
+                '/patient-safety' => 'Questions to discuss with your clinician.',
+                '/insurance-payment' => 'Ask the hospital about current payment information.',
+                '/international-patients' => 'Contact the hospital to discuss visit planning.',
+                '/reels' => 'Watch patient education videos when available.',
+                '/gallery?category=technology' => 'Photographs of equipment at the hospital.',
+                '/media-news' => 'Hospital news and approved updates.',
+                '/contact-us' => 'Contact details and directions to the hospital.',
+                '/book-appointment' => 'Send an appointment request to the hospital team.',
+            ],
+            'technology_categories' => [],
+        ];
+
+        foreach (db_all("SELECT slug, name, photo, designation, specialisation, biography FROM doctors WHERE status='published' ORDER BY position") as $doctor) {
+            $route = '/doctors/' . $doctor['slug'];
+            $content['images'][$route] = $doctor['photo'] ?: '';
+            $about = trim(implode(' · ', array_filter([$doctor['designation'], $doctor['specialisation']])));
+            $content['descriptions'][$route] = $about ?: excerpt((string)($doctor['biography'] ?? ''), 115);
+        }
+
+        foreach (db_all("SELECT slug, name, image, short_description FROM specialities WHERE status='published' ORDER BY position") as $speciality) {
+            $route = '/specialities/' . $speciality['slug'];
+            $content['images'][$route] = $speciality['image'] ?: '';
+            $content['descriptions'][$route] = $speciality['short_description'] ?: 'Read about ' . $speciality['name'] . ' and request a consultation.';
+            if (empty($content['images']['/specialities'])) $content['images']['/specialities'] = $speciality['image'] ?: '';
+        }
+
+        foreach (db_all("SELECT slug, name, image, short_description FROM treatments WHERE status='published' ORDER BY position") as $treatment) {
+            $route = '/treatments/' . $treatment['slug'];
+            $content['images'][$route] = $treatment['image'] ?: '';
+            $content['descriptions'][$route] = $treatment['short_description'] ?: 'Read information about ' . $treatment['name'] . '.';
+            if (empty($content['images']['/treatments'])) $content['images']['/treatments'] = $treatment['image'] ?: '';
+        }
+
+        foreach (db_all("SELECT slug, name, category, image, short_description FROM technologies WHERE status='published' ORDER BY position") as $technology) {
+            if (empty($content['images']['/technology'])) $content['images']['/technology'] = $technology['image'] ?: '';
+            if (!empty($technology['category']) && empty($content['technology_categories'][$technology['category']])) {
+                $content['technology_categories'][$technology['category']] = $technology['image'] ?: '';
+            }
+            $content['images']['/technology/' . $technology['slug']] = $technology['image'] ?: '';
+        }
+        if (empty($content['images']['/doctors'])) {
+            $content['images']['/doctors'] = 'assets/img/hospital-pic-15.webp';
+        }
+        if (empty($content['images']['/about-us#leadership'])) {
+            $content['images']['/about-us#leadership'] = $content['images']['/doctors'];
+        }
+    }
+
+    $parts = parse_url($href) ?: [];
+    $path = $parts['path'] ?? '/';
+    $key = $path;
+    if (!empty($parts['query'])) $key .= '?' . $parts['query'];
+    if (!empty($parts['fragment'])) $key .= '#' . $parts['fragment'];
+    $image = $content['images'][$key] ?? $content['images'][$path] ?? '';
+    $description = $content['descriptions'][$key] ?? $content['descriptions'][$path] ?? '';
+
+    if (!$image && $path === '/technology' && !empty($parts['fragment'])) {
+        $image = $content['technology_categories'][$parts['fragment']] ?? '';
+    }
+    if (!$image) $image = 'assets/img/hospital-pic-15.webp';
+    if (!$description) {
+        $description = $label !== '' ? 'Explore ' . $label . ' at ' . SITE_NAME . '.' : 'Learn more about ' . SITE_NAME . '.';
+    }
+
+    return ['image' => $image, 'description' => excerpt($description, 115)];
+}
+
 function footer_columns(): array
 {
     $rows = db_all("SELECT * FROM footer_links WHERE is_active = 1 ORDER BY column_group, position");

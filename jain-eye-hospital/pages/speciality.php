@@ -8,7 +8,6 @@ $page_seo = page_seo($route, $spec['name'] . ' in Shalimar Bagh, Delhi | ' . SIT
     excerpt($spec['short_description'] ?: $spec['overview'] ?: '', 155));
 $treatments = db_all("SELECT * FROM treatments WHERE speciality_id = ? AND status='published' ORDER BY position", [$spec['id']]);
 $doctors = db_all("SELECT d.* FROM doctors d JOIN doctor_specialities ds ON ds.doctor_id=d.id WHERE ds.speciality_id=? AND d.status='published'", [$spec['id']]);
-if (!$doctors) { $doctors = db_all("SELECT * FROM doctors WHERE status='published' ORDER BY position LIMIT 3"); }
 $faqs = db_all("SELECT * FROM faqs WHERE is_active=1 AND (context=? OR context='website') ORDER BY position LIMIT 5", [$spec['slug']]);
 $posts = db_all("SELECT * FROM blog_posts WHERE status='published' ORDER BY published_at DESC LIMIT 3");
 
