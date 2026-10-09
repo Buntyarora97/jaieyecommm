@@ -8,7 +8,7 @@ $page_seo = page_seo($route, $spec['name'] . ' in Shalimar Bagh, Delhi | ' . SIT
     excerpt($spec['short_description'] ?: $spec['overview'] ?: '', 155));
 $treatments = db_all("SELECT * FROM treatments WHERE speciality_id = ? AND status='published' ORDER BY position", [$spec['id']]);
 $doctors = db_all("SELECT d.* FROM doctors d JOIN doctor_specialities ds ON ds.doctor_id=d.id WHERE ds.speciality_id=? AND d.status='published'", [$spec['id']]);
-$faqs = db_all("SELECT * FROM faqs WHERE is_active=1 AND (context=? OR context='website') ORDER BY position LIMIT 5", [$spec['slug']]);
+$faqs = db_all("SELECT * FROM faqs WHERE is_active=1 AND context=? ORDER BY position LIMIT 8", [$spec['slug']]);
 $posts = db_all("SELECT * FROM blog_posts WHERE status='published' ORDER BY published_at DESC LIMIT 3");
 
 $sections = [
@@ -21,6 +21,13 @@ $sections = [
     'what_to_expect'  => 'What to Expect',
     'recovery'        => 'Recovery & Follow-Up',
 ];
+$populatedSections = array_filter(
+    $sections,
+    static function (string $field) use ($spec): bool {
+        return !empty($spec[$field]);
+    },
+    ARRAY_FILTER_USE_KEY
+);
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero care-hero">
@@ -38,15 +45,32 @@ require __DIR__ . '/../includes/header.php';
   </div>
 </section>
 
+<nav class="speciality-page-nav" aria-label="On this page">
+  <div class="container">
+    <span>Explore this care area</span>
+    <?php foreach ($populatedSections as $field => $label): ?><a href="#speciality-section-<?= e($field) ?>"><?= e($label) ?></a><?php endforeach; ?>
+    <?php if ($treatments): ?><a href="#speciality-treatments">Related services</a><?php endif; ?>
+    <?php if ($doctors): ?><a href="#speciality-doctors">Doctors</a><?php endif; ?>
+    <a href="#speciality-faqs">FAQs</a>
+  </div>
+</nav>
+
 <section class="section">
   <div class="container split">
     <div class="prose reveal">
       <?php foreach ($sections as $field => $label): ?>
         <?php if (!empty($spec[$field])): ?>
-        <h2><?= e($label) ?></h2>
+        <h2 id="speciality-section-<?= e($field) ?>"><?= e($label) ?></h2>
         <p><?= nl2br(e($spec[$field])) ?></p>
         <?php endif; ?>
       <?php endforeach; ?>
+      <?php if (count($populatedSections) < 4): ?>
+      <div class="speciality-content-note">
+        <span class="eyebrow">More information</span>
+        <strong>This care guide is being expanded</strong>
+        <p>The hospital is preparing additional verified information for this speciality. Use the appointment team for advice about a personal concern or treatment question.</p>
+      </div>
+      <?php endif; ?>
       <div class="care-prose__notice">
         <strong>Planning your consultation?</strong>
         <p>Bring any previous eye reports, your current spectacles and a list of medicines or eye drops you use. Your clinician can explain which examinations or options are relevant to you.</p>
@@ -77,8 +101,24 @@ require __DIR__ . '/../includes/header.php';
   </div>
 </section>
 
+<?php if ($treatments): ?>
+<section class="section section--pale" id="speciality-treatments">
+  <div class="container">
+    <div class="section-head reveal"><span class="eyebrow">Related services</span><h2>Explore published treatment information</h2><p>These services are linked to <?= e($spec['name']) ?> in the hospital directory. A clinician can discuss which, if any, may apply to your care.</p></div>
+    <div class="cards related-treatment-grid">
+      <?php foreach ($treatments as $t): ?>
+      <a class="service-card related-treatment-card reveal" href="<?= url('treatments/' . $t['slug']) ?>">
+        <div class="service-card__img"><?= image_or_placeholder($t['image'], '', $t['name']) ?></div>
+        <div class="service-card__body"><span class="eyebrow">Treatment information</span><h3><?= e($t['name']) ?></h3><p><?= e($t['short_description']) ?></p><span class="link-arrow">Read more</span></div>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <?php if ($doctors): ?>
-<section class="section section--pale">
+<section class="section section--pale" id="speciality-doctors">
   <div class="container">
     <div class="section-head reveal"><span class="eyebrow">Specialists</span><h2>Doctors for <?= e($spec['name']) ?></h2></div>
     <div class="cards">
@@ -97,19 +137,21 @@ require __DIR__ . '/../includes/header.php';
 </section>
 <?php endif; ?>
 
-<?php if ($faqs): ?>
-<section class="section">
+<section class="section" id="speciality-faqs">
   <div class="container">
     <div class="section-head center reveal"><span class="eyebrow">FAQs</span><h2>Questions About <?= e($spec['name']) ?></h2></div>
+    <?php if ($faqs): ?>
     <div class="faq">
       <?php foreach ($faqs as $faq): ?>
       <details><summary><?= e($faq['question']) ?><span class="plus">+</span></summary>
         <div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
       <?php endforeach; ?>
     </div>
+    <?php else: ?>
+    <div class="speciality-faq-note"><div class="speciality-faq-note__symbol" aria-hidden="true">?</div><div><strong>Answers for this speciality are being prepared</strong><p>For advice about <?= e($spec['name']) ?> or your own eye-care needs, speak with the hospital team. Personal recommendations are made after a consultation.</p></div><a class="btn btn--outline" href="<?= url('contact-us') ?>">Ask the hospital</a></div>
+    <?php endif; ?>
   </div>
 </section>
-<?php endif; ?>
 
 <section class="section section--green">
   <div class="container cta-final">

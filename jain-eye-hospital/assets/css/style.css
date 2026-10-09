@@ -1143,3 +1143,189 @@ h1,h2,h3,h4{letter-spacing:-.035em}
   .page-hero:not(.care-hero){background-position:center,right center}
   .patient-safety-cta{align-items:flex-start;flex-direction:column}
 }
+
+/* Technology destination: editorial image-led introduction and browsable real-photo gallery. */
+.technology-hero{position:relative;isolation:isolate;overflow:hidden;background:var(--green-900);color:#fff}
+.technology-hero::before{position:absolute;z-index:-1;inset:-40% -8% auto auto;width:min(68vw,900px);aspect-ratio:1;border:1px solid rgba(225,239,229,.12);border-radius:50%;content:""}
+.technology-hero__inner{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(340px,.96fr);gap:clamp(36px,7vw,100px);align-items:center;padding-block:clamp(58px,8vw,112px)}
+.technology-hero__copy{max-width:650px}
+.technology-hero .breadcrumb{margin-bottom:30px;color:#d6e4db}
+.technology-hero .breadcrumb a{color:#e9f2ec}
+.technology-hero .eyebrow{color:#f1b28e}
+.technology-hero h1{max-width:640px;margin:15px 0 18px;color:#fff;font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:-.055em}
+.technology-hero__copy>p{max-width:570px;color:#d1dfd6;font-size:1.02rem;line-height:1.8}
+.technology-hero__actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.technology-hero__actions .btn{border-radius:7px}
+.technology-hero__facts{display:flex;gap:32px;margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.2)}
+.technology-hero__facts>div{display:flex;flex-direction:column;gap:1px}
+.technology-hero__facts strong{font-family:var(--font-head);font-size:1.45rem;color:#fff}
+.technology-hero__facts span{font-size:.76rem;color:#c6d8cc}
+.technology-hero__visual{position:relative;min-width:0;padding:0 26px 26px 0}
+.technology-hero__image{height:clamp(320px,42vw,530px);overflow:hidden;border-radius:5px;background:#244a3f;box-shadow:0 28px 55px -28px rgba(0,0,0,.55)}
+.technology-hero__image img{width:100%;height:100%;object-fit:cover}
+.technology-hero__visual::after{position:absolute;z-index:-1;right:0;bottom:0;width:60%;height:63%;border:1px solid rgba(241,138,75,.72);content:""}
+.technology-hero__caption{position:absolute;right:0;bottom:0;display:flex;flex-direction:column;gap:5px;min-width:210px;padding:16px 20px;background:#f3f0e7;color:var(--green-900);box-shadow:var(--shadow-md)}
+.technology-hero__caption .eyebrow{font-size:.62rem;color:var(--green-700)}
+.technology-hero__caption strong{font-family:var(--font-head);font-size:1rem}
+.technology-hero__caption>span:last-child{font-size:.78rem;color:var(--grey)}
+.technology-hero__index{position:absolute;top:18px;right:0;font-family:var(--font-head);font-size:.75rem;letter-spacing:.12em;color:#d1dfd6}
+.technology-hero__empty{min-height:320px;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--green-800)}
+.technology-hero__empty strong{margin-top:16px;font-size:1.5rem;color:#fff}
+.technology-hero__empty p{margin-top:8px;color:#d1dfd6}
+.technology-page{overflow:hidden}
+.technology-intro{display:grid;grid-template-columns:1fr minmax(260px,.7fr);gap:36px;align-items:end;margin-bottom:26px}
+.technology-intro h2{max-width:570px;margin-top:10px}
+.technology-intro>p{color:var(--grey);line-height:1.75}
+.technology-nav{position:sticky;z-index:10;top:90px;display:flex;gap:9px;overflow-x:auto;padding:14px 0 24px;background:var(--white);scrollbar-width:thin}
+.technology-nav a{display:inline-flex;align-items:center;gap:10px;flex:none;padding:10px 15px;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--green-900);font-size:.82rem;font-weight:700}
+.technology-nav a:hover{border-color:var(--green-700);background:var(--pale)}
+.technology-nav a span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--pale);font-size:.7rem}
+.technology-category{padding-top:36px;margin-top:15px;scroll-margin-top:145px}
+.technology-category__heading{display:flex;align-items:center;gap:19px;margin-bottom:24px}
+.technology-category__number{font-family:var(--font-editorial);font-size:3.25rem;line-height:1;color:#c8d6ca}
+.technology-category__heading .eyebrow{font-size:.65rem}
+.technology-category__heading h2{margin-top:4px;font-size:clamp(1.4rem,2.5vw,2rem)}
+.technology-category__count{margin-left:auto;font-size:.78rem;color:var(--grey)}
+.technology-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.technology-gallery-card{overflow:hidden;border:1px solid #e4e5d9;background:#fff;transition:transform .25s,box-shadow .25s}
+.technology-gallery-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.technology-gallery-card--feature{grid-column:span 2;display:grid;grid-template-columns:1.1fr .9fr}
+.technology-gallery-card__image{position:relative;aspect-ratio:1.48/1;overflow:hidden;background:var(--pale)}
+.technology-gallery-card--feature .technology-gallery-card__image{height:100%;min-height:280px;aspect-ratio:auto}
+.technology-gallery-card__image img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.technology-gallery-card:hover .technology-gallery-card__image img{transform:scale(1.035)}
+.technology-gallery-card__image>span{position:absolute;top:12px;left:12px;display:grid;place-items:center;width:34px;height:34px;background:var(--white);font-family:var(--font-head);font-size:.72rem;font-weight:800;color:var(--green-900)}
+.technology-gallery-card__body{padding:20px 21px 22px}
+.technology-gallery-card--feature .technology-gallery-card__body{display:flex;flex-direction:column;justify-content:center;padding:clamp(20px,3vw,35px)}
+.technology-gallery-card__label{font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+.technology-gallery-card__body h3{margin:8px 0;font-size:1.15rem}
+.technology-gallery-card__body p{font-size:.85rem;line-height:1.7;color:var(--grey)}
+.technology-gallery-card__body .technology-gallery-card__summary{margin-bottom:8px;color:var(--ink);font-weight:600}
+.technology-gallery-card--feature .technology-gallery-card__body h3{font-size:clamp(1.35rem,2.2vw,1.8rem)}
+.technology-guide{margin-top:64px}
+
+/* Specialty directory and detail pages. */
+.speciality-directory__facts{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:26px;color:#d1dfd6;font-size:.83rem}
+.speciality-directory__facts>span{padding-right:20px;border-right:1px solid rgba(255,255,255,.26)}
+.speciality-directory__facts strong{margin-right:5px;color:#fff;font-size:1rem}
+.speciality-directory__facts>a{color:#fff;font-weight:700}
+.speciality-directory__group{margin-bottom:clamp(54px,7vw,92px);scroll-margin-top:125px}
+.speciality-directory__group .section-head h2{margin-top:8px}
+.speciality-directory__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.speciality-directory-card{min-width:0;overflow:hidden;border:1px solid #e2e5dc;background:#fff;color:var(--ink);transition:transform .25s,box-shadow .25s}
+.speciality-directory-card:hover{color:var(--ink);transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.speciality-directory-card__image{position:relative;aspect-ratio:1.7/1;overflow:hidden;background:var(--pale)}
+.speciality-directory-card__image img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.speciality-directory-card:hover .speciality-directory-card__image img{transform:scale(1.04)}
+.speciality-directory-card__image>span{position:absolute;left:13px;bottom:13px;padding:7px 10px;background:rgba(16,55,45,.9);color:#fff;font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.speciality-directory-card__body{display:flex;flex-direction:column;min-height:200px;padding:20px 22px 23px}
+.speciality-directory-card__index{font-size:.64rem;letter-spacing:.13em;color:var(--orange);font-weight:800}
+.speciality-directory-card__body h3{margin:9px 0;font-size:1.08rem}
+.speciality-directory-card__body p{flex:1;color:var(--grey);font-size:.85rem;line-height:1.7}
+.speciality-directory__group .section-head p{margin-top:10px}
+.speciality-page-nav{position:sticky;top:90px;z-index:20;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 6px 14px -14px rgba(0,0,0,.3)}
+.speciality-page-nav>.container{display:flex;align-items:center;gap:20px;overflow-x:auto;min-height:60px;white-space:nowrap;scrollbar-width:thin}
+.speciality-page-nav span{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green-800)}
+.speciality-page-nav a{padding:9px 0;font-size:.81rem;font-weight:600;color:var(--grey)}
+.speciality-page-nav a:hover{color:var(--orange)}
+.speciality-page-nav~.section h2[id]{scroll-margin-top:160px}
+.speciality-content-note{display:flex;flex-direction:column;gap:8px;margin:26px 0;padding:22px 24px;background:var(--off-white);border-left:3px solid var(--orange)}
+.speciality-content-note .eyebrow{font-size:.65rem}
+.speciality-content-note strong{font-family:var(--font-head);color:var(--green-900)}
+.speciality-content-note p{margin:0;font-size:.88rem;color:var(--grey)}
+#speciality-treatments,#speciality-doctors,#speciality-faqs{scroll-margin-top:125px}
+
+/* Doctor pages: verified profile details, associated media and doctor-specific reels. */
+.doctor-profile__portrait{position:relative}
+.doctor-profile__portrait .profile-hero__photo{max-width:none}
+.doctor-profile__portrait-caption{position:absolute;right:-14px;bottom:20px;display:flex;flex-direction:column;gap:3px;min-width:190px;padding:15px 18px;background:var(--white);box-shadow:var(--shadow-md)}
+.doctor-profile__portrait-caption span{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:800}
+.doctor-profile__portrait-caption strong{font-family:var(--font-head);color:var(--green-900)}
+.doctor-profile__specialty{margin:9px 0;color:var(--orange);font-weight:700}
+.doctor-profile__notice{max-width:680px;margin-top:18px;padding:18px 20px;border-left:3px solid var(--orange);background:var(--off-white)}
+.doctor-profile__notice strong{font-family:var(--font-head);color:var(--green-900)}
+.doctor-profile__notice p{margin:6px 0 0;color:var(--grey);font-size:.9rem}
+.doctor-profile-nav{display:flex;align-items:center;gap:18px;overflow-x:auto;margin:46px 0 18px;padding:15px 18px;border:1px solid var(--border);background:#fff;white-space:nowrap}
+.doctor-profile-nav>span{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green-800)}
+.doctor-profile-nav>a{font-size:.8rem;font-weight:700;color:var(--grey)}
+.doctor-profile-nav>a:hover{color:var(--orange)}
+.doctor-profile-details{max-width:900px!important;margin-top:48px}
+.doctor-profile-details__heading{margin-bottom:30px}
+.doctor-profile-details__heading h2{margin:8px 0}
+.doctor-profile-details__heading p{color:var(--grey)}
+.doctor-profile-details>h2{padding-top:21px;border-top:1px solid var(--border)}
+.doctor-reels-section,.doctor-gallery-section{margin-top:clamp(52px,7vw,88px);scroll-margin-top:125px}
+.doctor-reels-section{padding:clamp(24px,4vw,42px);background:var(--off-white)}
+.doctor-reels-section__heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px}
+.doctor-reels-section__heading h2{margin:8px 0}
+.doctor-reels-section__heading p{max-width:620px;color:var(--grey)}
+.doctor-reel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.doctor-reel-card{overflow:hidden;border:1px solid var(--border);background:#fff}
+.doctor-reel-card__video{aspect-ratio:9/14;background:var(--green-900)}
+.doctor-reel-card__video video{display:block;width:100%;height:100%;object-fit:cover}
+.doctor-reel-card__body{padding:17px 18px 20px}
+.doctor-reel-card__body .eyebrow{font-size:.61rem}
+.doctor-reel-card__body h3{margin:8px 0;font-size:1rem}
+.doctor-reel-card__body p{font-size:.85rem;color:var(--grey)}
+.doctor-reels-empty{display:flex;align-items:center;gap:17px;padding:22px;background:#fff;border:1px solid var(--border)}
+.doctor-reels-empty__icon{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:50%;background:var(--pale);color:var(--green-800)}
+.doctor-reels-empty>div:nth-child(2){flex:1}
+.doctor-reels-empty strong{font-family:var(--font-head);color:var(--green-900)}
+.doctor-reels-empty p{margin-top:4px;color:var(--grey);font-size:.86rem}
+.doctor-reels-empty .btn{border-radius:5px}
+.doctor-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.doctor-photo-grid figure{overflow:hidden;border:1px solid var(--border);background:#fff}
+.doctor-photo-grid img{width:100%;aspect-ratio:1.3/1;object-fit:cover}
+.doctor-photo-grid figcaption{padding:12px 15px;color:var(--grey);font-size:.8rem}
+
+@media(max-width:900px){
+  .technology-hero__inner{grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);gap:34px}
+  .speciality-directory__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .technology-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .technology-gallery-card--feature{grid-column:1/-1}
+}
+@media(max-width:640px){
+  .technology-hero__inner{grid-template-columns:1fr;padding-block:42px}
+  .technology-hero h1{font-size:clamp(2.2rem,10vw,3.1rem)}
+  .technology-hero__visual{padding-right:15px}
+  .technology-hero__image{height:320px}
+  .technology-hero__caption{right:-2px;min-width:175px}
+  .technology-hero__actions .btn{width:auto}
+  .technology-hero__facts{gap:22px;margin-top:30px}
+  .technology-intro{grid-template-columns:1fr;gap:13px}
+  .technology-nav{top:72px}
+  .technology-category__heading{gap:12px;flex-wrap:wrap}
+  .technology-category__number{font-size:2.4rem}
+  .technology-category__count{margin-left:auto}
+  .technology-gallery{grid-template-columns:1fr}
+  .technology-gallery-card--feature{grid-column:auto;grid-template-columns:1fr}
+  .technology-gallery-card--feature .technology-gallery-card__image{min-height:0;aspect-ratio:1.48/1}
+  .speciality-directory__facts{gap:10px}
+  .speciality-directory__facts>span{padding-right:10px}
+  .speciality-directory__facts>a{flex-basis:100%}
+  .speciality-directory__grid{grid-template-columns:1fr}
+  .speciality-directory-card__body{min-height:0}
+  .speciality-page-nav{top:72px}
+  .speciality-page-nav>.container{gap:16px;min-height:54px}
+  .speciality-page-nav span{display:none}
+  .doctor-profile__portrait-caption{right:-5px;bottom:12px;min-width:165px}
+  .doctor-profile-nav{gap:14px;margin-top:32px}
+  .doctor-profile-nav>span{display:none}
+  .doctor-reels-section__heading{align-items:flex-start;flex-direction:column}
+  .doctor-reel-grid,.doctor-photo-grid{grid-template-columns:1fr}
+  .doctor-reel-card__video{aspect-ratio:9/12}
+  .doctor-reels-empty{align-items:flex-start;flex-direction:column}
+  .doctor-reels-empty .btn{width:100%}
+}
+.technology-faq-note,.speciality-faq-note{display:flex;align-items:center;gap:18px;max-width:960px;margin:0 auto;padding:22px;border:1px solid var(--border);background:#fff}
+.technology-faq-note__icon,.speciality-faq-note__symbol{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:50%;background:var(--pale);font-family:var(--font-head);font-weight:800;color:var(--green-800)}
+.technology-faq-note>div:nth-child(2),.speciality-faq-note>div:nth-child(2){flex:1}
+.technology-faq-note strong,.speciality-faq-note strong{font-family:var(--font-head);color:var(--green-900)}
+.technology-faq-note p,.speciality-faq-note p{margin-top:5px;color:var(--grey);font-size:.87rem;line-height:1.65}
+.technology-faq-note>a{flex:none;font-size:.83rem;font-weight:700;color:var(--green-800)}
+.speciality-faq-note .btn{flex:none;border-radius:5px}
+.doctor-profile-faq{margin-top:58px;scroll-margin-top:125px}
+@media(max-width:640px){
+  .technology-faq-note,.speciality-faq-note{align-items:flex-start;flex-direction:column}
+  .technology-faq-note>a,.speciality-faq-note .btn{width:100%}
+}
