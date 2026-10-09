@@ -80,27 +80,27 @@ ul{list-style:none}
 .site-header{position:sticky;top:0;z-index:200;background:#fff;
   transition:box-shadow .25s}
 .site-header.is-scrolled{box-shadow:0 6px 30px -10px rgba(0,46,34,.18)}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding-block:14px}
 .nav__logo{display:flex;align-items:center;gap:12px;flex:none}
-.nav__logo img{height:52px;width:auto}
+.nav__logo img{height:48px;width:auto}
 .nav__toggle{display:none;width:48px;height:48px;border:1px solid var(--border);
   border-radius:12px;background:#fff;cursor:pointer;align-items:center;justify-content:center}
 .nav__toggle span,.nav__toggle span::before,.nav__toggle span::after{content:"";display:block;
   width:20px;height:2px;background:var(--green-800);border-radius:2px;position:relative;transition:.25s}
 .nav__toggle span::before{position:absolute;top:-6px}
 .nav__toggle span::after{position:absolute;top:6px}
-.nav__menu{display:flex;align-items:center;gap:4px}
+.nav__menu{display:flex;align-items:center;gap:0}
 .nav__item{position:relative}
-.nav__link{display:inline-flex;align-items:center;gap:6px;padding:12px 14px;
-  font-family:var(--font-head);font-weight:600;font-size:.92rem;color:var(--ink);
+.nav__link{display:inline-flex;align-items:center;gap:4px;padding:12px 9px;
+  font-family:var(--font-head);font-weight:600;font-size:.86rem;color:var(--ink);
   border-radius:10px;white-space:nowrap}
 .nav__link:hover,.nav__item.is-open>.nav__link{color:var(--green-700);background:var(--pale)}
 .nav__link .caret{width:10px;height:10px;border-right:1.6px solid currentColor;
   border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:.2s}
 .nav__item.is-open .caret{transform:rotate(-135deg) translateY(-1px)}
-.nav__cta{display:flex;align-items:center;gap:14px;flex:none}
-.nav__call{width:48px;height:48px;border-radius:50%;background:var(--pale);
+.nav__cta{display:flex;align-items:center;gap:10px;flex:none}
+.nav__call{width:44px;height:44px;border-radius:50%;background:var(--pale);
   display:inline-flex;align-items:center;justify-content:center}
 .nav__call svg{width:20px;height:20px;fill:var(--green-800)}
 .nav__call:hover{background:var(--green-800)}
@@ -808,4 +808,11 @@ h1,h2,h3,h4{letter-spacing:-.035em}
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none}
   .hero__frame img,.spec-card__img img,.post-card__img img,.tech-card img{transition:none}
+}
+
+/* Mobile rails show one complete card at a time; native swipe and snap remain enabled. */
+@media (max-width:820px){
+  .spec-strip{grid-auto-columns:100%;margin-right:0;padding-right:3px;scroll-padding-inline:3px}
+  .carousel__track{grid-auto-columns:100%;scroll-padding-inline:4px}
+  .spec-card,.service-card{width:100%;min-width:0;scroll-snap-stop:always}
 }

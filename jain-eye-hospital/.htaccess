@@ -11,7 +11,7 @@ RewriteEngine On
 # RewriteBase /
 
 # Never expose application internals, source documentation, or the SQL schema.
-RewriteRule ^(config|database|docs|includes|storage)(/|$) - [F,L,NC]
+RewriteRule ^(config|database|docs|includes|storage|admin/includes)(/|$) - [F,L,NC]
 
 # Force HTTPS (uncomment after SSL is enabled)
 # RewriteCond %{HTTPS} off

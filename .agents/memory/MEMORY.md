@@ -1,0 +1,1 @@
+- [Hospital brand and claim review](hospital-content-approval.md) — Use the supplied logo unchanged and publish health or hospital claims only after verification.

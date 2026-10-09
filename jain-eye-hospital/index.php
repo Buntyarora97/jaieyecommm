@@ -7,6 +7,16 @@ declare(strict_types=1);
 // Let PHP's built-in preview server serve real static files directly.
 if (PHP_SAPI === 'cli-server') {
     $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+    $privatePath = preg_match('#^/(?:config|database|docs|includes|storage|admin/includes)(?:/|$)#i', $requestPath)
+        || preg_match('#^/uploads/.*\.(?:php|phtml|phar)(?:$|/)#i', $requestPath)
+        || preg_match('#^/(?:\.htaccess|\.gitignore|\.env(?:\..*)?|README\.md|composer\.(?:json|lock))$#i', $requestPath)
+        || preg_match('#\.(?:sql|md|log|ini|sh)$#i', $requestPath);
+    if ($privatePath) {
+        http_response_code(404);
+        header('Content-Type: text/plain; charset=utf-8');
+        exit('Not found');
+    }
+
     $rootPath = realpath(__DIR__);
     $requestedFile = realpath(__DIR__ . $requestPath);
     if ($requestPath !== '/' && $rootPath && $requestedFile

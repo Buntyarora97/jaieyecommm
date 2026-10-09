@@ -47,7 +47,7 @@ require __DIR__ . '/../includes/header.php';
 </section>
 
 <!-- SECTION 2: SPECIALITY DISCOVERY -->
-<section class="section">
+<section class="section" id="home-specialities">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">Our Specialities</span>
@@ -93,7 +93,7 @@ require __DIR__ . '/../includes/header.php';
 
 <!-- SECTION 4: SERVICES CAROUSEL -->
 <?php if ($services): ?>
-<section class="section">
+<section class="section" id="home-treatments">
   <div class="container" data-carousel>
     <div class="section-head reveal">
       <span class="eyebrow">Treatments &amp; Procedures</span>
