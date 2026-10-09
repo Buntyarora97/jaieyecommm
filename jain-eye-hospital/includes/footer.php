@@ -40,7 +40,7 @@ if (!$patient_resource_links) {
     <div class="container footer-grid">
       <div class="footer-brand">
         <a class="footer-brand__logo" href="<?= url('/') ?>" aria-label="<?= e(SITE_NAME) ?> home">
-          <img src="<?= asset('img/logo-official.webp') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>">
+          <img src="<?= asset('img/logo-official-transparent.png') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>">
         </a>
         <p><?= e(SITE_TAGLINE) ?>. Specialist consultations, clear guidance and patient-centred eye care in <?= e(SITE_AREA) ?>.</p>
         <div class="footer-social">

@@ -379,6 +379,7 @@ CREATE TABLE reels (
   doctor_id INT UNSIGNED DEFAULT NULL,
   category VARCHAR(100) DEFAULT NULL,
   video_path VARCHAR(255) DEFAULT NULL,
+  video_url VARCHAR(500) DEFAULT NULL,
   thumbnail VARCHAR(255) DEFAULT NULL,
   related_speciality_id INT UNSIGNED DEFAULT NULL,
   position INT NOT NULL DEFAULT 0,
@@ -640,7 +641,7 @@ INSERT INTO treatments (speciality_id, name, slug, short_description, image, sta
 -- Doctors (names verified from existing site; complete profiles via admin)
 INSERT INTO doctors (name, slug, photo, is_featured, status, position) VALUES
 ('Dr Arun Kumar Jain','dr-arun-kumar-jain','assets/img/dr-arun-kumar-jain.webp',1,'published',1),
-('Dr Rajat Jain','dr-rajat-jain','assets/img/rajat-jain-3.webp',1,'published',2),
+('Dr Rajat Jain','dr-rajat-jain',NULL,1,'published',2),
 ('Dr Neha Mohan','dr-neha-mohan','assets/img/neha-mohan.webp',1,'published',3);
 
 -- Real hospital photography. Device names and model specifications are intentionally not inferred.
@@ -671,7 +672,7 @@ INSERT INTO gallery_items (title, category, image, caption, position, is_active)
 ('Dr Neha Mohan','doctors','assets/img/neha-mohan.webp','Portrait of Dr Neha Mohan.',17,1),
 ('Doctor consultation','doctors','assets/img/neha-mohan-2.webp','A doctor speaking with a patient.',18,1),
 ('Clinical consultation','doctors','assets/img/neha-mohan-4.webp','A doctor consulting with a patient.',19,1),
-('Dr Rajat Jain','doctors','assets/img/rajat-jain-3.webp','Portrait of Dr Rajat Jain.',20,1),
+('Dr Rajat Jain','doctors','assets/img/rajat-jain-3.webp','Portrait of Dr Rajat Jain.',20,0),
 ('Doctor at work','doctors','assets/img/rajat-jain.webp','A doctor during clinical work.',21,1),
 ('Patient examination','doctors','assets/img/rajat-jain-2.webp','A doctor examining a patient.',22,1),
 ('Eye-care consultation','doctors','assets/img/rajat-jain-4.webp','A doctor with a patient in a clinical setting.',23,1),

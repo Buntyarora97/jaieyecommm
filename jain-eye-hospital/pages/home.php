@@ -9,7 +9,11 @@ $doctors      = db_all("SELECT * FROM doctors WHERE status='published' ORDER BY 
 $techs        = db_all("SELECT * FROM technologies WHERE status='published' ORDER BY position LIMIT 3");
 $testimonials = db_all("SELECT * FROM testimonials WHERE status='published' ORDER BY position LIMIT 3");
 $faqs         = db_all("SELECT * FROM faqs WHERE is_active=1 ORDER BY position LIMIT 6");
-$reel         = db_row("SELECT * FROM reels WHERE status='published' AND video_path IS NOT NULL ORDER BY position LIMIT 1");
+$reel         = db_row("SELECT r.*, d.name AS doctor_name, d.photo AS doctor_photo
+                        FROM reels r LEFT JOIN doctors d ON d.id=r.doctor_id
+                        WHERE r.status='published'
+                          AND ((r.video_path IS NOT NULL AND r.video_path <> '') OR (r.video_url IS NOT NULL AND r.video_url <> ''))
+                        ORDER BY r.position LIMIT 1");
 $posts        = db_all("SELECT p.*, c.name AS cat_name FROM blog_posts p LEFT JOIN blog_categories c ON c.id=p.category_id WHERE p.status='published' ORDER BY p.published_at DESC LIMIT 3");
 
 require __DIR__ . '/../includes/header.php';
@@ -330,11 +334,17 @@ require __DIR__ . '/../includes/header.php';
       <span class="phone__notch" aria-hidden="true"></span>
       <div class="phone__screen">
         <?php if ($reel && $reel['video_path']): ?>
-        <video src="<?= uploads_url($reel['video_path']) ?>" <?= $reel['thumbnail'] ? 'poster="' . e(uploads_url($reel['thumbnail'])) . '"' : '' ?> preload="none" muted playsinline loop></video>
+        <video src="<?= e(uploads_url($reel['video_path'])) ?>" <?= $reel['thumbnail'] ? 'poster="' . e(uploads_url($reel['thumbnail'])) . '"' : '' ?> preload="none" muted playsinline loop></video>
         <div class="phone__controls">
           <button class="phone__btn" data-play aria-label="Play or pause video"><span class="phone__icon phone__icon--play" aria-hidden="true"></span></button>
           <button class="phone__btn" data-mute aria-label="Mute or unmute video"><span class="phone__icon phone__icon--sound" aria-hidden="true"></span></button>
         </div>
+        <?php elseif ($reel && ($featuredReelUrl = safe_https_url($reel['video_url'] ?? null))): ?>
+        <a class="phone__external-reel" href="<?= e($featuredReelUrl) ?>" target="_blank" rel="noopener noreferrer" aria-label="Open <?= e($reel['title']) ?> on its original video platform">
+          <?= image_or_placeholder($reel['thumbnail'] ?: $reel['doctor_photo'], 'phone__external-reel-image', $reel['thumbnail'] ? 'Thumbnail for ' . $reel['title'] : 'Portrait of ' . ($reel['doctor_name'] ?: 'the featured doctor')) ?>
+          <span class="phone__external-reel-play" aria-hidden="true">▶</span>
+          <span class="phone__external-reel-label"><?= e($reel['title']) ?> <i aria-hidden="true">↗</i></span>
+        </a>
         <?php else: ?>
         <div class="phone__empty phone__empty--poster">
           <img src="<?= asset('img/hospital-pic-15.webp') ?>" alt="A clinician speaking with a patient at Jain Eye Hospital" loading="lazy" decoding="async">

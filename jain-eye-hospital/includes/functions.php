@@ -27,6 +27,16 @@ function uploads_url(string $path): string
     return url('uploads/' . ltrim($path, '/'));
 }
 
+function safe_https_url(?string $value): string
+{
+    $value = trim((string)$value);
+    if ($value === '' || !filter_var($value, FILTER_VALIDATE_URL)) return '';
+    $parts = parse_url($value);
+    if (!$parts || strtolower((string)($parts['scheme'] ?? '')) !== 'https' || empty($parts['host'])) return '';
+    if (isset($parts['user']) || isset($parts['pass'])) return '';
+    return $value;
+}
+
 function redirect(string $to, int $code = 302): void
 {
     if (!preg_match('#^https?://#i', $to)) {

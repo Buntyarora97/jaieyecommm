@@ -9,6 +9,29 @@ $page_seo = page_seo($route, $spec['name'] . ' in Shalimar Bagh, Delhi | ' . SIT
 $treatments = db_all("SELECT * FROM treatments WHERE speciality_id = ? AND status='published' ORDER BY position", [$spec['id']]);
 $doctors = db_all("SELECT d.* FROM doctors d JOIN doctor_specialities ds ON ds.doctor_id=d.id WHERE ds.speciality_id=? AND d.status='published'", [$spec['id']]);
 $faqs = db_all("SELECT * FROM faqs WHERE is_active=1 AND context=? ORDER BY position LIMIT 8", [$spec['slug']]);
+$faqCategoryBySlug = [
+    'cataract-iol' => 'Cataract',
+    'lasik-refractive' => 'LASIK',
+    'retina-uvea' => 'Retina',
+    'macular-conditions' => 'Retina',
+    'squint' => 'Children',
+    'myopia-clinic' => 'Children',
+    'childrens-eye-health' => 'Children',
+];
+$faqCategory = $faqCategoryBySlug[$spec['slug']] ?? 'General';
+$directoryFaqs = db_all(
+    "SELECT * FROM faqs
+     WHERE is_active=1 AND context='website' AND category IN (?, 'General')
+     ORDER BY CASE WHEN category=? THEN 0 ELSE 1 END, position LIMIT 8",
+    [$faqCategory, $faqCategory]
+);
+$faqIds = array_fill_keys(array_map(static fn(array $faq): int => (int)$faq['id'], $faqs), true);
+foreach ($directoryFaqs as $faq) {
+    if (!isset($faqIds[(int)$faq['id']])) {
+        $faqs[] = $faq;
+        $faqIds[(int)$faq['id']] = true;
+    }
+}
 $posts = db_all("SELECT * FROM blog_posts WHERE status='published' ORDER BY published_at DESC LIMIT 3");
 
 $sections = [
@@ -49,6 +72,7 @@ require __DIR__ . '/../includes/header.php';
   <div class="container">
     <span>Explore this care area</span>
     <?php foreach ($populatedSections as $field => $label): ?><a href="#speciality-section-<?= e($field) ?>"><?= e($label) ?></a><?php endforeach; ?>
+    <a href="#speciality-visit-guide">Visit questions</a>
     <?php if ($treatments): ?><a href="#speciality-treatments">Related services</a><?php endif; ?>
     <?php if ($doctors): ?><a href="#speciality-doctors">Doctors</a><?php endif; ?>
     <a href="#speciality-faqs">FAQs</a>
@@ -67,8 +91,8 @@ require __DIR__ . '/../includes/header.php';
       <?php if (count($populatedSections) < 4): ?>
       <div class="speciality-content-note">
         <span class="eyebrow">More information</span>
-        <strong>This care guide is being expanded</strong>
-        <p>The hospital is preparing additional verified information for this speciality. Use the appointment team for advice about a personal concern or treatment question.</p>
+        <strong>Additional details are being prepared</strong>
+        <p>Only information reviewed by the hospital is published in this guide. Contact the care team with questions about a personal concern or treatment option.</p>
       </div>
       <?php endif; ?>
       <div class="care-prose__notice">
@@ -98,6 +122,22 @@ require __DIR__ . '/../includes/header.php';
         <?php endif; ?>
       </div>
     </aside>
+  </div>
+</section>
+
+<section class="section speciality-visit-questions" id="speciality-visit-guide">
+  <div class="container">
+    <div class="speciality-visit-questions__heading">
+      <div><span class="eyebrow">Plan your conversation</span><h2>Questions you can ask about <?= e($spec['name']) ?></h2></div>
+      <p>Your care is individual. These prompts can help you discuss your concerns and understand the information shared at your appointment.</p>
+    </div>
+    <div class="speciality-visit-questions__grid">
+      <article><span>01</span><h3>What will help clarify my concern?</h3><p>Ask what information, examination or records may be useful for your situation.</p></article>
+      <article><span>02</span><h3>What do my findings mean?</h3><p>Invite the clinician to explain any results or terms in plain language and how they relate to you.</p></article>
+      <article><span>03</span><h3>What choices should I understand?</h3><p>Ask about the purpose, expected next steps and important considerations for any option discussed.</p></article>
+      <article><span>04</span><h3>What happens after this visit?</h3><p>Before you leave, check whether follow-up is needed and whom to contact if you have questions.</p></article>
+    </div>
+    <p class="speciality-visit-questions__note">These are general discussion prompts, not treatment advice. Your clinician can explain what is relevant to you.</p>
   </div>
 </section>
 

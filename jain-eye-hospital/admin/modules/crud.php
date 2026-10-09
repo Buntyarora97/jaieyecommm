@@ -150,6 +150,10 @@ function crud_form(array $mod, string $moduleKey, ?array $row = null): void
               <input id="f_<?= e($name) ?>" name="<?= e($name) ?>" type="text" value="<?= e((string)$val) ?>" placeholder="auto-generated if empty">
               <div class="hint">Leave empty to auto-generate from the <?= e($f['from'] ?? 'title') ?>.</div>
               <?php break;
+              case 'url': ?>
+              <input id="f_<?= e($name) ?>" name="<?= e($name) ?>" type="url" value="<?= e((string)$val) ?>" placeholder="https://…" inputmode="url">
+              <div class="hint">Use an official public video or reel link. Only secure HTTPS links are accepted.</div>
+              <?php break;
               case 'select': ?>
               <select id="f_<?= e($name) ?>" name="<?= e($name) ?>">
                 <?php foreach ($f['options'] as $optVal => $optLabel): ?>
@@ -248,12 +252,32 @@ function crud_save(array $mod, string $moduleKey, ?int $id): void
                     }
                     $data[$name] = unique_slug($table, $v, $id);
                     break;
+                case 'url':
+                    $v = trim((string)($_POST[$name] ?? ''));
+                    if ($v !== '') {
+                        $parts = parse_url($v);
+                        if (!filter_var($v, FILTER_VALIDATE_URL) || !$parts ||
+                            strtolower((string)($parts['scheme'] ?? '')) !== 'https' ||
+                            empty($parts['host']) || isset($parts['user']) || isset($parts['pass'])) {
+                            throw new RuntimeException($f['label'] . ' must be a valid HTTPS URL.');
+                        }
+                    }
+                    $data[$name] = $v === '' ? null : $v;
+                    break;
                 default:
                     $v = trim((string)($_POST[$name] ?? ''));
                     if (!empty($f['required']) && $v === '') {
                         throw new RuntimeException($f['label'] . ' is required.');
                     }
                     $data[$name] = $v === '' ? null : $v;
+            }
+        }
+        if ($moduleKey === 'reels' && ($data['status'] ?? 'published') === 'published') {
+            $existing = $id ? db_row("SELECT video_path, video_url FROM reels WHERE id=?", [$id]) : [];
+            $videoPath = array_key_exists('video_path', $data) ? $data['video_path'] : ($existing['video_path'] ?? null);
+            $videoUrl = array_key_exists('video_url', $data) ? $data['video_url'] : ($existing['video_url'] ?? null);
+            if (empty($videoPath) && empty($videoUrl)) {
+                throw new RuntimeException('Add an MP4 video or an official HTTPS reel link before publishing.');
             }
         }
     } catch (RuntimeException $ex) {

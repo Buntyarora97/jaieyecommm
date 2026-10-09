@@ -54,6 +54,20 @@ if [[ "$TABLE_COUNT" -eq 0 ]]; then
   mariadb --default-character-set=utf8mb4 --protocol=socket --socket="$SOCKET" -uroot jaineye_dev < "$APP_DIR/database/schema.sql"
 fi
 
+REEL_URL_COLUMN_COUNT="$(mariadb --protocol=socket --socket="$SOCKET" -uroot -Nse \
+  "SELECT COUNT(*) FROM information_schema.columns WHERE table_schema='jaineye_dev' AND table_name='reels' AND column_name='video_url'")"
+if [[ "$REEL_URL_COLUMN_COUNT" -eq 0 ]]; then
+  mariadb --protocol=socket --socket="$SOCKET" -uroot jaineye_dev \
+    -e "ALTER TABLE reels ADD COLUMN video_url VARCHAR(500) DEFAULT NULL AFTER video_path"
+fi
+
+mariadb --protocol=socket --socket="$SOCKET" -uroot jaineye_dev <<'SQL'
+UPDATE doctors SET photo=NULL
+  WHERE slug='dr-rajat-jain' AND photo='assets/img/rajat-jain-3.webp';
+UPDATE gallery_items SET is_active=0
+  WHERE title='Dr Rajat Jain' AND image='assets/img/rajat-jain-3.webp';
+SQL
+
 cd "$APP_DIR"
 export DB_HOST=127.0.0.1 DB_NAME=jaineye_dev DB_USER=jaineye_dev DB_PASS=''
 export APP_ENV=development SITE_URL=http://127.0.0.1:5000 MAIL_ENABLED=false

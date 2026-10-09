@@ -3,9 +3,10 @@
 $nav = nav_tree();
 $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?? setting('hero_description'));
 $pageVisual = navigation_link_details($route ?? '/', $seo['title'] ?? SITE_NAME);
-$pageHeroImage = str_starts_with($pageVisual['image'], 'assets/')
-    ? url($pageVisual['image'])
-    : uploads_url($pageVisual['image']);
+$pageHeroSource = $pageVisual['image'] ?: 'assets/img/hospital-pic-15.webp';
+$pageHeroImage = str_starts_with($pageHeroSource, 'assets/')
+    ? url($pageHeroSource)
+    : uploads_url($pageHeroSource);
 ?>
 <!DOCTYPE html>
 <html lang="en">

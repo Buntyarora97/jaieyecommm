@@ -18,8 +18,9 @@ $doctor_gallery = db_all(
     [$doctor['id']]
 );
 $doctor_reels = db_all(
-    "SELECT id, title, description, video_path, thumbnail FROM reels
-     WHERE doctor_id=? AND status='published' AND video_path IS NOT NULL AND video_path <> ''
+    "SELECT id, title, description, video_path, video_url, thumbnail FROM reels
+     WHERE doctor_id=? AND status='published'
+       AND ((video_path IS NOT NULL AND video_path <> '') OR (video_url IS NOT NULL AND video_url <> ''))
      ORDER BY position, id",
     [$doctor['id']]
 );
@@ -37,7 +38,7 @@ $extra_head = '<script type="application/ld+json">' . json_encode([
 
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="page-hero">
+<section class="page-hero doctor-page-hero">
   <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><a href="<?= url('doctors') ?>">Our Doctors</a><span class="sep">/</span><span><?= e($doctor['name']) ?></span></nav>
     <h1><?= e($doctor['name']) ?></h1>
@@ -90,7 +91,23 @@ require __DIR__ . '/../includes/header.php';
         <p><?= nl2br(e($doctor[$field])) ?></p>
         <?php endif; ?>
       <?php endforeach; ?>
+      <?php if (empty($doctor['education']) && empty($doctor['expertise']) && empty($doctor['fellowships']) && empty($doctor['memberships']) && empty($doctor['awards_text'])): ?>
+      <div class="doctor-profile__notice"><strong>Verified profile details are not published yet</strong><p>Qualifications, training and areas of practice will be shown here when the hospital provides and approves them.</p></div>
+      <?php endif; ?>
     </div>
+
+    <section class="doctor-visit-guide" aria-labelledby="doctorVisitGuideTitle">
+      <div class="doctor-visit-guide__intro">
+        <span class="eyebrow">Make your appointment count</span>
+        <h2 id="doctorVisitGuideTitle">A few details can help you prepare.</h2>
+        <p>Every visit is individual. Use these practical prompts to share your concerns and understand the next step.</p>
+      </div>
+      <div class="doctor-visit-guide__list">
+        <article><span>01</span><div><h3>Bring what you already have</h3><p>Previous eye reports, prescriptions and your current spectacles can help you and the care team refer to earlier information.</p></div></article>
+        <article><span>02</span><div><h3>Describe what brought you in</h3><p>Note what you have noticed and any questions you want to discuss. Ask the doctor to explain unfamiliar terms.</p></div></article>
+        <article><span>03</span><div><h3>Ask about the next step</h3><p>Before you leave, check what happens next, who to contact with questions and whether any follow-up is planned.</p></div></article>
+      </div>
+    </section>
 
     <?php if ($related_specs): ?>
     <div class="doctor-related-services" id="doctor-specialities">
@@ -142,13 +159,30 @@ require __DIR__ . '/../includes/header.php';
       <?php if ($doctor_reels): ?>
       <div class="doctor-reel-grid">
         <?php foreach ($doctor_reels as $reel): ?>
+        <?php $externalReelUrl = safe_https_url($reel['video_url'] ?? null); ?>
         <article class="doctor-reel-card">
+          <?php if (!empty($reel['video_path'])): ?>
           <div class="doctor-reel-card__video">
             <video controls playsinline preload="none" <?= $reel['thumbnail'] ? 'poster="' . e(uploads_url($reel['thumbnail'])) . '"' : '' ?>>
               <source src="<?= e(uploads_url($reel['video_path'])) ?>">
               Your browser does not support video playback.
             </video>
           </div>
+          <?php elseif ($externalReelUrl): ?>
+          <?php
+            $reelHost = strtolower((string)parse_url($externalReelUrl, PHP_URL_HOST));
+            $reelPlatform = ($reelHost === 'instagram.com' || str_ends_with($reelHost, '.instagram.com'))
+                ? 'Watch on Instagram'
+                : (($reelHost === 'youtube.com' || str_ends_with($reelHost, '.youtube.com') || $reelHost === 'youtu.be')
+                    ? 'Watch on YouTube'
+                    : 'Watch this video');
+          ?>
+          <a class="doctor-reel-card__external" href="<?= e($externalReelUrl) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($reelPlatform . ': ' . $reel['title']) ?>">
+            <?= image_or_placeholder($reel['thumbnail'] ?: $doctor['photo'], '', 'Video thumbnail for ' . $reel['title']) ?>
+            <span class="doctor-reel-card__external-play" aria-hidden="true">▶</span>
+            <span class="doctor-reel-card__external-label"><?= e($reelPlatform) ?> <i aria-hidden="true">↗</i></span>
+          </a>
+          <?php endif; ?>
           <div class="doctor-reel-card__body"><span class="eyebrow"><?= e($doctor['name']) ?></span><h3><?= e($reel['title']) ?></h3>
             <?php if (!empty($reel['description'])): ?><p><?= e($reel['description']) ?></p><?php endif; ?>
           </div>
@@ -157,9 +191,9 @@ require __DIR__ . '/../includes/header.php';
       </div>
       <?php else: ?>
       <div class="doctor-reels-empty">
-        <div class="doctor-reels-empty__icon" aria-hidden="true">▶</div>
-        <div><strong>No videos are published for this profile yet</strong><p>Only videos submitted and approved by the hospital will appear here.</p></div>
-        <a class="btn btn--outline" href="<?= url('reels') ?>">Browse all published videos</a>
+        <div class="doctor-reels-empty__portrait"><?= image_or_placeholder($doctor['photo'], '', 'Portrait of ' . $doctor['name']) ?><span aria-hidden="true">▶</span></div>
+        <div><span class="eyebrow"><?= e($doctor['name']) ?></span><strong>Doctor reels will appear here.</strong><p>This profile has its own space for the doctor’s real, hospital-approved video links or clips. No videos have been published for this profile yet.</p></div>
+        <a class="btn btn--outline" href="<?= url('book-appointment') ?>">Book a consultation</a>
       </div>
       <?php endif; ?>
     </section>

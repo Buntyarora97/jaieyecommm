@@ -11,6 +11,8 @@
 2. Tab **Import** → choose `database/schema.sql` → **Go**.
 3. Confirm the tables were created and seed data exists (check `navigation_items`, `specialities`, `technologies`, and `gallery_items`). The `admins` table is intentionally empty until first-time setup.
 
+For an existing installation being upgraded, back up the database first. Run `database/migrations/20261009_add_reel_video_url.sql` once if the `reels.video_url` column is absent, and run `database/migrations/20261009_correct_rajat_portrait_attribution.sql` once to stop showing an image that identifies a different doctor. These migration files are for existing databases, not fresh installs.
+
 ## 3. Upload the Files
 1. cPanel → **File Manager** → `public_html/`.
 2. If migrating, first back up the old site: compress the current `public_html` contents and download the ZIP, and export the old database via phpMyAdmin.
