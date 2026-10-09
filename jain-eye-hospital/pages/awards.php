@@ -6,7 +6,7 @@ require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero"><div class="container">
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><span>Awards</span></nav>
-  <h1>Awards &amp; Recognition</h1><p>Verified recognitions are listed here when the hospital has approved them for publication.</p>
+  <h1>Awards &amp; Recognition</h1><p>Hospital-approved recognition details are published here when verified information is available.</p>
 </div></section>
 <section class="section"><div class="container">
   <?php if ($awards): ?>
@@ -23,5 +23,9 @@ require __DIR__ . '/../includes/header.php';
   <?php else: ?>
   <div class="empty-state"><strong>No verified awards are listed</strong>Please contact the hospital if you need information about a specific recognition.</div>
   <?php endif; ?>
+  <div class="listing-guide">
+    <div><span class="eyebrow">About this page</span><h2>Recognition, clearly documented</h2><p>A useful award listing identifies the awarding organisation, year and what the recognition covers. Those details help readers understand the context instead of relying on an unverified badge or claim.</p></div>
+    <div class="listing-guide__action"><strong>Looking for a specific record?</strong><p>Contact the hospital team for current, confirmed information.</p><a class="btn btn--outline" href="<?= url('contact-us') ?>">Contact the Hospital</a></div>
+  </div>
 </div></section>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

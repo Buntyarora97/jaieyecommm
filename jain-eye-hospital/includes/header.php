@@ -21,7 +21,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
 <meta property="og:image" content="<?= e($seo['og_image']) ?>">
 <?php endif; ?>
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/webp" href="<?= asset('img/logo-official.webp') ?>">
+<link rel="icon" type="image/png" href="<?= asset('img/logo-official-transparent.png') ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
     '@type' => ['Hospital', 'MedicalOrganization'],
     'name' => SITE_NAME,
     'url' => SITE_URL,
-    'logo' => SITE_URL . '/assets/img/logo-official.webp',
+    'logo' => SITE_URL . '/assets/img/logo-official-transparent.png',
     'telephone' => [SITE_PHONE_1, SITE_PHONE_2, SITE_PHONE_3],
     'email' => SITE_EMAIL,
     'address' => [
@@ -68,7 +68,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
   <div class="container">
     <nav class="nav" aria-label="Main navigation">
       <a class="nav__logo" href="<?= url('/') ?>" aria-label="<?= e(SITE_NAME) ?> - Home">
-        <img src="<?= asset('img/logo-official.webp') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>" width="256" height="64">
+        <img src="<?= asset('img/logo-official-transparent.png') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>" width="256" height="64">
       </a>
 
       <ul class="nav__menu">
@@ -143,7 +143,7 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
   <div class="drawer__overlay" data-close-drawer></div>
   <div class="drawer__panel">
     <div class="drawer__head">
-      <img src="<?= asset('img/logo-official.webp') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>">
+      <img src="<?= asset('img/logo-official-transparent.png') ?>" alt="<?= e(SITE_NAME) ?> — <?= e(SITE_TAGLINE) ?>">
       <button class="drawer__close" data-close-drawer aria-label="Close menu">&times;</button>
     </div>
     <?php foreach ($nav['top'] as $item):

@@ -24,11 +24,18 @@ $sections = [
 ];
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="page-hero">
-  <div class="container">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><a href="<?= url('specialities') ?>">Specialities</a><span class="sep">/</span><span><?= e($spec['name']) ?></span></nav>
-    <h1><?= e($spec['name']) ?></h1>
-    <p><?= e($spec['short_description']) ?></p>
+<section class="page-hero care-hero">
+  <div class="container care-hero__inner">
+    <div class="care-hero__copy">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><a href="<?= url('specialities') ?>">Specialities</a><span class="sep">/</span><span><?= e($spec['name']) ?></span></nav>
+      <span class="eyebrow">Eye care at <?= e(SITE_AREA) ?></span>
+      <h1><?= e($spec['name']) ?></h1>
+      <p><?= e($spec['short_description']) ?></p>
+      <div class="care-hero__actions"><a class="btn btn--primary" href="<?= url('book-appointment') ?>">Request an Appointment</a><a class="care-hero__phone" href="tel:+911143784377">Call <?= e(SITE_PHONE_1) ?></a></div>
+    </div>
+    <?php if (!empty($spec['image'])): ?>
+    <div class="care-hero__media"><?= image_or_placeholder($spec['image'], '', $spec['name'] . ' care at ' . SITE_NAME, false) ?></div>
+    <?php endif; ?>
   </div>
 </section>
 
@@ -41,6 +48,11 @@ require __DIR__ . '/../includes/header.php';
         <p><?= nl2br(e($spec[$field])) ?></p>
         <?php endif; ?>
       <?php endforeach; ?>
+      <div class="care-prose__notice">
+        <strong>Planning your consultation?</strong>
+        <p>Bring any previous eye reports, your current spectacles and a list of medicines or eye drops you use. Your clinician can explain which examinations or options are relevant to you.</p>
+        <a class="link-arrow" href="<?= url('patient-journey') ?>">Read the patient visit guide</a>
+      </div>
       <p style="font-size:.85rem;color:var(--grey);border-top:1px solid var(--border);padding-top:16px;margin-top:28px">
         This information is for general education and does not replace a personal consultation. Treatment recommendations vary from patient to patient and are made only after a detailed eye examination.
       </p>

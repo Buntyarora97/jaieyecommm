@@ -9,11 +9,18 @@ $doctors = db_all("SELECT d.* FROM doctors d JOIN treatment_doctors td ON td.doc
 if (!$doctors) { $doctors = db_all("SELECT * FROM doctors WHERE status='published' ORDER BY position LIMIT 3"); }
 require __DIR__ . '/../includes/header.php';
 ?>
-<section class="page-hero">
-  <div class="container">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><a href="<?= url('treatments') ?>">Treatments</a><span class="sep">/</span><span><?= e($treatment['name']) ?></span></nav>
-    <h1><?= e($treatment['name']) ?></h1>
-    <p><?= e($treatment['short_description']) ?></p>
+<section class="page-hero care-hero">
+  <div class="container care-hero__inner">
+    <div class="care-hero__copy">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><a href="<?= url('treatments') ?>">Treatments</a><span class="sep">/</span><span><?= e($treatment['name']) ?></span></nav>
+      <span class="eyebrow">Treatment information</span>
+      <h1><?= e($treatment['name']) ?></h1>
+      <p><?= e($treatment['short_description']) ?></p>
+      <div class="care-hero__actions"><a class="btn btn--primary" href="<?= url('book-appointment') ?>">Request an Appointment</a><a class="care-hero__phone" href="tel:+911143784377">Call <?= e(SITE_PHONE_1) ?></a></div>
+    </div>
+    <?php if (!empty($treatment['image'])): ?>
+    <div class="care-hero__media"><?= image_or_placeholder($treatment['image'], '', $treatment['name'] . ' at ' . SITE_NAME, false) ?></div>
+    <?php endif; ?>
   </div>
 </section>
 <section class="section">
@@ -24,6 +31,11 @@ require __DIR__ . '/../includes/header.php';
         <h2><?= e($label) ?></h2><p><?= nl2br(e($treatment[$field])) ?></p>
         <?php endif; ?>
       <?php endforeach; ?>
+      <div class="care-prose__notice">
+        <strong>Before deciding on a procedure</strong>
+        <p>Ask your clinician why it has been recommended for you, what alternatives may be appropriate, how to prepare and what follow-up to expect. Suitability is assessed individually.</p>
+        <a class="link-arrow" href="<?= url('patient-safety') ?>">Read patient safety guidance</a>
+      </div>
       <?php if (empty($treatment['overview']) && empty($treatment['procedure_text'])): ?>
       <p>Detailed information about <?= e($treatment['name']) ?> is being updated. For personalised guidance, please book a consultation with our specialists or call <?= e(SITE_PHONE_1) ?>.</p>
       <?php endif; ?>
