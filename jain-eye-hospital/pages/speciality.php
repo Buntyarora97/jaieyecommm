@@ -6,8 +6,37 @@ if (!$spec) { http_response_code(404); require __DIR__ . '/404.php'; return; }
 $guideLibrary = require __DIR__ . '/../includes/speciality-guides.php';
 $guide = $guideLibrary[$spec['slug']] ?? null;
 $route = '/specialities/' . $spec['slug'];
-$page_seo = page_seo($route, $spec['name'] . ' in Shalimar Bagh, Delhi | ' . SITE_NAME,
-    excerpt($spec['short_description'] ?: $spec['overview'] ?: '', 155));
+$specialitySeoTopics = [
+    'cataract-iol' => ['cataract care Delhi', 'cataract surgery information', 'intraocular lens options'],
+    'lasik-refractive' => ['LASIK information Delhi', 'refractive surgery', 'vision correction assessment'],
+    'retina-uvea' => ['retina care Delhi', 'uvea care information', 'retina evaluation'],
+    'macular-conditions' => ['macular condition information', 'macular eye care Delhi', 'retina care'],
+    'cornea-care' => ['cornea care Delhi', 'corneal condition information', 'cornea evaluation'],
+    'squint' => ['squint evaluation Delhi', 'eye alignment information', 'children eye care'],
+    'myopia-clinic' => ['myopia clinic Delhi', 'myopia information', 'children eye care'],
+    'childrens-eye-health' => ['children eye health Delhi', 'paediatric eye care', 'child eye examination information'],
+];
+$specialitySummary = $spec['short_description'] ?: $spec['overview'] ?: 'Published care information for ' . $spec['name'] . '.';
+$specialityDescription = excerpt(
+    excerpt($specialitySummary, 92) . ' Learn more at ' . SITE_NAME . ', Shalimar Bagh, Delhi.',
+    155
+);
+$specialityKeywords = array_merge(
+    [$spec['name'] . ' Delhi'],
+    $specialitySeoTopics[$spec['slug']] ?? [],
+    ['eye care Shalimar Bagh', SITE_NAME]
+);
+$page_seo = page_seo(
+    $route,
+    $spec['name'] . ' in Delhi | Jain Eye Hospital',
+    $specialityDescription,
+    implode(', ', array_unique($specialityKeywords))
+);
+if (empty($page_seo['og_image']) && !empty($spec['image'])) {
+    $page_seo['og_image'] = str_starts_with($spec['image'], 'assets/')
+        ? url($spec['image'])
+        : uploads_url($spec['image']);
+}
 $treatments = db_all("SELECT * FROM treatments WHERE speciality_id = ? AND status='published' ORDER BY position", [$spec['id']]);
 $doctors = db_all("SELECT d.* FROM doctors d JOIN doctor_specialities ds ON ds.doctor_id=d.id WHERE ds.speciality_id=? AND d.status='published'", [$spec['id']]);
 $faqs = db_all("SELECT * FROM faqs WHERE is_active=1 AND context=? ORDER BY position LIMIT 8", [$spec['slug']]);
@@ -99,7 +128,7 @@ require __DIR__ . '/../includes/header.php';
 </nav>
 
 <section class="section">
-  <div class="container split">
+  <div class="container speciality-layout">
     <article class="prose reveal speciality-guide">
       <?php if ($guide): ?><p class="speciality-guide__meta">Patient education <span aria-hidden="true">·</span> <?= $readingMinutes ?> min read</p><?php endif; ?>
       <?php foreach ($sections as $section): ?>
@@ -139,7 +168,7 @@ require __DIR__ . '/../includes/header.php';
       </p>
     </article>
     <aside class="reveal">
-      <div class="contact-card" style="position:sticky;top:110px">
+      <div class="contact-card speciality-layout__card">
         <h3 style="margin-bottom:14px">Book a Consultation</h3>
         <p style="font-size:.9rem;color:var(--grey);margin-bottom:18px">Get a personalised evaluation for <?= e($spec['name']) ?> at <?= e(SITE_AREA) ?>.</p>
         <div class="btn-row" style="flex-direction:column;align-items:stretch">

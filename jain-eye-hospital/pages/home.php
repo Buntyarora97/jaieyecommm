@@ -14,7 +14,9 @@ $reel         = db_row("SELECT r.*, d.name AS doctor_name, d.photo AS doctor_pho
                         WHERE r.status='published'
                           AND ((r.video_path IS NOT NULL AND r.video_path <> '') OR (r.video_url IS NOT NULL AND r.video_url <> ''))
                         ORDER BY r.position LIMIT 1");
-$posts        = db_all("SELECT p.*, c.name AS cat_name FROM blog_posts p LEFT JOIN blog_categories c ON c.id=p.category_id WHERE p.status='published' ORDER BY p.published_at DESC LIMIT 3");
+$reelAvailable = (bool) ($reel && (!empty($reel['video_path']) || safe_https_url($reel['video_url'] ?? null)));
+$reelsTopics   = array_slice($specialities, 0, 4);
+$posts         = db_all("SELECT p.*, c.name AS cat_name FROM blog_posts p LEFT JOIN blog_categories c ON c.id=p.category_id WHERE p.status='published' ORDER BY p.published_at DESC LIMIT 3");
 
 require __DIR__ . '/../includes/header.php';
 ?>
@@ -173,19 +175,8 @@ require __DIR__ . '/../includes/header.php';
     <div class="cards">
       <?php foreach ($doctors as $doc): ?>
       <article class="doctor-card reveal">
-        <?php
-          $doctorPhoto = $doc['photo'] ?? '';
-          if (!$doctorPhoto && stripos($doc['name'], 'Rajat Jain') !== false) $doctorPhoto = 'rajat-jain-3.webp';
-          if (!$doctorPhoto && stripos($doc['name'], 'Neha Mohan') !== false) $doctorPhoto = 'neha-mohan.webp';
-        ?>
         <div class="doctor-card__photo">
-          <?php if ($doc['photo']): ?>
-            <?= image_or_placeholder($doctorPhoto, '', 'Portrait of ' . $doc['name']) ?>
-          <?php elseif ($doctorPhoto): ?>
-            <img src="<?= asset('img/' . $doctorPhoto) ?>" alt="Portrait of <?= e($doc['name']) ?>" loading="lazy" decoding="async">
-          <?php else: ?>
-            <?= image_or_placeholder('', '', 'Portrait of ' . $doc['name']) ?>
-          <?php endif; ?>
+          <?= image_or_placeholder($doc['photo'] ?? null, '', 'Portrait of ' . $doc['name']) ?>
         </div>
         <div class="doctor-card__body">
           <h3><?= e($doc['name']) ?></h3>
@@ -321,14 +312,24 @@ require __DIR__ . '/../includes/header.php';
 <!-- SECTION 10: REELS EXPERIENCE -->
 <section class="section" id="home-reels">
   <div class="container reels-wrap">
-    <div class="reveal">
+    <div class="reels-wrap__copy reveal">
       <span class="eyebrow">Watch &amp; Learn</span>
       <h2>Expert Eye Care Insights, One Reel at a Time</h2>
-      <p class="reels-wrap__intro">When patient-education videos are available, they will be shown here. Explore the video library for practical information about eye health and consultations.</p>
-      <div class="topic-tags" aria-label="Video topics">
-        <span>Cataract</span><span>LASIK</span><span>Retina</span><span>Children's Eye Health</span><span>Eye Care Tips</span>
+      <p class="reels-wrap__intro">
+        <?php if ($reelAvailable): ?>
+          Watch a hospital-published video, then explore more information about the eye-care areas below.
+        <?php else: ?>
+          No patient-education videos are available yet. You can still explore these published speciality pages and patient resources.
+        <?php endif; ?>
+      </p>
+      <div class="reels-wrap__actions">
+        <a class="btn btn--dark" href="<?= url($reelAvailable ? 'reels' : 'patient-education') ?>">
+          <?= $reelAvailable ? 'View All Videos' : 'Explore Patient Education' ?>
+        </a>
+        <?php if (!$reelAvailable): ?>
+        <a class="reels-wrap__library-link" href="<?= url('reels') ?>">Visit Videos &amp; Reels <span aria-hidden="true">→</span></a>
+        <?php endif; ?>
       </div>
-      <a class="btn btn--dark" href="<?= url('reels') ?>">View All Videos</a>
     </div>
     <div class="phone reveal" data-phone>
       <span class="phone__notch" aria-hidden="true"></span>
@@ -356,6 +357,31 @@ require __DIR__ . '/../includes/header.php';
         </div>
         <?php endif; ?>
       </div>
+    </div>
+    <div class="reels-wrap__topics reveal">
+      <div class="reels-wrap__topics-head">
+        <div>
+          <span class="eyebrow">Explore by speciality</span>
+          <h3>Find information by care area</h3>
+        </div>
+        <a class="reels-wrap__all-topics" href="<?= url('specialities') ?>">View all specialities <span aria-hidden="true">→</span></a>
+      </div>
+      <?php if ($reelsTopics): ?>
+      <div class="reels-topic-grid" aria-label="Featured eye-care specialities">
+        <?php foreach ($reelsTopics as $index => $topic): ?>
+        <a class="reels-topic-card" href="<?= url('specialities/' . $topic['slug']) ?>">
+          <span class="reels-topic-card__number" aria-hidden="true"><?= e(str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)) ?></span>
+          <span class="reels-topic-card__body">
+            <strong><?= e($topic['name']) ?></strong>
+            <span class="reels-topic-card__description"><?= e(excerpt($topic['short_description'] ?? '', 105)) ?></span>
+            <span class="reels-topic-card__link">Explore speciality <i aria-hidden="true">→</i></span>
+          </span>
+        </a>
+        <?php endforeach; ?>
+      </div>
+      <?php else: ?>
+      <p class="reels-wrap__topics-empty">Browse all published eye-care specialities to explore the hospital’s available information.</p>
+      <?php endif; ?>
     </div>
   </div>
 </section>

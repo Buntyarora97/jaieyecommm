@@ -4,7 +4,26 @@ $post = db_row("SELECT p.*, c.name AS cat_name FROM blog_posts p LEFT JOIN blog_
 if (!$post) { http_response_code(404); require __DIR__ . '/404.php'; return; }
 
 $route = '/blog/' . $post['slug'];
-$page_seo = page_seo($route, $post['title'] . ' | ' . SITE_NAME, excerpt($post['excerpt'] ?: $post['content'] ?: '', 155));
+$postDescription = excerpt($post['excerpt'] ?: $post['content'] ?: 'Eye-health information from ' . SITE_NAME . '.', 155);
+$postSeoKeywords = array_filter([
+    $post['title'],
+    !empty($post['cat_name']) ? $post['cat_name'] . ' eye health' : '',
+    'eye health information',
+    'eye care Delhi',
+    SITE_NAME,
+]);
+$page_seo = page_seo(
+    $route,
+    excerpt($post['title'], 48) . ' | Jain Eye Hospital',
+    $postDescription,
+    implode(', ', array_unique($postSeoKeywords))
+);
+$page_seo['og_type'] = 'article';
+if (empty($page_seo['og_image']) && !empty($post['featured_image'])) {
+    $page_seo['og_image'] = str_starts_with($post['featured_image'], 'assets/')
+        ? url($post['featured_image'])
+        : uploads_url($post['featured_image']);
+}
 $related = db_all("SELECT * FROM blog_posts WHERE status='published' AND id<>? ORDER BY published_at DESC LIMIT 3", [$post['id']]);
 
 $extra_head = '<script type="application/ld+json">' . json_encode([

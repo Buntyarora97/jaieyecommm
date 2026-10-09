@@ -7,6 +7,11 @@ $pageHeroSource = $pageVisual['image'] ?: 'assets/img/hospital-pic-15.webp';
 $pageHeroImage = str_starts_with($pageHeroSource, 'assets/')
     ? url($pageHeroSource)
     : uploads_url($pageHeroSource);
+$seoImage = trim((string)($seo['og_image'] ?? ''));
+if ($seoImage === '') $seoImage = $pageHeroImage;
+if ($seoImage !== '' && !preg_match('~^https?://~i', $seoImage)) {
+    $seoImage = rtrim(SITE_URL, '/') . '/' . ltrim($seoImage, '/');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,15 +22,22 @@ $pageHeroImage = str_starts_with($pageHeroSource, 'assets/')
 <meta name="description" content="<?= e($seo['description']) ?>">
 <meta name="robots" content="<?= e($seo['robots']) ?>">
 <link rel="canonical" href="<?= e($seo['canonical']) ?>">
-<meta property="og:type" content="website">
+<?php if (!empty($seo['keywords'])): ?>
+<meta name="keywords" content="<?= e($seo['keywords']) ?>">
+<?php endif; ?>
+<meta property="og:locale" content="en_IN">
+<meta property="og:type" content="<?= e($seo['og_type'] ?? 'website') ?>">
 <meta property="og:site_name" content="<?= e(SITE_NAME) ?>">
 <meta property="og:title" content="<?= e($seo['title']) ?>">
 <meta property="og:description" content="<?= e($seo['description']) ?>">
 <meta property="og:url" content="<?= e($seo['canonical']) ?>">
-<?php if ($seo['og_image']): ?>
-<meta property="og:image" content="<?= e($seo['og_image']) ?>">
-<?php endif; ?>
+<meta property="og:image" content="<?= e($seoImage) ?>">
+<meta property="og:image:alt" content="<?= e($seo['title']) ?>">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?= e($seo['title']) ?>">
+<meta name="twitter:description" content="<?= e($seo['description']) ?>">
+<meta name="twitter:image" content="<?= e($seoImage) ?>">
+<meta name="twitter:image:alt" content="<?= e($seo['title']) ?>">
 <link rel="icon" type="image/png" href="<?= asset('img/logo-official-transparent.png') ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,18 +45,41 @@ $pageHeroImage = str_starts_with($pageHeroSource, 'assets/')
 <link rel="stylesheet" href="<?= e(asset('css/style.css') . '?v=' . filemtime(__DIR__ . '/../assets/css/style.css')) ?>">
 <script type="application/ld+json"><?= json_encode([
     '@context' => 'https://schema.org',
-    '@type' => ['Hospital', 'MedicalOrganization'],
-    'name' => SITE_NAME,
-    'url' => SITE_URL,
-    'logo' => SITE_URL . '/assets/img/logo-official-transparent.png',
-    'telephone' => [SITE_PHONE_1, SITE_PHONE_2, SITE_PHONE_3],
-    'email' => SITE_EMAIL,
-    'address' => [
-        '@type' => 'PostalAddress',
-        'streetAddress' => SITE_ADDRESS,
-        'addressLocality' => 'Shalimar Bagh, Delhi',
-        'postalCode' => '110088',
-        'addressCountry' => 'IN',
+    '@graph' => [
+        [
+            '@type' => ['Hospital', 'MedicalOrganization'],
+            '@id' => SITE_URL . '/#hospital',
+            'name' => SITE_NAME,
+            'url' => SITE_URL,
+            'logo' => SITE_URL . '/assets/img/logo-official-transparent.png',
+            'telephone' => [SITE_PHONE_1, SITE_PHONE_2, SITE_PHONE_3],
+            'email' => SITE_EMAIL,
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => SITE_ADDRESS,
+                'addressLocality' => 'Shalimar Bagh, Delhi',
+                'postalCode' => '110088',
+                'addressCountry' => 'IN',
+            ],
+        ],
+        [
+            '@type' => 'WebSite',
+            '@id' => SITE_URL . '/#website',
+            'url' => SITE_URL,
+            'name' => SITE_NAME,
+            'publisher' => ['@id' => SITE_URL . '/#hospital'],
+            'inLanguage' => 'en-IN',
+        ],
+        [
+            '@type' => 'WebPage',
+            '@id' => $seo['canonical'] . '#webpage',
+            'url' => $seo['canonical'],
+            'name' => $seo['title'],
+            'description' => $seo['description'],
+            'isPartOf' => ['@id' => SITE_URL . '/#website'],
+            'about' => ['@id' => SITE_URL . '/#hospital'],
+            'inLanguage' => 'en-IN',
+        ],
     ],
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?></script>
 <?php if (!empty($extra_head)) echo $extra_head; ?>

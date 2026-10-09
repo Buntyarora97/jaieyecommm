@@ -124,15 +124,21 @@ function seo_for(string $route): array
     return $row ?: [];
 }
 
-function page_seo(string $route, string $title, string $description): array
+function page_seo(string $route, string $title, string $description, string $keywords = ''): array
 {
     $meta = seo_for($route);
+    $metaTitle = trim((string)($meta['meta_title'] ?? ''));
+    $metaDescription = trim((string)($meta['meta_description'] ?? ''));
+    $metaKeywords = trim((string)($meta['meta_keywords'] ?? ''));
+    $canonical = trim((string)($meta['canonical_url'] ?? ''));
     return [
-        'title'       => $meta['meta_title'] ?? $title,
-        'description' => $meta['meta_description'] ?? $description,
-        'canonical'   => $meta['canonical_url'] ?? (SITE_URL . $route),
+        'title'       => $metaTitle !== '' ? $metaTitle : $title,
+        'description' => $metaDescription !== '' ? $metaDescription : $description,
+        'keywords'    => $metaKeywords !== '' ? $metaKeywords : $keywords,
+        'canonical'   => $canonical !== '' ? $canonical : (SITE_URL . $route),
         'og_image'    => $meta['og_image'] ?? '',
         'robots'      => $meta['robots'] ?? 'index,follow',
+        'og_type'     => 'website',
     ];
 }
 

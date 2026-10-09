@@ -4,8 +4,36 @@ $doctor = db_row("SELECT * FROM doctors WHERE slug = ? AND status='published'", 
 if (!$doctor) { http_response_code(404); require __DIR__ . '/404.php'; return; }
 
 $route = '/doctors/' . $doctor['slug'];
-$page_seo = page_seo($route, $doctor['name'] . ' | ' . SITE_NAME,
-    excerpt(($doctor['specialisation'] ?? '') . ' at ' . SITE_NAME . '. ' . ($doctor['biography'] ?? ''), 155));
+$doctorSeoSummary = trim(implode(' ', array_filter([
+    $doctor['specialisation'] ?? '',
+    $doctor['designation'] ?? '',
+    $doctor['biography'] ?? '',
+])));
+if ($doctorSeoSummary === '') {
+    $doctorSeoSummary = 'Published profile and appointment information for ' . $doctor['name'] . '.';
+}
+$doctorSeoDescription = excerpt(
+    $doctorSeoSummary . ' ' . SITE_NAME . ', Shalimar Bagh, Delhi.',
+    155
+);
+$doctorSeoKeywords = array_filter([
+    $doctor['name'],
+    !empty($doctor['specialisation']) ? $doctor['specialisation'] . ' Delhi' : 'eye doctor Delhi',
+    'eye doctor Shalimar Bagh',
+    'eye hospital Delhi',
+    SITE_NAME,
+]);
+$page_seo = page_seo(
+    $route,
+    $doctor['name'] . ' | Jain Eye Hospital',
+    $doctorSeoDescription,
+    implode(', ', array_unique($doctorSeoKeywords))
+);
+if (empty($page_seo['og_image']) && !empty($doctor['photo'])) {
+    $page_seo['og_image'] = str_starts_with($doctor['photo'], 'assets/')
+        ? url($doctor['photo'])
+        : uploads_url($doctor['photo']);
+}
 $related_specs = db_all("SELECT s.* FROM specialities s JOIN doctor_specialities ds ON ds.speciality_id=s.id WHERE ds.doctor_id=? AND s.status='published'", [$doctor['id']]);
 $related_treatments = db_all(
     "SELECT DISTINCT t.* FROM treatments t JOIN treatment_doctors td ON td.treatment_id=t.id

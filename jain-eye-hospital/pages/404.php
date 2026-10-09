@@ -1,5 +1,5 @@
 <?php
-$page_seo = ['title'=>'Page Not Found | ' . SITE_NAME,'description'=>'The page you are looking for could not be found.','canonical'=>SITE_URL . '/404','og_image'=>'','robots'=>'noindex,follow'];
+$page_seo = ['title'=>'Page Not Found | ' . SITE_NAME,'description'=>'The page you are looking for could not be found.','keywords'=>'','canonical'=>SITE_URL . '/404','og_image'=>'','robots'=>'noindex,follow','og_type'=>'website'];
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="section"><div class="container" style="text-align:center;padding-block:80px">

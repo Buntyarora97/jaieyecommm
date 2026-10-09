@@ -259,12 +259,13 @@ function admin_modules(): array
         ],
         'seo' => [
             'label' => 'SEO Manager', 'table' => 'seo_metadata', 'permission' => 'seo.manage',
-            'title_field' => 'route', 'order' => 'route', 'search' => ['route', 'meta_title'],
+            'title_field' => 'route', 'order' => 'route', 'search' => ['route', 'meta_title', 'meta_keywords'],
             'columns' => ['route', 'meta_title', 'robots'],
             'fields' => [
                 ['name'=>'route','label'=>'Route (e.g. /about-us)','type'=>'text','required'=>true],
                 ['name'=>'meta_title','label'=>'Meta Title','type'=>'text'],
                 ['name'=>'meta_description','label'=>'Meta Description','type'=>'textarea'],
+                ['name'=>'meta_keywords','label'=>'Meta Keywords (comma-separated)','type'=>'textarea'],
                 ['name'=>'canonical_url','label'=>'Canonical URL','type'=>'text'],
                 ['name'=>'og_image','label'=>'Social Image URL','type'=>'text'],
                 ['name'=>'robots','label'=>'Robots','type'=>'select','options'=>['index,follow'=>'index,follow','noindex,follow'=>'noindex,follow','noindex,nofollow'=>'noindex,nofollow']],
