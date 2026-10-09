@@ -97,6 +97,56 @@ if (!$patient_resource_links) {
   </div>
 </footer>
 
+<nav class="floating-actions" aria-label="Quick contact links">
+  <a class="floating-actions__link floating-actions__link--social floating-actions__instagram"
+     href="<?= e(SITE_INSTAGRAM) ?>" target="_blank" rel="noopener noreferrer" aria-label="Follow Jain Eye Hospital on Instagram" title="Instagram">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.8" r="1.2" fill="currentColor"/></svg><span>Instagram</span>
+  </a>
+  <a class="floating-actions__link floating-actions__link--social floating-actions__facebook"
+     href="<?= e(SITE_FACEBOOK) ?>" target="_blank" rel="noopener noreferrer" aria-label="Follow Jain Eye Hospital on Facebook" title="Facebook">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.3 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.5-1.5h1.8V3.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V10H7v3h2.9v8z"/></svg><span>Facebook</span>
+  </a>
+  <a class="floating-actions__link floating-actions__link--social floating-actions__youtube"
+     href="<?= e(SITE_YOUTUBE) ?>" target="_blank" rel="noopener noreferrer" aria-label="Watch Jain Eye Hospital on YouTube" title="YouTube">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.5 15.4V8.6l6 3.4-6 3.4Z"/></svg><span>YouTube</span>
+  </a>
+  <a class="floating-actions__link floating-actions__whatsapp"
+     href="https://wa.me/919643536373?text=Namaste%2C%20I%20would%20like%20to%20contact%20Jain%20Eye%20Hospital."
+     target="_blank" rel="noopener noreferrer" aria-label="Message Jain Eye Hospital on WhatsApp" title="WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a9.8 9.8 0 0 0-8.4 14.8L2.3 22l5.4-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4-1.1l-.3-.2-3.2.8.9-3.1-.2-.4A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.3-.5c.1-.2 0-.3 0-.5-.1-.1-.5-1.3-.7-1.7-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.2 1.8 2.8 4.4 3.8.6.3 1.1.4 1.5.5.6.2 1.1.2 1.5.1.5-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2-.1-.2-.3-.3-.5-.4Z"/></svg><span>WhatsApp</span>
+  </a>
+  <a class="floating-actions__link floating-actions__enquiry" href="<?= url('contact-us') ?>" data-open-enquiry aria-haspopup="dialog" aria-label="Open the enquiry form" title="Send an enquiry">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg><span>Enquiry</span>
+  </a>
+  <a class="floating-actions__link floating-actions__call" href="tel:+911143784377" aria-label="Call Jain Eye Hospital at <?= e(SITE_PHONE_1) ?>" title="Call">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.3 0 .7-.2 1l-2.3 2.1z"/></svg><span>Call</span>
+  </a>
+  <a class="floating-actions__link floating-actions__maps" href="<?= e(SITE_MAPS_URL) ?>" target="_blank" rel="noopener noreferrer" aria-label="Find Jain Eye Hospital on Google Maps" title="Google Maps">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg><span>Directions</span>
+  </a>
+</nav>
+
+<dialog class="enquiry-dialog" id="enquiryDialog" aria-labelledby="enquiryTitle">
+  <div class="enquiry-dialog__inner">
+    <button class="enquiry-dialog__close" type="button" data-close-enquiry aria-label="Close enquiry form">&times;</button>
+    <span class="eyebrow">We’re here to help</span>
+    <h2 id="enquiryTitle">Send an enquiry</h2>
+    <p class="enquiry-dialog__intro">Share your contact details and a brief message. Our team can follow up about your enquiry.</p>
+    <form class="enquiry-form" method="post" action="<?= url('contact-us') ?>">
+      <?= csrf_field() ?>
+      <input type="hidden" name="subject" value="Website Enquiry">
+      <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Name <span class="req">*</span><input name="name" type="text" required maxlength="120" autocomplete="name"></label>
+      <label>Email <span class="req">*</span><input name="email" type="email" required maxlength="120" autocomplete="email"></label>
+      <label>Phone <span class="req">*</span><input name="phone" type="tel" required maxlength="15" autocomplete="tel" inputmode="tel"></label>
+      <label>How can we help? <span class="req">*</span><textarea name="message" required minlength="10" maxlength="5000" rows="4"></textarea></label>
+      <label class="enquiry-form__consent"><input type="checkbox" name="consent" value="1" required><span>I consent to being contacted about this enquiry and have read the <a href="<?= url('privacy-policy') ?>">Privacy Policy</a>.</span></label>
+      <p class="enquiry-form__note">Please do not include medical records, payment details or sensitive health information.</p>
+      <button class="btn btn--primary" type="submit">Send Enquiry</button>
+    </form>
+  </div>
+</dialog>
+
 <script src="<?= asset('js/main.js') ?>" defer></script>
 </body>
 </html>

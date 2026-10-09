@@ -84,15 +84,25 @@ $seo = $page_seo ?? page_seo($route ?? '/', $seo_title ?? SITE_NAME, $seo_desc ?
           </a>
 
           <?php if ($mega): ?>
+          <?php
+            $menuRoute = trim((string)$item['url'], '/');
+            $featureImage = $menuRoute === 'specialities'
+                ? 'img/ophthalmic-microsurgery-in-a-clinical-theatre.webp'
+                : 'img/hospital-pic-15.webp';
+          ?>
           <div class="mega mega--4" role="menu">
             <?php foreach ($mega as $col): ?>
               <?php if ($col['column_type'] === 'featured'): ?>
               <div class="mega__featured">
-                <h4><?= e($col['heading']) ?></h4>
-                <p><?= e($col['text']) ?></p>
-                <?php if ($col['cta_url']): ?>
-                <a class="btn btn--primary" href="<?= url(ltrim($col['cta_url'], '/')) ?>"><?= e($col['cta_label']) ?></a>
-                <?php endif; ?>
+                <img class="mega__image" src="<?= asset($featureImage) ?>" alt="" loading="lazy" decoding="async">
+                <div class="mega__feature-copy">
+                  <span class="eyebrow">Jain Eye Hospital</span>
+                  <h4><?= e($col['heading']) ?></h4>
+                  <p><?= e($col['text']) ?></p>
+                  <?php if ($col['cta_url']): ?>
+                  <a class="btn btn--primary" href="<?= url(ltrim($col['cta_url'], '/')) ?>"><?= e($col['cta_label']) ?></a>
+                  <?php endif; ?>
+                </div>
               </div>
               <?php else: ?>
               <div class="mega__col">

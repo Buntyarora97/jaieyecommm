@@ -299,13 +299,13 @@ require __DIR__ . '/../includes/header.php';
     <div class="patient-care-panel reveal">
       <div>
         <span class="eyebrow">Patient Care</span>
-        <h3>Clear information, centred on your visit</h3>
-        <p>Learn what to expect before a consultation, read practical eye-health guidance and contact our team if you need help planning your visit.</p>
+        <h3>Plan your visit with clear, practical information</h3>
+        <p>Know what to bring, how to request an appointment and where to find answers before you arrive. For personal medical advice, speak directly with your eye-care professional.</p>
       </div>
       <div class="patient-care-panel__links">
-        <a class="link-arrow" href="<?= url('patient-journey') ?>">Plan your visit</a>
-        <a class="link-arrow" href="<?= url('patient-education') ?>">Patient education</a>
-        <a class="link-arrow" href="<?= url('contact-us') ?>">Ask our team</a>
+        <a href="<?= url('patient-journey') ?>"><strong>Before your visit</strong><span>Appointments, records and what to bring</span><b>Plan your visit <i aria-hidden="true">→</i></b></a>
+        <a href="<?= url('patient-education') ?>"><strong>Patient education</strong><span>Read general eye-care information</span><b>Explore resources <i aria-hidden="true">→</i></b></a>
+        <a href="<?= url('contact-us') ?>"><strong>Questions for our team?</strong><span>Contact details and directions</span><b>Get in touch <i aria-hidden="true">→</i></b></a>
       </div>
     </div>
     <?php endif; ?>

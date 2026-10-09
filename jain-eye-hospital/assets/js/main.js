@@ -70,6 +70,26 @@
     });
   }
 
+  /* Enquiry dialog: a contact-page link remains as the no-JavaScript fallback. */
+  var enquiryDialog = document.getElementById('enquiryDialog');
+  document.querySelectorAll('[data-open-enquiry]').forEach(function (trigger) {
+    trigger.addEventListener('click', function (ev) {
+      if (!enquiryDialog || typeof enquiryDialog.showModal !== 'function') return;
+      ev.preventDefault();
+      enquiryDialog.showModal();
+      var firstField = enquiryDialog.querySelector('input[name="name"]');
+      if (firstField) firstField.focus();
+    });
+  });
+  if (enquiryDialog) {
+    enquiryDialog.querySelectorAll('[data-close-enquiry]').forEach(function (button) {
+      button.addEventListener('click', function () { enquiryDialog.close(); });
+    });
+    enquiryDialog.addEventListener('click', function (ev) {
+      if (ev.target === enquiryDialog) enquiryDialog.close();
+    });
+  }
+
   /* Reveal on scroll */
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && revealEls.length) {

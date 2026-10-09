@@ -12,7 +12,7 @@ require __DIR__ . '/../includes/header.php';
   <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= url('/') ?>">Home</a><span class="sep">/</span><span>Technology</span></nav>
     <h1>Technology &amp; Facilities</h1>
-    <p>Explore photographs of clinical spaces and equipment. Contact the hospital to confirm specific device names and their use.</p>
+    <p>Explore photographs of the hospital’s clinical spaces and equipment. Your clinician can explain which investigations, if any, are relevant to your eye examination.</p>
   </div>
 </section>
 <section class="section">
@@ -37,12 +37,24 @@ require __DIR__ . '/../includes/header.php';
     <?php else: ?>
     <div class="empty-state"><strong>No equipment details are published yet</strong>Contact the hospital to ask about the facilities or equipment relevant to your consultation.</div>
     <?php endif; ?>
+    <section class="technology-guide" aria-labelledby="technologyGuideTitle">
+      <div class="technology-guide__intro">
+        <span class="eyebrow">Your care, explained</span>
+        <h2 id="technologyGuideTitle">How to ask about equipment</h2>
+        <p>Seeing a machine or photograph does not tell you whether a test or procedure is needed. The examining clinician can connect each recommendation to your symptoms, examination and questions.</p>
+      </div>
+      <div class="technology-guide__steps">
+        <article><span>01</span><h3>Ask what the test is for</h3><p>Ask what your clinician hopes to learn and how the result will help guide the next discussion.</p></article>
+        <article><span>02</span><h3>Discuss your options</h3><p>Ask whether there are alternatives, what preparation is needed and whether you should bring someone with you.</p></article>
+        <article><span>03</span><h3>Confirm the next step</h3><p>Before leaving, ask when and how you will receive an explanation of findings and what follow-up is recommended.</p></article>
+      </div>
+    </section>
   </div>
 </section>
 <section class="section section--green">
   <div class="container cta-final">
     <h2>Questions about facilities or equipment?</h2>
-    <p>Contact the hospital before planning a visit.</p>
+    <p>Contact the hospital for practical details or to request an appointment. Device availability and suitability should be confirmed with the clinical team.</p>
     <a class="btn btn--primary" href="<?= url('book-appointment') ?>">Book Appointment</a>
   </div>
 </section>
