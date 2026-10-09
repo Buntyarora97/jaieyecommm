@@ -3,6 +3,8 @@
 $spec = db_row("SELECT * FROM specialities WHERE slug = ? AND status='published'", [$slug]);
 if (!$spec) { http_response_code(404); require __DIR__ . '/404.php'; return; }
 
+$guideLibrary = require __DIR__ . '/../includes/speciality-guides.php';
+$guide = $guideLibrary[$spec['slug']] ?? null;
 $route = '/specialities/' . $spec['slug'];
 $page_seo = page_seo($route, $spec['name'] . ' in Shalimar Bagh, Delhi | ' . SITE_NAME,
     excerpt($spec['short_description'] ?: $spec['overview'] ?: '', 155));
@@ -32,9 +34,19 @@ foreach ($directoryFaqs as $faq) {
         $faqIds[(int)$faq['id']] = true;
     }
 }
+$faqList = array_merge($guide['faqs'] ?? [], $faqs);
+$seenQuestions = [];
+$faqs = [];
+foreach ($faqList as $faq) {
+    $questionKey = mb_strtolower(trim((string)$faq['question']));
+    if (isset($seenQuestions[$questionKey])) continue;
+    $seenQuestions[$questionKey] = true;
+    $faqs[] = $faq;
+    if (count($faqs) === 8) break;
+}
 $posts = db_all("SELECT * FROM blog_posts WHERE status='published' ORDER BY published_at DESC LIMIT 3");
 
-$sections = [
+$fallbackSections = [
     'overview'        => 'Overview',
     'symptoms'        => 'Symptoms',
     'conditions'      => 'Conditions We Manage',
@@ -44,13 +56,20 @@ $sections = [
     'what_to_expect'  => 'What to Expect',
     'recovery'        => 'Recovery & Follow-Up',
 ];
-$populatedSections = array_filter(
-    $sections,
-    static function (string $field) use ($spec): bool {
-        return !empty($spec[$field]);
-    },
-    ARRAY_FILTER_USE_KEY
-);
+$sections = $guide['sections'] ?? [];
+if (!$sections) {
+    foreach ($fallbackSections as $field => $label) {
+        if (!empty($spec[$field])) {
+            $sections[] = ['id' => $field, 'title' => $label, 'body' => $spec[$field]];
+        }
+    }
+}
+$articleText = implode(' ', array_column($sections, 'body'));
+$guideWordCount = str_word_count(strip_tags($articleText)) + array_sum(array_map(
+    static fn(array $faq): int => str_word_count(strip_tags((string)$faq['answer'])),
+    $guide['faqs'] ?? []
+));
+$readingMinutes = max(1, (int)ceil($guideWordCount / 220));
 require __DIR__ . '/../includes/header.php';
 ?>
 <section class="page-hero care-hero">
@@ -71,7 +90,7 @@ require __DIR__ . '/../includes/header.php';
 <nav class="speciality-page-nav" aria-label="On this page">
   <div class="container">
     <span>Explore this care area</span>
-    <?php foreach ($populatedSections as $field => $label): ?><a href="#speciality-section-<?= e($field) ?>"><?= e($label) ?></a><?php endforeach; ?>
+    <?php foreach ($sections as $section): ?><a href="#speciality-section-<?= e($section['id']) ?>"><?= e($section['title']) ?></a><?php endforeach; ?>
     <a href="#speciality-visit-guide">Visit questions</a>
     <?php if ($treatments): ?><a href="#speciality-treatments">Related services</a><?php endif; ?>
     <?php if ($doctors): ?><a href="#speciality-doctors">Doctors</a><?php endif; ?>
@@ -81,18 +100,21 @@ require __DIR__ . '/../includes/header.php';
 
 <section class="section">
   <div class="container split">
-    <div class="prose reveal">
-      <?php foreach ($sections as $field => $label): ?>
-        <?php if (!empty($spec[$field])): ?>
-        <h2 id="speciality-section-<?= e($field) ?>"><?= e($label) ?></h2>
-        <p><?= nl2br(e($spec[$field])) ?></p>
-        <?php endif; ?>
+    <article class="prose reveal speciality-guide">
+      <?php if ($guide): ?><p class="speciality-guide__meta">Patient education <span aria-hidden="true">·</span> <?= $readingMinutes ?> min read</p><?php endif; ?>
+      <?php foreach ($sections as $section): ?>
+        <section class="speciality-guide__section" aria-labelledby="speciality-section-<?= e($section['id']) ?>">
+          <h2 id="speciality-section-<?= e($section['id']) ?>"><?= e($section['title']) ?></h2>
+          <?php foreach (preg_split('/\n\s*\n/', trim((string)$section['body'])) as $paragraph): ?>
+          <?php if (trim($paragraph) !== ''): ?><p><?= e(trim($paragraph)) ?></p><?php endif; ?>
+          <?php endforeach; ?>
+        </section>
       <?php endforeach; ?>
-      <?php if (count($populatedSections) < 4): ?>
+      <?php if (!$guide && count($sections) < 4): ?>
       <div class="speciality-content-note">
         <span class="eyebrow">More information</span>
         <strong>Additional details are being prepared</strong>
-        <p>Only information reviewed by the hospital is published in this guide. Contact the care team with questions about a personal concern or treatment option.</p>
+        <p>Contact the care team with questions about a personal concern or treatment option.</p>
       </div>
       <?php endif; ?>
       <div class="care-prose__notice">
@@ -100,10 +122,22 @@ require __DIR__ . '/../includes/header.php';
         <p>Bring any previous eye reports, your current spectacles and a list of medicines or eye drops you use. Your clinician can explain which examinations or options are relevant to you.</p>
         <a class="link-arrow" href="<?= url('patient-journey') ?>">Read the patient visit guide</a>
       </div>
+      <?php if (!empty($guide['sources'])): ?>
+      <aside class="speciality-guide__sources" aria-label="Sources for this patient guide">
+        <span class="eyebrow">Further reading</span>
+        <h2>Trusted eye-health references</h2>
+        <p>This guide is general education, not a substitute for an examination or personalised medical advice.</p>
+        <ul>
+          <?php foreach ($guide['sources'] as $source): ?>
+          <li><a href="<?= e($source['url']) ?>" target="_blank" rel="noopener noreferrer"><?= e($source['label']) ?><span aria-hidden="true">↗</span></a></li>
+          <?php endforeach; ?>
+        </ul>
+      </aside>
+      <?php endif; ?>
       <p style="font-size:.85rem;color:var(--grey);border-top:1px solid var(--border);padding-top:16px;margin-top:28px">
         This information is for general education and does not replace a personal consultation. Treatment recommendations vary from patient to patient and are made only after a detailed eye examination.
       </p>
-    </div>
+    </article>
     <aside class="reveal">
       <div class="contact-card" style="position:sticky;top:110px">
         <h3 style="margin-bottom:14px">Book a Consultation</h3>
@@ -181,7 +215,7 @@ require __DIR__ . '/../includes/header.php';
   <div class="container">
     <div class="section-head center reveal"><span class="eyebrow">FAQs</span><h2>Questions About <?= e($spec['name']) ?></h2></div>
     <?php if ($faqs): ?>
-    <div class="faq">
+    <div class="faq speciality-guide__faq">
       <?php foreach ($faqs as $faq): ?>
       <details><summary><?= e($faq['question']) ?><span class="plus">+</span></summary>
         <div class="faq__answer"><?= nl2br(e($faq['answer'])) ?></div></details>
